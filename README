@@ -10,6 +10,8 @@ http://people.mozilla.com/~gkoberger/bugzillajs/bugzillajs.user.js
 
 Note: You must have Greasemonkey installed
 
+A good bug view to explore all the features is:
+https://bugzilla.mozilla.org/show_bug.cgi?id=574290
 
 ===============================================================================
 FEATURES

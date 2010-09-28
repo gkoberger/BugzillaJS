@@ -851,7 +851,8 @@ function parseLinks() {
 
                         if (d.commit.added) {
                             $.each(d.commit.added, function (k, v) {
-                                table.append("<tr><td class='add'><div class='stat-icon'></td><td>" + v + "</td></tr><td>" + gitBox(5, 0) + "</td>");
+                                table.append("<tr><td class='add'><div class='stat-icon'></td><td>" + v +
+                                    "</td><td>" + gitBox(5, 0) + "</td></tr>");
                             });
                         }
 
@@ -859,7 +860,8 @@ function parseLinks() {
                             $.each(d.commit.modified, function (k, v) {
                                 additions = (v.diff.match(/^\+[^+]/gm) || '').length
                                 deletions = (v.diff.match(/^\-[^-]/gm) || '').length
-                                table.append("<tr><td class='modify'><div class='stat-icon'></div></td><td>" + v.filename + "</td><td>" + gitBox(additions, deletions) + "</td></tr>");
+                                table.append("<tr><td class='modify'><div class='stat-icon'></div></td><td>" +
+                                             v.filename + "</td><td>" + gitBox(additions, deletions) + "</td></tr>");
 
                             });
                         }
