@@ -1,0 +1,70 @@
+BUGZILLA JS
+
+===============================================================================
+HOW TO USE
+-------------------------------------------------------------------------------
+
+You can install the userscript at the following URL:
+
+http://people.mozilla.com/~gkoberger/bugzillajs/bugzillajs.user.js
+
+Note: You must have Greasemonkey installed
+
+
+===============================================================================
+FEATURES
+-------------------------------------------------------------------------------
+
+You can turn features on and off by clicking the "BugzillaJS Preferences" link
+at the top and bottom of every page.  You need to refresh the page to see them
+come into effect.
+
+SHOW CHANGES
+
+  This will show the changes to the bug inline.  Things like status,
+  assigned_to, cc, etc are shown (and, if applicable, attached to the relevant
+  comment).
+
+  [Inspired by Bugzilla Tweaks; thanks to potch for the idea/help]
+
+GIT LOGS INLINE
+
+  If a link to a github commit is posted, the changes will be shown inline.
+
+IMAGE GALLERY
+
+  If a link to an image is posted, there will be a gallery inline
+
+PRETTY DATES
+
+  Replaces timestamps with relative dates (such as "Last week")
+
+GRAVATARS
+
+  Show an avatar in the comments
+
+GIT STYLE COMMENTS
+
+  Sylizes the comments to look like github comments
+
+===============================================================================
+TODO / KNOWN BUGS
+-------------------------------------------------------------------------------
+
+- Add "additions/deletions" to github
+- Make github work with deletions
+- Show attachements inline, too
+- Use thumbnails for gallery, not full images with a width+height
+- Have image galleries link to a lightbox
+- Fix pretty dates so it doesn't use DateJS
+- Clean up styling when github styles aren't used
+- Clean up the code
+- Optomize the code so it runs faster
+
+===============================================================================
+CONTRIBUTE
+-------------------------------------------------------------------------------
+
+If you have an idea for an extra feature, either ask me to implement it or
+you can implement it yourself and submit a patch.  I'll do a better job in the
+future of cleaning up the code and possibly making it API-like.
