@@ -1,5 +1,4 @@
 BUGZILLA JS
-
 ===============================================================================
 HOW TO USE
 -------------------------------------------------------------------------------
@@ -70,3 +69,12 @@ CONTRIBUTE
 If you have an idea for an extra feature, either ask me to implement it or
 you can implement it yourself and submit a patch.  I'll do a better job in the
 future of cleaning up the code and possibly making it API-like.
+
+
+===============================================================================
+TROUBLESHOOTING
+-------------------------------------------------------------------------------
+
+If it's not working:
+ - It's only been tested on FF3.6
+ - It won't work if you have the Bugzilla Tweaks Jetpack running
