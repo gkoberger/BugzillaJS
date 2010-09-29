@@ -80,7 +80,11 @@ function loadPrettydate(selector) {
     if(settings['prettydate']) {
 
         $(selector).each(function () {
-            $(this).attr('title', $(this).text().trim()).html(prettydate(new Date($(this).attr('data-timestamp'))));
+
+            $(this).attr('title', $(this).text().trim())
+                .html(prettydate(new Date($(this).attr('data-timestamp')
+                            .replace(/[-+]?[0-9]*\s*\(.*\)/, ''))));
+
         });
 
     }
