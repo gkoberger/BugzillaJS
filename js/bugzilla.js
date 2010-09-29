@@ -22,6 +22,8 @@ $(document).ready(function(){
 
     if(bug_id) {
 
+        correctDates();
+
         if (settings['gitcomments']) {
             $('body').addClass('git_style')
         }
@@ -34,9 +36,6 @@ $(document).ready(function(){
             loadGravatars();
         }
 
-        if(settings['prettydate']) {
-            loadPrettydate();
-        }
 
         if (settings['gallery'] || settings['git']) {
             parseLinks();
@@ -74,10 +73,17 @@ function registerPref(slug, details) {
     settings_fields.push({'slug':slug, 'details':details});
 }
 
-function loadPrettydate() {
-    $('.bz_comment_time').each(function () {
-        $(this).attr('title', $(this).text().trim()).html(prettydate(Date.parse($(this).text().replace(/PDT/, 'PST'))))
-    });
+function loadPrettydate(selector) {
+
+    selector = selector || '.bz_comment_time';
+
+    if(settings['prettydate']) {
+
+        $(selector).each(function () {
+            $(this).attr('title', $(this).text().trim()).html(prettydate(new Date($(this).attr('data-timestamp'))));
+        });
+
+    }
 }
 
 function loadGravatars() {
@@ -87,8 +93,7 @@ function loadGravatars() {
     });
 }
 
-function loadChanges() {
-
+function correctDates() {
     // Load comments
     // (We need to do it this way because the DOM doesn't give us enough info)
 
@@ -110,12 +115,19 @@ function loadChanges() {
         var i = 0;
         $('.bz_comment').each(function () {
             $(this).attr('id', 'd' + new Date(d.comments[i].creation_time).getTime());
+            $('.bz_comment_time', this).attr('data-timestamp',
+                new Date(d.comments[i].creation_time));
             i++;
         });
+
+        loadPrettydate();
 
         joinComments();
 
     });
+}
+
+function loadChanges() {
 
     // Now, load the changes from the API
 
@@ -157,9 +169,15 @@ function joinComments() {
         } else if (v.date == comment.date) {
             $('#d' + comment.date).find('.bz_comment_text').prepend('<div class="history">' + formatChange(v.change.changes) + '</div>');
         } else {
-            $('#d' + comment.date).after('<div class="history"><strong>' + v.change.changer.name + '</strong> ' + formatChange(v.change.changes) + '</div>');
+            $('#d' + comment.date).after('<div class="history"><strong>' + v.change.changer.name + '</strong> ' +
+                formatChange(v.change.changes) +
+                ' <span class="bz_comment_time" title="'+new Date(v.date)+
+                '" data-timestamp="'+new Date(v.date)+'">' + new Date(v.date) +
+                '</span></div>');
         }
     });
+
+    loadPrettydate('.history .bz_comment_time');
 
 }
 

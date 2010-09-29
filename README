@@ -52,12 +52,9 @@ GIT STYLE COMMENTS
 TODO / KNOWN BUGS
 -------------------------------------------------------------------------------
 
-- Make github work with deletions
-- Add dates to "changes"
 - Show attachements inline, too
 - Use thumbnails for gallery, not full images with a width+height
 - Have image galleries link to a lightbox
-- Fix pretty dates so it doesn't use DateJS
 - Clean up styling when github styles aren't used
 - Clean up the code
 - Optomize the code so it runs faster

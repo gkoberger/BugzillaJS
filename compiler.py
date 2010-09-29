@@ -40,7 +40,6 @@ def compress(in_files, out_file, in_type='js', verbose=False,
 SCRIPTS = [
         'js/jquery.js',
         'js/md5.js',
-        'js/date.js',
         'js/bugzilla.js',
         ]
 SCRIPTS_OUT_DEBUG = 'min/bugzilla.debug.js'
