@@ -55,7 +55,6 @@ TODO / KNOWN BUGS
 - Show attachements inline, too
 - Use thumbnails for gallery, not full images with a width+height
 - Have image galleries link to a lightbox
-- Clean up styling when github styles aren't used
 - Clean up the code
 - Optomize the code so it runs faster
 
