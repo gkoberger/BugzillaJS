@@ -227,6 +227,45 @@ margin:10px 0 0;
 width:100%;
 }
 
+.git .changes_box {
+position:relative;
+}
+
+.git td .changes_box div {
+    display:none;
+}
+
+.git td:hover .changes_box div {
+-webkit-border-radius:4px;
+-moz-border-radius:4px;
+background-color:black;
+color:#FFFFFF;
+font-size:10px;
+left:-165px;
+opacity:0.8;
+padding:2px 3px;
+position:absolute;
+text-align:center;
+top:0;
+width:150px;
+display:block;
+}
+
+.git .changes_box strong {
+color:#444444;
+display:block;
+float:left;
+padding-right:5px;
+padding-top:1px;
+text-align:right;
+width:25px;
+
+}
+
+.git td.changes_td {
+width:80px;
+}
+
 .git td {
 	padding:5px;
 font-size:11px;

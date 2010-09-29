@@ -52,8 +52,8 @@ GIT STYLE COMMENTS
 TODO / KNOWN BUGS
 -------------------------------------------------------------------------------
 
-- Add "additions/deletions" to github
 - Make github work with deletions
+- Add dates to "changes"
 - Show attachements inline, too
 - Use thumbnails for gallery, not full images with a width+height
 - Have image galleries link to a lightbox
