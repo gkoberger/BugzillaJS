@@ -271,9 +271,6 @@ width:80px;
 font-size:11px;
 }
 
-.git td.add {
-	background-image:url(add.jpg);
-}
 
 .git td.add .stat-icon {
 background-position:0 0;
@@ -281,6 +278,10 @@ background-position:0 0;
 
 .git td.modify .stat-icon {
 background-position:0px -50px;
+}
+
+.git td.remove .stat-icon {
+background-position:0px -100px;
 }
 
 .git td .stat-icon {

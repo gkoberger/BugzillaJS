@@ -856,6 +856,13 @@ function parseLinks() {
                             });
                         }
 
+                        if (d.commit.removed) {
+                            $.each(d.commit.removed, function (k, v) {
+                                table.append("<tr><td class='remove'><div class='stat-icon'></td><td>" + v +
+                                    "</td><td class='changes_td'>" + gitBox(0, 5) + "</td></tr>");
+                            });
+                        }
+
                         if (d.commit.modified) {
                             $.each(d.commit.modified, function (k, v) {
                                 additions = (v.diff.match(/^\+[^+]/gm) || '').length
