@@ -596,13 +596,19 @@ $(document).ready(function(){
                 $('.lb').remove();
                 overlay =
                 $('<div>').addClass('overlay').appendTo('body').css('opacity',
-                    0).animate({'opacity':0.5}, 'fast');
+                    0).animate({'opacity':1}, 'fast');
 
-                div = $('<div>').addClass('lb').css('top',$(window).scrollTop()).appendTo('body');
+                div =
+                $('<div>').addClass('lb').appendTo(overlay);
                 img = $('<img>').attr('src', $(this).attr('href')).appendTo(div);
 
+                opts = $('<div>').addClass('opts').appendTo(overlay)
+                $(opts).append("<a href='"+$(this).attr('href')+
+                               "'target='_blank'>full image</a>");
+                $(opts).append(" | <a href='#' class='close_overlay' target='_new'>close</a>");
+
                 $(div).add(overlay).click(function(){
-                    $('.overlay, .lb').remove();
+                    $('.overlay, .lb, .close_overlay').remove();
                 });
 
                 return false;
