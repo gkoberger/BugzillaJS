@@ -559,6 +559,7 @@ $(document).ready(function(){
     registerPref('prettydate', 'Turn timestamps into a nice looking date');
     registerPref('gravatar', 'Show gravatars for comments');
     registerPref('gitcomments', 'Use git-style comments?');
+    registerPref('lightbox', 'Use lightboxes for images?');
 
     /** Get the bug ID **/
 
@@ -588,6 +589,25 @@ $(document).ready(function(){
 
         if (settings['gallery'] || settings['git']) {
             parseLinks();
+        }
+
+        if (settings['lightbox']) {
+            $('.img-gal a').click(function(){
+                $('.lb').remove();
+                overlay =
+                $('<div>').addClass('overlay').appendTo('body').css('opacity',
+                    0).animate({'opacity':0.5}, 'fast');
+
+                div = $('<div>').addClass('lb').css('top',$(window).scrollTop()).appendTo('body');
+                img = $('<img>').attr('src', $(this).attr('href')).appendTo(div);
+
+                $(div).add(overlay).click(function(){
+                    $('.overlay, .lb').remove();
+                });
+
+                return false;
+            });
+
         }
     }
 });

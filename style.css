@@ -330,3 +330,34 @@ width:8px;
 .gd {
 	background-color:#C52323
 }
+
+
+/* Lightbox */
+
+.lb {
+    height:100%;
+    left:0;
+    margin-top:20px;
+    position:absolute;
+    text-align:center;
+    top:0;
+    width:100%;
+}
+
+.lb img {
+    background-color:#fff;
+    border:1px solid #555;
+    padding:5px;
+}
+
+.overlay {
+    height:100%;
+    left:0;
+    position:fixed;
+    text-align:center;
+    top:0;
+    width:100%;
+    background-color:#000;
+    opacity:0.3;
+}
+
