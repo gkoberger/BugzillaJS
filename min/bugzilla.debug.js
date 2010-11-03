@@ -604,11 +604,12 @@ $(document).ready(function(){
 
                 opts = $('<div>').addClass('opts').appendTo(overlay)
                 $(opts).append("<a href='"+$(this).attr('href')+
-                               "'target='_blank'>full image</a>");
-                $(opts).append(" | <a href='#' class='close_overlay' target='_new'>close</a>");
+                               "' target='_blank'>full image</a>");
+                $(opts).append(" | <a class='close_overlay'>close</a>");
 
-                $(div).add(overlay).click(function(){
+                $(div).add(overlay).click(function(e){
                     $('.overlay, .lb, .close_overlay').remove();
+                    e.stopPropagation() //return false;
                 });
 
                 return false;

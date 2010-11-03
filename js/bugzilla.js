@@ -9,6 +9,7 @@ $(document).ready(function(){
     registerPref('gallery', 'Display images and attachments as an inline gallery');
     registerPref('prettydate', 'Turn timestamps into a nice looking date');
     registerPref('gravatar', 'Show gravatars for comments');
+    registerPref('assigntome', 'Add an Assign to Me button?');
     registerPref('gitcomments', 'Use git-style comments?');
     registerPref('lightbox', 'Use lightboxes for images?');
 
@@ -42,6 +43,10 @@ $(document).ready(function(){
             parseLinks();
         }
 
+        if (settings['assigntome']) {
+            loadAssignToMe();
+        }
+
         if (settings['lightbox']) {
             $('.img-gal a').click(function(){
                 $('.lb').remove();
@@ -49,17 +54,18 @@ $(document).ready(function(){
                 $('<div>').addClass('overlay').appendTo('body').css('opacity',
                     0).animate({'opacity':1}, 'fast');
 
-                div =
-                $('<div>').addClass('lb').appendTo(overlay);
-                img = $('<img>').attr('src', $(this).attr('href')).appendTo(div);
+                div = $('<div>').addClass('lb').appendTo(overlay);
+                img = $('<img>').attr('src', $(this).attr('href'))
+                                .appendTo(div);
 
                 opts = $('<div>').addClass('opts').appendTo(overlay)
                 $(opts).append("<a href='"+$(this).attr('href')+
-                               "'target='_blank'>full image</a>");
-                $(opts).append(" | <a href='#' class='close_overlay' target='_new'>close</a>");
+                               "' target='_blank'>full image</a>");
+                $(opts).append(" | <a class='close_overlay'>close</a>");
 
-                $(div).add(overlay).click(function(){
+                $(div).add(overlay).click(function(e){
                     $('.overlay, .lb, .close_overlay').remove();
+                    e.stopPropagation() //return false;
                 });
 
                 return false;
@@ -70,23 +76,41 @@ $(document).ready(function(){
 });
 
 function addPrefs() {
-    $("<span class='separator'>| </span><li><a href=''>BugzillaJS Preferences</a></li>").appendTo('#header .links, #links-actions .links').click(function(){
-        $('#prefs').remove();
+    d = "<span class='separator'>| </span>" +
+        "<li><a href=''>BugzillaJS Preferences</a></li>";
 
-        prefs = $('<div id="prefs">').appendTo('body')
-        $.each(settings_fields, function(k, v){
-            o = "<div><input type='checkbox' id='setting_"+v.slug+"' data-slug='"+v.slug+"' "+(settings[v.slug] ? "checked='checked'" : "")+">";
-            o += "<label for='setting_"+v.slug+"'>" + v.details + "</label></div>";
-            prefs.append(o);
+    $(d).appendTo('#header .links, #links-actions .links')
+        .click(function(){
+            $('#prefs').remove();
+
+            prefs = $('<div id="prefs">').appendTo('body')
+            $.each(settings_fields, function(k, v){
+                o = "<div>"
+
+                o += "<input type='checkbox' id='setting_"+v.slug+"' " +
+                     "data-slug='"+v.slug+"' "+
+                     (settings[v.slug] ? "checked='checked'" : "")+
+                     ">";
+
+                o += "<label for='setting_"+v.slug+"'>" + v.details +
+                     "</label></div>";
+
+                prefs.append(o);
+            });
+
+        $("<a href='#'>close preferences</a>").appendTo(prefs).click(function(){
+            $('#prefs').remove();
+            return false;
         });
 
-        $("<a href='#'>close preferences</a>").appendTo(prefs).click(function(){ $('#prefs').remove(); return false; });
-        $("<span>&nbsp;|&nbsp;</span><a href='#'>refresh page</a>").appendTo(prefs).click(function(){ window.location.reload(); return false; });
+        $("<span>&nbsp;|&nbsp;</span><a href='#'>refresh page</a>")
+            .appendTo(prefs)
+            .click(function(){ window.location.reload(); return false; });
 
         $('input', prefs).change(function(){
             window.localStorage['settings_' + $(this).attr('data-slug')] =
-            settings[$(this).attr('data-slug')] =
-            $(this).is(':checked') ? 1 : 0;
+                settings[$(this).attr('data-slug')] =
+                    $(this).is(':checked') ? 1 : 0;
         });
 
         return false;
@@ -115,6 +139,31 @@ function loadPrettydate(selector) {
 
     }
 }
+
+function loadAssignToMe() {
+    // Written by fwenzel
+    // http://github.com/fwenzel/jetpacks/tree/gh-pages/bugzilla/assign-to-me/
+
+    var logout_re = /[\s\S]*Log.*out.*[\s]\s*(.*)\s/m,
+        logout_link = $('#footer #links-actions li:last'),
+        user_name = logout_link.text().replace(logout_re, '$1');
+    var assigned_to = $('#assigned_to');
+
+    // already the assignee?
+    if (assigned_to.val() == user_name) return;
+
+    // does button already exist? Mozilla bug 535001
+    if ($('#bz_assignee_edit_container button').size()) return;
+
+    // otherwise, make an assignee button
+    var button = $('<button>Assign to me</button>');
+    button.click(function() {
+        assigned_to.val(user_name);
+        $('#commit_top').click();
+    });
+    $('#bz_assignee_edit_container').append(button);
+}
+
 
 function loadGravatars() {
     $('.bz_comment_head,.bz_first_comment_head').each(function () {
