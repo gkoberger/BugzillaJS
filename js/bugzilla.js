@@ -133,7 +133,8 @@ function addPrefs() {
 }
 
 function registerPref(slug, details, setting_default) {
-    setting_default = true || setting_default
+    if(setting_default == undefined) setting_default = true
+
     settings[slug] = window.localStorage['settings_' + slug] == null ? setting_default : window.localStorage['settings_' + slug]*1;
     settings_fields.push({'slug':slug, 'details':details});
 }
