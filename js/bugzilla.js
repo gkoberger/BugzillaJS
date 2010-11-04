@@ -40,7 +40,6 @@ $(document).ready(function(){
             loadGravatars();
         }
 
-
         if (settings['gallery'] || settings['git']) {
             parseLinks();
         }
@@ -152,7 +151,7 @@ function loadPrettydate(selector) {
 
 function loadCommentOverflow() {
     // Idea by fwenzel
-    $('.bz_comment').css('overflow-x', 'auto');
+    $('body').addClass('bzJS-commentoverflow')
 }
 
 function loadHideFirst() {

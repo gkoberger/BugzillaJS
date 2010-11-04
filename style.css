@@ -114,6 +114,12 @@
     float:left;
 }
 
+/** Comment Overflow **/
+
+.bzJS-commentoverflow .bz_comment pre {
+    overflow-x: auto;
+}
+
 /** Image gallery **/
 
 .img-gal{
