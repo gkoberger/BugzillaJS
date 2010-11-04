@@ -189,12 +189,18 @@ function loadHideFirst() {
 }
 
 function loadAssignToMe() {
-    // Written by fwenzel
+    // Based on code written by oremj and fwenzel
     // http://github.com/fwenzel/jetpacks/tree/gh-pages/bugzilla/assign-to-me/
 
     var logout_re = /[\s\S]*Log.*out.*[\s]\s*(.*)\s/m,
-        logout_link = $('#footer #links-actions li:last'),
-        user_name = logout_link.text().replace(logout_re, '$1');
+        logout_link = $('#footer #links-actions li'),
+        user_name = false;
+
+    logout_link.each(function(){
+        if($(this).text().match(logout_re)) {
+        user_name = $(this).text().replace(logout_re, '$1');
+        }
+    });
     var assigned_to = $('#assigned_to');
 
     // already the assignee?
