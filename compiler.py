@@ -51,7 +51,7 @@ STYLESHEETS_OUT = 'min/style.min.css'
 
 def main():
 
-    os.system('rm -f min; mkdir min')
+    os.system('rm -r -f min; mkdir min')
 
     print 'Compressing JavaScript...'
     compress(SCRIPTS, SCRIPTS_OUT, 'js', False, SCRIPTS_OUT_DEBUG)
