@@ -12,6 +12,7 @@ $(document).ready(function(){
     registerPref('assigntome', 'Add an Assign to Me button?');
     registerPref('gitcomments', 'Use git-style comments?');
     registerPref('lightbox', 'Use lightboxes for images?');
+    registerPref('commentoverflow', 'Fix comment overflow issues?');
     registerPref('hidefirst', 'Hide first comment if empty?');
 
     /** Get the bug ID **/
@@ -50,6 +51,10 @@ $(document).ready(function(){
 
         if (settings['hidefirst']) {
             loadHideFirst();
+        }
+
+        if(settings['commentoverflow']) {
+            loadCommentOverflow();
         }
 
         if (settings['lightbox']) {
@@ -143,6 +148,11 @@ function loadPrettydate(selector) {
         });
 
     }
+}
+
+function loadCommentOverflow() {
+    // Idea by fwenzel
+    $('.bz_comment').css('overflow-x', 'auto');
 }
 
 function loadHideFirst() {

@@ -104,7 +104,12 @@ future of cleaning up the code and possibly making it API-like.
 TROUBLESHOOTING
 -------------------------------------------------------------------------------
 
-If it's not working:
  - You need Greasemonkey on 3.6, and Scriptish for Firefox 4.
  - It conflicts with other Bugzilla Jetpacks and Userscripts, including the
-   Bugzilla Tweaks Jetpack running
+   Bugzilla Tweaks Jetpack running.
+
+IF THERE IS A CONFLICT WITH ANOTHER SCRIPT:
+  Simply disabling the feature in the Bugzilla Preferences should fix it.
+
+STILL HAVE ISSUES?
+  Contact me at gkoberger [a] mozilla [dot] com
