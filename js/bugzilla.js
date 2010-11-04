@@ -169,7 +169,8 @@ function loadRemoveFlags() {
 function loadRemoveAccessKeys() {
     // Inspired by jbalogh, who evidently hates accessibility.
     $('[accesskey]').each(function(i, e) {
-        e.removeAttribute('accessKey').addClass('accessKey');
+        $(e).attr('accessKey', false);
+        $(e).addClass('accessKey');
     });
 
     $('body').addClass('bzJS-removeaccesskeys');

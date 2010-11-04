@@ -82,6 +82,14 @@ GIT STYLE COMMENTS
 
   Sylizes the comments to look like github comments
 
+REMOVE FLAGS
+
+    Remove the flags field in the bugs (off by default)
+
+REMOVE ACCESSIBILITY KEYS
+
+    Remove the accessibility keys (off by default)
+
 ===============================================================================
 TODO / KNOWN BUGS
 -------------------------------------------------------------------------------
