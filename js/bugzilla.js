@@ -14,6 +14,7 @@ $(document).ready(function(){
     registerPref('lightbox', 'Use lightboxes for images?');
     registerPref('commentoverflow', 'Fix comment overflow issues?');
     registerPref('removeflags', 'Remove flags?', false);
+    registerPref('removeaccesskeys', 'Remove access keys?', false);
     registerPref('hidefirst', 'Hide first comment if empty?');
 
     /** Get the bug ID **/
@@ -59,6 +60,10 @@ $(document).ready(function(){
 
         if(settings['removeflags']) {
             loadRemoveFlags();
+        }
+
+        if(settings['removeaccesskeys']) {
+            loadRemoveAccessKeys();
         }
 
         if (settings['lightbox']) {
@@ -159,6 +164,15 @@ function loadPrettydate(selector) {
 function loadRemoveFlags() {
     // Idea by jbalogh
     $('#flags, .flags_label').remove();
+}
+
+function loadRemoveAccessKeys() {
+    // Inspired by jbalogh, who evidently hates accessibility.
+    $('[accesskey]').each(function(i, e) {
+        e.removeAttribute('accessKey').addClass('accessKey');
+    });
+
+    $('body').addClass('bzJS-removeaccesskeys');
 }
 
 function loadCommentOverflow() {

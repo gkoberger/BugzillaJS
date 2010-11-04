@@ -120,6 +120,12 @@
     overflow-x: auto;
 }
 
+/** Remove Access Keys **/
+
+.bzJS-removeaccesskeys .accessKey u {
+    text-decoration: none;
+}
+
 /** Image gallery **/
 
 .img-gal{
