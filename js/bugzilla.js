@@ -13,6 +13,7 @@ $(document).ready(function(){
     registerPref('gitcomments', 'Use git-style comments?');
     registerPref('lightbox', 'Use lightboxes for images?');
     registerPref('commentoverflow', 'Fix comment overflow issues?');
+    registerPref('removeflags', 'Remove flags?', false);
     registerPref('hidefirst', 'Hide first comment if empty?');
 
     /** Get the bug ID **/
@@ -54,6 +55,10 @@ $(document).ready(function(){
 
         if(settings['commentoverflow']) {
             loadCommentOverflow();
+        }
+
+        if(settings['removeflags']) {
+            loadRemoveFlags();
         }
 
         if (settings['lightbox']) {
@@ -127,8 +132,9 @@ function addPrefs() {
 
 }
 
-function registerPref(slug, details) {
-    settings[slug] = window.localStorage['settings_' + slug] == null ? true : window.localStorage['settings_' + slug]*1;
+function registerPref(slug, details, setting_default) {
+    setting_default = true || setting_default
+    settings[slug] = window.localStorage['settings_' + slug] == null ? setting_default : window.localStorage['settings_' + slug]*1;
     settings_fields.push({'slug':slug, 'details':details});
 }
 
@@ -147,6 +153,11 @@ function loadPrettydate(selector) {
         });
 
     }
+}
+
+function loadRemoveFlags() {
+    // Idea by jbalogh
+    $('#flags, .flags_label').remove();
 }
 
 function loadCommentOverflow() {
