@@ -32,7 +32,7 @@ def compress(in_files, out_file, in_type='js', verbose=False,
     print 'Reduction: %.1f%%' % (float(org_size - new_size) / org_size * 100)
     print ''
 
-    #os.remove(temp_file)
+    os.remove(temp_file)
 
 
 SCRIPTS = [
