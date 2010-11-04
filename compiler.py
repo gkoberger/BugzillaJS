@@ -21,9 +21,7 @@ def compress(in_files, out_file, in_type='js', verbose=False,
     if verbose:
         options.append('-v')
 
-    os.system('java -jar "%s" %s "%s"' % (YUI_COMPRESSOR,
-                                          ' '.join(options),
-                                          temp_file))
+    os.system('python compiler-'+in_type+'.py < %s > %s' % (temp_file, out_file))
 
     org_size = os.path.getsize(temp_file)
     new_size = os.path.getsize(out_file)

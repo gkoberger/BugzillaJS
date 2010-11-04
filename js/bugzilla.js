@@ -12,6 +12,7 @@ $(document).ready(function(){
     registerPref('assigntome', 'Add an Assign to Me button?');
     registerPref('gitcomments', 'Use git-style comments?');
     registerPref('lightbox', 'Use lightboxes for images?');
+    registerPref('hidefirst', 'Hide first comment if empty?');
 
     /** Get the bug ID **/
 
@@ -45,6 +46,10 @@ $(document).ready(function(){
 
         if (settings['assigntome']) {
             loadAssignToMe();
+        }
+
+        if (settings['hidefirst']) {
+            loadHideFirst();
         }
 
         if (settings['lightbox']) {
@@ -137,6 +142,13 @@ function loadPrettydate(selector) {
 
         });
 
+    }
+}
+
+function loadHideFirst() {
+    if($('.bz_first_comment .bz_comment_text').text() == "") {
+        $('.bz_first_comment').hide();
+        $('.bz_comment_table').addClass('no-first-comment');
     }
 }
 

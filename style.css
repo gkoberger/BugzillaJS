@@ -22,7 +22,8 @@
     margin-bottom:1em;
 }
 
-.git_style .bz_first_comment {
+.git_style .bz_first_comment,
+.no-first-comment .bz_comment {
     margin-left:0;
 }
 
