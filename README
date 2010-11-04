@@ -10,14 +10,23 @@ http://gkoberger.net/bugzilla/demo/index.html
 HOW TO USE
 -------------------------------------------------------------------------------
 
-You can install the userscript at the following URL:
-
+Vist:
 http://people.mozilla.com/~gkoberger/bugzillajs/bugzillajs.user.js
 
-Note: You must have Greasemonkey installed
+ - Firefox 3.6: You need Greasemonkey
+ - Firefox 4: You need Scriptish
+ - Chrome: Untested, but should work automatically
+ - Internet Explorer: Go to Firefox.com, click Download :)
 
-A good bug view to explore all the features is:
+===============================================================================
+TESTING THE PLUGIN
+-------------------------------------------------------------------------------
+
+Once you have it installed, check out the following URL to see it in action:
+
 https://bugzilla.mozilla.org/show_bug.cgi?id=574290
+
+Or, use the URL above to demo it before installing it.
 
 ===============================================================================
 FEATURES
@@ -26,6 +35,11 @@ FEATURES
 You can turn features on and off by clicking the "BugzillaJS Preferences" link
 at the top and bottom of every page.  You need to refresh the page to see them
 come into effect.
+
+PREFERENCES
+
+  You can turn all features on and off in the preferences (the "BugzillaJS
+  Preferences" link at the top and bottom of every page).
 
 SHOW CHANGES
 
@@ -46,6 +60,11 @@ IMAGE GALLERY
 LIGHTBOX
 
   View images as a lightbox, so you don't have to open a new window
+
+ASSIGN TO ME
+
+  Adds an "Assign to Me" button to all bugs not assigned to you.  Based on a
+  jetpack by Fred Wenzel.
 
 PRETTY DATES
 
@@ -82,5 +101,6 @@ TROUBLESHOOTING
 -------------------------------------------------------------------------------
 
 If it's not working:
- - It's only been tested on FF3.6
- - It won't work if you have the Bugzilla Tweaks Jetpack running
+ - You need Greasemonkey on 3.6, and Scriptish for Firefox 4.
+ - It conflicts with other Bugzilla Jetpacks and Userscripts, including the
+   Bugzilla Tweaks Jetpack running
