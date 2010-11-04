@@ -23,7 +23,7 @@
 }
 
 .git_style .bz_first_comment,
-.no-first-comment .bz_comment {
+.git_style .no-first-comment .bz_comment {
     margin-left:0;
 }
 
@@ -75,7 +75,8 @@
     width:655px;
 }
 
-.git_style .bz_first_comment .bz_comment_text {
+.git_style .bz_first_comment .bz_comment_text,
+.git_style .no-first-comment .bz_comment_text {
     width:670px;
 }
 
