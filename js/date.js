@@ -5,7 +5,7 @@ prettydate = function(d) {
     var diff = (now.getTime() - d.getTime()) / 1000;
 
     // FIXME: calculation not very accurate towards months/years
-    if (diff < 0)  return "future event";
+    if (diff < 0)  return "just now";
     if (diff == 0) return "now";
     if (diff == 1) return "1 second ago";
     if (diff < 60) return "" + Math.round(diff) + " seconds ago";
