@@ -289,6 +289,7 @@ function joinComments() {
     // Combine and sort the comments / changes
 
     everything = $.merge(comments, changes).sort(function (x, y) {
+        console.log(x.date, y.date);
         return (x.date + (x.type == 'change')) - (y.date + (y.type == 'change'));
     });
 
@@ -302,7 +303,8 @@ function joinComments() {
         } else if (v.date == comment.date) {
             $('#d' + comment.date).find('.bz_comment_text').prepend('<div class="history">' + formatChange(v.change.changes) + '</div>');
         } else {
-            $('#d' + comment.date).after('<div class="history"><strong>' + v.change.changer.name + '</strong> ' +
+            $('#d' + comment.date + ', .p' + comment.date).last().after(
+                '<div class="history p'+comment.date+'"><strong>' + v.change.changer.name + '</strong> ' +
                 formatChange(v.change.changes) +
                 ' <span class="bz_comment_time" title="'+new Date(v.date)+
                 '" data-timestamp="'+new Date(v.date)+'">' + new Date(v.date) +
