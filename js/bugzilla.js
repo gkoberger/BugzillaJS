@@ -16,6 +16,7 @@ $(document).ready(function(){
     registerPref('removeflags', 'Remove flags?', false);
     registerPref('removeaccesskeys', 'Remove access keys?', false);
     registerPref('hidefirst', 'Hide first comment if empty?');
+    registerPref('hidenobody', 'Option to hide nobody bugs?');
 
     /** Get the bug ID **/
 
@@ -25,6 +26,10 @@ $(document).ready(function(){
     /** Run the modules **/
 
     addPrefs();
+
+    if(settings['hidenobody']) {
+        loadHideNobody();
+    }
 
     if(bug_id) {
 
@@ -145,7 +150,6 @@ function registerPref(slug, details, setting_default) {
 }
 
 function loadPrettydate(selector) {
-
     selector = selector || '.bz_comment_time';
 
     if(settings['prettydate']) {
@@ -158,6 +162,36 @@ function loadPrettydate(selector) {
         });
 
     }
+}
+
+function loadHideNobody() {
+    $('.bz_result_count').first()
+                         .after('<input id="hide-nobody" type="checkbox"> ' +
+                                '<label for="hide-nobody">Hide Nobody Bugs'+
+                                '</label>');
+
+    hidenobody_val = window.localStorage['hidenobody_val'] == null ?
+                        false : window.localStorage['hidenobody_val'] * 1;
+
+    $('#hide-nobody').attr('checked', hidenobody_val);
+
+    $('#hide-nobody').change(function(){
+        window.localStorage['hidenobody_val'] = $(this).is(':checked') ? 1 : 0;
+        hideNobodyToggle();
+        return false;
+    });
+    hideNobodyToggle();
+}
+
+function hideNobodyToggle() {
+    hidenobody_val = window.localStorage['hidenobody_val'] == null ?
+                        false : window.localStorage['hidenobody_val'] * 1;
+
+    $('.bz_assigned_to_column').each(function(){
+        if($(this).text().trim() == "nobody@mozilla.org") {
+            $(this).closest('tr').toggle(!hidenobody_val);
+        }
+    });
 }
 
 function loadRemoveFlags() {
@@ -288,7 +322,6 @@ function joinComments() {
     // Combine and sort the comments / changes
 
     everything = $.merge(comments, changes).sort(function (x, y) {
-        console.log(x.date, y.date);
         return (x.date + (x.type == 'change')) - (y.date + (y.type == 'change'));
     });
 
