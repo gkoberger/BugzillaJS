@@ -16,7 +16,7 @@ $(document).ready(function(){
     registerPref('removeflags', 'Remove flags?', false);
     registerPref('removeaccesskeys', 'Remove access keys?', false);
     registerPref('hidefirst', 'Hide first comment if empty?');
-    registerPref('hidenobody', 'Option to hide nobody bugs?');
+    registerPref('hidenobody', 'Have a "Show only assigned bugs" option?');
 
     /** Get the bug ID **/
 
@@ -167,7 +167,7 @@ function loadPrettydate(selector) {
 function loadHideNobody() {
     $('.bz_result_count').first()
                          .after('<input id="hide-nobody" type="checkbox"> ' +
-                                '<label for="hide-nobody">Hide Nobody Bugs'+
+                                '<label for="hide-nobody">Show only assigned bugs'+
                                 '</label>');
 
     hidenobody_val = window.localStorage['hidenobody_val'] == null ?
