@@ -243,10 +243,9 @@ function loadAssignToMe() {
     if ($('#bz_assignee_edit_container button').size()) return;
 
     // otherwise, make an assignee button
-    var button = $('<button>Assign to me</button>');
+    var button = $('<button type="button">Assign to me</button>');
     button.click(function() {
         assigned_to.val(user_name);
-        $('#commit_top').click();
     });
     $('#bz_assignee_edit_container').append(button);
 }
