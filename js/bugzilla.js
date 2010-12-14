@@ -353,11 +353,26 @@ function joinComments() {
 // Return a formatted version of the changes
 
 function formatChange(c) {
+
     changes_array = [];
     $.each(c, function (ck, cv) {
-        changes_array.push(cv.field_name + ": " + (cv.removed ? "<del>" + cv.removed + "</del> => " : "") + cv.added)
-    });
+        removed = cv.removed
+        added = cv.added
 
+        if(cv.field_name == 'depends_on' || cv.field_name == 'blocks') {
+                f = function(text){
+                    u = "<a href='https://bugzilla.mozilla.org/show" +
+                        "_bug.cgi?id=$1'>$1</a>";
+                    return text.replace(/([0-9]+)/g, u);
+                }
+                if(removed) removed = f(removed);
+                if(added) added = f(added);
+        }
+
+        text = cv.field_name + ": " +
+               (removed ? "<del>" + removed + "</del> => " : "") + added;
+        changes_array.push(text);
+    });
     return changes_array.join('; ');
 }
 
