@@ -1,6 +1,6 @@
 // ==UserScript==
-// @name           BugzillaJS
-// @namespace      http://people.mozilla.com/~gkoberger
+// @name           BugzillaJS (Developer)
+// @namespace      http://people.mozilla.com/~gkoberger/?dev
 // @include        https://bugzilla.mozilla.org/*
 // ==/UserScript==
 
