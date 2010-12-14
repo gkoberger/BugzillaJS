@@ -1,7 +1,5 @@
 import os, os.path, shutil
 
-YUI_COMPRESSOR = 'yuicompressor-2.4.2.jar'
-
 def compress(in_files, out_file, in_type='js', verbose=False,
              temp_file='.temp'):
     temp = open(temp_file, 'w')
@@ -32,7 +30,8 @@ def compress(in_files, out_file, in_type='js', verbose=False,
     print 'Reduction: %.1f%%' % (float(org_size - new_size) / org_size * 100)
     print ''
 
-    os.remove(temp_file)
+    if temp_file == '.temp':
+        os.remove(temp_file)
 
 
 SCRIPTS = [
