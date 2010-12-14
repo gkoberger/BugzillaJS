@@ -245,7 +245,10 @@ function loadAssignToMe() {
     // otherwise, make an assignee button
     var button = $('<button type="button">Assign to me</button>');
     button.click(function() {
+        $('#bz_assignee_edit_container').hide();
+        $('#bz_assignee_input').show().removeClass('bz_default_hidden');
         assigned_to.val(user_name);
+        return false;
     });
     $('#bz_assignee_edit_container').append(button);
 }
