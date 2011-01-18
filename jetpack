@@ -1,0 +1,16 @@
+#!/bin/bash
+rm -r ../addon-sdk-1.0b1/jetpack
+cp -r output/jetpack ../addon-sdk-1.0b1/jetpack
+
+cd ../addon-sdk-1.0b1/
+source bin/activate
+
+cd jetpack
+
+if [ "$1" = "generate" ] ; then
+    cfx run --binary="/Applications/Firefox Beta.app"
+elif [ "$1" = "test" ] ; then
+    cfx run --binary="/Applications/Firefox Beta.app"
+else
+    echo 'Usage: jetpack [test|generate]'
+fi

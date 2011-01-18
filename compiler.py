@@ -1,7 +1,7 @@
 import os, os.path, shutil
 
 def compress(in_files, out_file, in_type='js', verbose=False,
-             temp_file='.temp'):
+             temp_file='.temp', full_file=False):
     temp = open(temp_file, 'w')
     for f in in_files:
         fh = open(f)
@@ -33,7 +33,6 @@ def compress(in_files, out_file, in_type='js', verbose=False,
     if temp_file == '.temp':
         os.remove(temp_file)
 
-
 SCRIPTS = [
         'js/jquery.js',
         'js/md5.js',
@@ -48,6 +47,9 @@ STYLESHEETS = [
     ]
 STYLESHEETS_OUT = 'min/style.min.css'
 
+USERSCRIPT_HEADER = 'js/bugzillafull_headers.js'
+USERSCRIPT_OUT = 'bugzillajs-full.user.js'
+
 def main():
 
     os.system('rm -r -f min; mkdir min')
@@ -57,6 +59,37 @@ def main():
 
     print 'Compressing CSS...'
     compress(STYLESHEETS, STYLESHEETS_OUT, 'css')
+
+    print 'Creating full userscript...'
+    userscript([USERSCRIPT_HEADER, SCRIPTS_OUT_DEBUG], STYLESHEETS_OUT,
+                USERSCRIPT_OUT)
+
+def userscript(scripts, stylesheets, output):
+    if not isinstance(scripts, list):
+        scripts = [scripts]
+    if not isinstance(stylesheets, list):
+        stylesheets = [stylesheets]
+
+    o = open(output, 'w')
+    for f in scripts:
+        fh = open(f)
+        data = fh.read() + '\n'
+        fh.close()
+
+        o.write(data)
+
+        print ' + %s' % f
+
+    for f in stylesheets:
+        fh = open(f)
+        data = fh.read()
+        fh.close()
+
+        #o.write("$('<style type=text/css>').appendTo($('head')).html('%s');" %
+        #        data.strip())
+
+        print ' + %s' % f
+    o.close()
 
 if __name__ == '__main__':
     main()

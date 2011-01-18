@@ -1,9 +1,12 @@
-var settings = [];
-var settings_fields = [];
-var bug_id = false;
-var joinCount = 0;
+var settings = [],
+    settings_fields = [],
+    bug_id = false,
+    joinCount = 0;
 
-$(document).ready(function(){
+    if(! unsafeWindow) {
+        unsafeWindow = window;
+    }
+
     registerPref('changes', 'Show changes to the bug');
     registerPref('git', 'Show git log inline');
     registerPref('gallery', 'Display images and attachments as an inline gallery');
@@ -97,7 +100,6 @@ $(document).ready(function(){
 
         }
     }
-});
 
 function addPrefs() {
     d = "<span class='separator'>| </span>" +
@@ -109,7 +111,7 @@ function addPrefs() {
 
             prefs = $('<div id="prefs">').appendTo('body')
             $.each(settings_fields, function(k, v){
-                o = "<div>"
+                o = "<div>";
 
                 o += "<input type='checkbox' id='setting_"+v.slug+"' " +
                      "data-slug='"+v.slug+"' "+
@@ -129,10 +131,10 @@ function addPrefs() {
 
         $("<span>&nbsp;|&nbsp;</span><a href='#'>refresh page</a>")
             .appendTo(prefs)
-            .click(function(){ window.location.reload(); return false; });
+            .click(function(){ unsafeWindow.location.reload(); return false; });
 
         $('input', prefs).change(function(){
-            window.localStorage['settings_' + $(this).attr('data-slug')] =
+            unsafeWindow.localStorage['settings_' + $(this).attr('data-slug')] =
                 settings[$(this).attr('data-slug')] =
                     $(this).is(':checked') ? 1 : 0;
         });
@@ -145,7 +147,11 @@ function addPrefs() {
 function registerPref(slug, details, setting_default) {
     if(setting_default == undefined) setting_default = true
 
-    settings[slug] = window.localStorage['settings_' + slug] == null ? setting_default : window.localStorage['settings_' + slug]*1;
+    settings[slug] = setting_default;
+    if('settings_' + slug in unsafeWindow.localStorage) {
+        settings[slug] = unsafeWindow.localStorage['settings_' + slug];
+    }
+
     settings_fields.push({'slug':slug, 'details':details});
 }
 
@@ -165,18 +171,20 @@ function loadPrettydate(selector) {
 }
 
 function loadHideNobody() {
-    $('.bz_result_count').first()
+    $('.bz_result_count').eq(0)
                          .after('<input id="hide-nobody" type="checkbox"> ' +
                                 '<label for="hide-nobody">Show only assigned bugs'+
                                 '</label>');
 
-    hidenobody_val = window.localStorage['hidenobody_val'] == null ?
-                        false : window.localStorage['hidenobody_val'] * 1;
+    hidenobody_val = false;
+    if('hidenobody_val' in unsafeWindow.localStorage) {
+        hidenobody_val = unsafeWindow.localStorage['hidenobody_val'] * 1;
+    }
 
     $('#hide-nobody').attr('checked', hidenobody_val);
 
     $('#hide-nobody').change(function(){
-        window.localStorage['hidenobody_val'] = $(this).is(':checked') ? 1 : 0;
+        unsafeWindow.localStorage['hidenobody_val'] = $(this).is(':checked') ? 1 : 0;
         hideNobodyToggle();
         return false;
     });
@@ -184,8 +192,11 @@ function loadHideNobody() {
 }
 
 function hideNobodyToggle() {
-    hidenobody_val = window.localStorage['hidenobody_val'] == null ?
-                        false : window.localStorage['hidenobody_val'] * 1;
+
+    hidenobody_val = false;
+    if('hidenobody_val' in unsafeWindow.localStorage) {
+        hidenobody_val = unsafeWindow.localStorage['hidenobody_val'] * 1;
+    }
 
     $('.bz_assigned_to_column').each(function(){
         if($(this).text().trim() == "nobody@mozilla.org") {
@@ -256,8 +267,12 @@ function loadAssignToMe() {
 
 function loadGravatars() {
     $('.bz_comment_head,.bz_first_comment_head').each(function () {
-        email = $('a[class=email]', this).attr('href').replace(/mailto:\s*/, '')
-        $(this).prepend('<img src="http://www.gravatar.com/avatar/' + hex_md5(email) + '">');
+        // Only if logged in
+        if($('a.email', this).length > 0) {
+            email = $('a.email', this).attr('href').replace(/mailto:\s*/, '');
+            $(this).prepend('<img src="http://www.gravatar.com/avatar/' + hex_md5(email) + '">');
+        }
+
     });
 }
 
@@ -337,7 +352,7 @@ function joinComments() {
         } else if (v.date == comment.date) {
             $('#d' + comment.date).find('.bz_comment_text').prepend('<div class="history">' + formatChange(v.change.changes) + '</div>');
         } else {
-            $('#d' + comment.date + ', .p' + comment.date).last().after(
+            $('#d' + comment.date + ', .p' + comment.date).filter(':last').after(
                 '<div class="history p'+comment.date+'"><strong>' + v.change.changer.name + '</strong> ' +
                 formatChange(v.change.changes) +
                 ' <span class="bz_comment_time" title="'+new Date(v.date)+
@@ -353,7 +368,6 @@ function joinComments() {
 // Return a formatted version of the changes
 
 function formatChange(c) {
-
     changes_array = [];
     $.each(c, function (ck, cv) {
         removed = cv.removed
