@@ -3,10 +3,6 @@ var settings = [],
     bug_id = false,
     joinCount = 0;
 
-    if(! unsafeWindow) {
-        unsafeWindow = window;
-    }
-
     registerPref('changes', 'Show changes to the bug');
     registerPref('git', 'Show git log inline');
     registerPref('gallery', 'Display images and attachments as an inline gallery');
@@ -131,10 +127,10 @@ function addPrefs() {
 
         $("<span>&nbsp;|&nbsp;</span><a href='#'>refresh page</a>")
             .appendTo(prefs)
-            .click(function(){ unsafeWindow.location.reload(); return false; });
+            .click(function(){ window.location.reload(); return false; });
 
         $('input', prefs).change(function(){
-            unsafeWindow.localStorage['settings_' + $(this).attr('data-slug')] =
+            window.localStorage['settings_' + $(this).attr('data-slug')] =
                 settings[$(this).attr('data-slug')] =
                     $(this).is(':checked') ? 1 : 0;
         });
@@ -148,8 +144,8 @@ function registerPref(slug, details, setting_default) {
     if(setting_default == undefined) setting_default = true
 
     settings[slug] = setting_default;
-    if('settings_' + slug in unsafeWindow.localStorage) {
-        settings[slug] = unsafeWindow.localStorage['settings_' + slug];
+    if('settings_' + slug in window.localStorage) {
+        settings[slug] = window.localStorage['settings_' + slug];
     }
 
     settings_fields.push({'slug':slug, 'details':details});
@@ -177,14 +173,14 @@ function loadHideNobody() {
                                 '</label>');
 
     hidenobody_val = false;
-    if('hidenobody_val' in unsafeWindow.localStorage) {
-        hidenobody_val = unsafeWindow.localStorage['hidenobody_val'] * 1;
+    if('hidenobody_val' in window.localStorage) {
+        hidenobody_val = window.localStorage['hidenobody_val'] * 1;
     }
 
     $('#hide-nobody').attr('checked', hidenobody_val);
 
     $('#hide-nobody').change(function(){
-        unsafeWindow.localStorage['hidenobody_val'] = $(this).is(':checked') ? 1 : 0;
+        window.localStorage['hidenobody_val'] = $(this).is(':checked') ? 1 : 0;
         hideNobodyToggle();
         return false;
     });
@@ -194,8 +190,8 @@ function loadHideNobody() {
 function hideNobodyToggle() {
 
     hidenobody_val = false;
-    if('hidenobody_val' in unsafeWindow.localStorage) {
-        hidenobody_val = unsafeWindow.localStorage['hidenobody_val'] * 1;
+    if('hidenobody_val' in window.localStorage) {
+        hidenobody_val = window.localStorage['hidenobody_val'] * 1;
     }
 
     $('.bz_assigned_to_column').each(function(){
