@@ -1,18 +1,23 @@
 {
-    "description": "Add features to Bugzilla.", 
-    "author": "Gregory Koberger", 
-    "jetpack_id": "jid0-NgMDcEu2B88AbzZ6ulHodW9sJzA", 
-    "namespace": "http://gkoberger.net", 
+    "description": "Add features to Bugzilla.",
+    "author": "Gregory Koberger",
+    "jetpack_id": "jid0-NgMDcEu2B88AbzZ6ulHodW9sJzA",
+    "namespace": "http://gkoberger.net",
     "load_order": [
-        "jquery.js", 
-        "style.css", 
-        "md5.js", 
-        "date.js", 
-        "bugzilla.js"
-    ], 
-    "version": "1.0", 
+        "jquery.js",
+        "style.css",
+        "md5.js",
+        "date.js",
+        "bugzilla.js",
+        "bugzilla-changes.js",
+        "bugzilla-images.js",
+        "bugzilla-git.js",
+        "bugzilla-gravatars.js",
+        "bugzilla-misc.js"
+    ],
+    "version": "1.0",
     "included_urls": [
         "https://bugzilla.mozilla.org/show_bug.cgi*"
-    ], 
+    ],
     "name": "BugzillaJS"
 }
