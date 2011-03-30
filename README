@@ -4,22 +4,17 @@ BUGZILLA JS
 DEMO
 -------------------------------------------------------------------------------
 
+[ Temporarily not working ]
 http://gkoberger.net/bugzilla/demo/index.html
 
 ===============================================================================
-HOW TO USE
+DOWNLOAD THE ADD-ON
 -------------------------------------------------------------------------------
 
-Vist:
-http://people.mozilla.com/~gkoberger/bugzillajs/bugzillajs.user.js
-
- - Firefox 3.6: You need Greasemonkey
- - Firefox 4: You need Scriptish
- - Chrome: Untested, but should work automatically
- - Internet Explorer: Go to Firefox.com, click Download :)
+https://addons.mozilla.org/en-US/firefox/addon/bugzillajs/
 
 ===============================================================================
-TESTING THE PLUGIN
+TESTING THE ADD-ON
 -------------------------------------------------------------------------------
 
 Once you have it installed, check out the following URL to see it in action:
@@ -94,10 +89,7 @@ REMOVE ACCESSIBILITY KEYS
 TODO / KNOWN BUGS
 -------------------------------------------------------------------------------
 
-- Show attachements inline, too
 - Use thumbnails for gallery, not full images with a width+height
-- Clean up the code
-- Optomize the code so it runs faster
 
 ===============================================================================
 CONTRIBUTE
@@ -112,7 +104,6 @@ future of cleaning up the code and possibly making it API-like.
 TROUBLESHOOTING
 -------------------------------------------------------------------------------
 
- - You need Greasemonkey on 3.6, and Scriptish for Firefox 4.
  - It conflicts with other Bugzilla Jetpacks and Userscripts, including the
    Bugzilla Tweaks Jetpack running.
 

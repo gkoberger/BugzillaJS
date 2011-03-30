@@ -2,30 +2,32 @@ var settings = [],
     settings_fields = [],
     bug_id = false,
     joinCount = 0,
-    bz_comments = $('.bz_comment_text');
-
-registerPref('prettydate', 'Turn timestamps into a nice looking date');
-registerPref('gitcomments', 'Use git-style comments?');
-registerPref('hidenobody', 'Have a "Show only assigned bugs" option?');
+    bz_comments = $('.bz_comment_text'),
+    hidenobody_val = false;
 
 /** Get the bug ID **/
 
 bug_id = $('title').text().match(/Bug ([0-9]+)/)
 bug_id = bug_id ? bug_id[1] : false
 
+
+/* Register preferences */
+registerPref('prettydate', 'Turn timestamps into a nice looking date', ifBug(correctDates));
+registerPref('gitcomments', 'Use git-style comments?', ifBug(addStyling));
+registerPref('hidenobody', 'Have a "Show only assigned bugs" option?', loadHideNobody);
+
 /** Run the modules **/
 addPrefs();
 
-if(bug_id) {
-    correctDates();
-    parseComments();
+function ifBug(f) {
+    if(bug_id) {
+        return f;
+    } else {
+        return function(){};
+    }
 }
 
-if(settings['hidenobody']) {
-    loadHideNobody();
-}
-
-if(bug_id) {
+function addStyling() {
     if (settings['gitcomments']) {
         $('body').addClass('git_style')
     }
@@ -54,19 +56,19 @@ function addPrefs() {
                 prefs.append(o);
             });
 
+        $("<br>").appendTo(prefs);
+
+        $("<a>", {'class': 'refresh', 'text': 'reload page', 'href': '#'})
+            .appendTo(prefs)
+            .click(function(){ window.location.reload(); return false; });
+
         $("<a href='#'>close preferences</a>").appendTo(prefs).click(function(){
             $('#prefs').remove();
             return false;
         });
 
-        $("<span>&nbsp;|&nbsp;</span><a href='#'>refresh page</a>")
-            .appendTo(prefs)
-            .click(function(){ window.location.reload(); return false; });
-
         $('input', prefs).change(function(){
-            window.localStorage['settings_' + $(this).attr('data-slug')] =
-                settings[$(this).attr('data-slug')] =
-                    $(this).is(':checked') ? 1 : 0;
+            _.storage.save('settings_' + $(this).attr('data-slug'), $(this).is(':checked'));
         });
 
         return false;
@@ -74,15 +76,23 @@ function addPrefs() {
 
 }
 
-function registerPref(slug, details, setting_default) {
+function registerPref(slug, details, setting_default, callback) {
+    if(typeof setting_default == "function") callback = setting_default;
     if(setting_default == undefined) setting_default = true
 
-    settings[slug] = setting_default;
-    if('settings_' + slug in window.localStorage) {
-        settings[slug] = window.localStorage['settings_' + slug];
-    }
+    callback = callback || function(){};
 
-    settings_fields.push({'slug':slug, 'details':details});
+    settings[slug] = setting_default;
+
+    _.storage.request('settings_' + slug, function(v){
+        if(typeof v != "undefined") {
+            settings[slug] = v;
+        }
+
+        settings_fields.push({'slug':slug, 'details':details});
+
+        callback();
+    });
 }
 
 function correctDates() {
@@ -173,27 +183,25 @@ function loadHideNobody() {
                                 '</label>');
 
     hidenobody_val = false;
-    if('hidenobody_val' in window.localStorage) {
-        hidenobody_val = window.localStorage['hidenobody_val'] * 1;
-    }
 
-    $('#hide-nobody').attr('checked', hidenobody_val);
+    _.storage.request('hidenobody_val', function(v){
+        if(typeof hidenobody_val != "undefined") {
+            hidenobody_val = v;
+        }
 
-    $('#hide-nobody').change(function(){
-        window.localStorage['hidenobody_val'] = $(this).is(':checked') ? 1 : 0;
+        $('#hide-nobody').attr('checked', hidenobody_val);
+
+        $('#hide-nobody').change(function(){
+            hidenobody_val = $(this).is(':checked');
+            _.storage.save('hidenobody_val', hidenobody_val, hideNobodyToggle);
+            return false; // This seems wrong?
+        });
         hideNobodyToggle();
-        return false;
     });
-    hideNobodyToggle();
+
 }
 
 function hideNobodyToggle() {
-
-    hidenobody_val = false;
-    if('hidenobody_val' in window.localStorage) {
-        hidenobody_val = window.localStorage['hidenobody_val'] * 1;
-    }
-
     $('.bz_assigned_to_column').each(function(){
         if($(this).text().trim() == "nobody@mozilla.org") {
             $(this).closest('tr').toggle(!hidenobody_val);
@@ -203,7 +211,6 @@ function hideNobodyToggle() {
 
 
 // Return a formatted version of the changes
-
 function formatChange(c) {
     changes_array = [];
     $.each(c, function (ck, cv) {
@@ -225,14 +232,6 @@ function formatChange(c) {
         changes_array.push(text);
     });
     return changes_array.join('; ');
-}
-
-function parseComments() {
-    /*
-    comments.each(function(i, comment) {
-        $(comment).trigger('loadcomment', [$(comment)]);
-    });
-    */
 }
 
 function set_cookie(name, value) {

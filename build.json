@@ -17,7 +17,8 @@
     ],
     "version": "1.0",
     "included_urls": [
-        "https://bugzilla.mozilla.org/show_bug.cgi*"
+        "https://bugzilla.mozilla.org/*",
+        "https://landfill.bugzilla.org/*"
     ],
     "name": "BugzillaJS"
 }

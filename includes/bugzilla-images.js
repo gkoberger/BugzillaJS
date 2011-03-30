@@ -1,57 +1,80 @@
-registerPref('gallery', 'Display images and attachments as an inline gallery');
-registerPref('lightbox', 'Use lightboxes for images?');
+registerPref('gallery', 'Display images and attachments as an inline gallery', function(){
+    // Ugh, chaining.
+    registerPref('lightbox', 'Use lightboxes for images?', ifBug(initImageStuff));
+});
 
-if(bug_id && (settings['gallery'] || settings['lightbox'])) {
-    bz_comments.each(function() {
-        var comment = $(this),
-            images = new Array();
-        $('a', comment).each(function () {
-            if ($(this).attr('href').match(/(\.(jpg|gif|png))/i)) {
+function initImageStuff() {
+    if(settings['gallery'] || settings['lightbox']) {
 
-                if (settings['gallery']) {
-                    images.push($(this).attr('href'));
-                }
+        var image_attachments = {};
 
-                if (settings['lightbox']) {
-                    $(this).click(bzLightbox);
-                }
+        $('#attachment_table tr').each(function() {
+          if($(this).attr('class').match('image')) {
+            var $a = $(this).find('a b').parent();
+            if (settings['lightbox']) {
+                $a.click(bzLightbox);
             }
+
+            image_attachments[$a.attr('href').match(/id=([0-9]*)/)[1]] = true;
+          }
         });
 
-        if (settings['gallery'] && images.length) {
-            gal = $('<div class="img-gal">').insertAfter(comment);
-            $.each(images, function (k, v) {
-                a = $('<a href="' + v + '" title="' + v + '" target="_blank"><img src="' + v + '"></a>').appendTo(gal);
-                if(settings['lightbox']) {
-                    $(a).click(bzLightbox);
+        bz_comments.each(function() {
+            var comment = $(this),
+                images = new Array();
+            $('a', comment).each(function () {
+                var attachment_id = $(this).attr('name').match('attach_([0-9]+)$');
+                var is_image_attachment = (attachment_id && attachment_id[1] in image_attachments);
+
+                if ($(this).attr('href').match(/(\.(jpg|gif|png))/i) || is_image_attachment) {
+
+                    if (settings['gallery']) {
+                        images.push($(this).attr('href'));
+                    }
+
+                    if (settings['lightbox']) {
+                        $(this).click(bzLightbox);
+                    }
                 }
             });
-        }
-    });
-}
 
-function bzLightbox() {
-    $('.lb, .overlay').remove();
-    overlay = $('<div>').addClass('overlay').appendTo('body').css({opacity: 0});
+            if (settings['gallery'] && images.length) {
+                gal = $('<div class="img-gal">').insertAfter(comment);
+                $.each(images, function (k, v) {
+                    a = $('<a href="' + v + '" title="' + v + '" target="_blank"><img src="' + v + '"></a>').appendTo(gal);
+                    if(settings['lightbox']) {
+                        $(a).click(bzLightbox);
+                    }
+                });
+            }
+        });
+    }
 
-    img = $('<img>').attr('src', $(this).attr('href')).addClass('lb').css({'opacity': 0}).appendTo('body');
-    $(img).css({'margin-left':-1 * ($(img).width()/2), 'top':$(window).scrollTop() + 5});
+    function bzLightbox() {
+        $('.lb, .overlay').remove();
+        overlay = $('<div>').addClass('overlay').appendTo('body').css({opacity: 0});
+        overlay2 = $('<div>').addClass('overlay2').appendTo('body');
 
-    $(overlay).click(function(e){
-        $('.lb').remove();
-        $('.overlay').remove();
-    });
+        $(overlay2).css({'top':$(window).scrollTop() + 5});
 
-    opts = $('<div>').addClass('opts').appendTo(overlay)
-    $(opts).append("<a href='"+$(this).attr('href')+
-                   "' target='_blank' class='full_image'>full image</a>");
-    $(opts).append(" | <a class='close_overlay' href='#'>close</a>");
+        img = $('<img>').attr('src', $(this).attr('href')).addClass('lb').css({'opacity': 0}).appendTo(overlay2);
 
-    $('.full_image', opts).click(function(e){ e.stopPropagation(); });
-    $('.close_overlay', opts).click(function(e){ e.preventDefault(); });
+        $(overlay).add(overlay2).click(function(e){
+            $('.lb').remove();
+            $('.overlay').remove();
+        });
 
-    $(img).css({'opacity': 1});
-    $(overlay).css({'opacity': 1});
+        opts = $('<div>').addClass('opts').appendTo(overlay)
+        $(opts).append("<a href='"+$(this).attr('href')+
+                       "' target='_blank' class='full_image'>full image</a>");
+        $(opts).append(" | <a class='close_overlay' href='#'>close</a>");
 
-    return false;
+        $('.full_image', opts).click(function(e){ e.stopPropagation(); });
+        $('.close_overlay', opts).click(function(e){ e.preventDefault(); });
+
+        $(img).css({'opacity': 1});
+        $(overlay).css({'opacity': 1});
+
+        return false;
+    }
 }

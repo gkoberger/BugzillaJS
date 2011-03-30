@@ -1,13 +1,78 @@
 #prefs {
-    border-width:0 0 1px 1px;
-    border-color:#ccc;
-    border-style:solid;
     padding:10px;
-    position:fixed;
-    top:0;
-    right:0;
-    width:300px;
     background-color:#f3f3f3;
+    border: 1px solid #777777;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 0 30px #333333;
+    height: 300px;
+    left: 50%;
+    margin: auto auto auto -200px;
+    overflow: auto;
+    position: fixed;
+    top: 40px;
+    width: 400px;
+
+}
+
+#prefs a.refresh {
+    background-color: #FFFFFF;
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.33, rgb(232,232,232)),
+        color-stop(0.84, rgb(255,255,255))
+    );
+    background-image: -moz-linear-gradient(
+        center bottom,
+        rgb(232,232,232) 33%,
+        rgb(255,255,255) 84%
+    );
+    border: 1px solid #AAAAAA;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 -2px 0 #DDDDDD inset;
+    color: #333333;
+    display: inline-block;
+    padding: 3px 7px;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+#prefs a.refresh:active {
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.33, #fff),
+        color-stop(0.84, rgb(232,232,232))
+    );
+    background-image: -moz-linear-gradient(
+        center bottom,
+        rgb(255,255,255) 84%
+        rgb(232,232,232) 33%,
+    );
+}
+
+#prefs a {
+    color: #333;
+}
+
+#prefs a:hover {
+    text-decoration: none;
+}
+
+#prefs a.refresh:hover {
+    border: 1px solid #777;
+    color: #000;
+}
+
+#prefs label {
+    color: #444;
+}
+
+#prefs label:hover {
+    color: #000;
+    cursor: pointer;
 }
 
 /** Style comments **/
@@ -122,7 +187,7 @@
 
 /** Remove Access Keys **/
 
-.bzJS-removeaccesskeys .accessKeyt u {
+.bzJS-removeaccesskeys .accessKey u {
     text-decoration: none;
 }
 
@@ -148,14 +213,30 @@
     width:670px;
 }
 
-.img-gal img {
-    width:104px;
-    height:104px;
+.img-gal a {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    padding: 4px;
     float: left;
     margin:0 20px 20px 0;
     border:1px solid #ddd;
-    padding:4px;
-    background-color:#fff;
+    background-color: #fff;
+}
+
+.img-gal a:hover {
+    border: 1px solid #ccc;
+}
+
+.img-gal a img {
+    position: absolute;
+    margin: auto;
+    max-height: 100px;
+    max-width: 100px;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
 }
 
 
@@ -355,10 +436,17 @@ width:8px;
     border: 1px solid #666666;
     box-shadow: 0 0 10px #555555;
     -moz-box-shadow: 0 0 10px #555555;
-    margin: 20px;
     padding: 10px;
-    left: 50%;
+    max-width: 90%;
+    -moz-box-sizing: border-box;
+    margin: 20px auto;
+}
+
+.overlay2 {
     position: absolute;
+    left: 0;
+    width: 100%;
+    text-align: center;
 }
 
 .overlay {
