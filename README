@@ -56,11 +56,6 @@ LIGHTBOX
 
   View images as a lightbox, so you don't have to open a new window
 
-ASSIGN TO ME
-
-  Adds an "Assign to Me" button to all bugs not assigned to you.  Based on a
-  jetpack by Fred Wenzel.
-
 HIDE EMPTY FIRST COMMENT
 
   If the first comment is empty, it's not shown.

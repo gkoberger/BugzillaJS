@@ -85,6 +85,7 @@
     padding:3px;
     margin-left:15px;
     margin-bottom:1em;
+    width: auto;
 }
 
 .git_style .bz_first_comment,
@@ -158,6 +159,7 @@
 
 .git_style .bz_comment_time {
     color:#999;
+    font-weight: normal;
 }
 
 /** Gravatar **/
