@@ -50,7 +50,7 @@ function removeFlags() {
 }
 
 function dontGuess() {
-    if(settings['dontguess']) {
+    if(settings['dontguess'] && location.href.match(/enter_bug/)) {
         $('#rep_platform, #op_sys').each(function(){
             var $span = $("<span>&nbsp;(<a>guess</a>)</span>");
                 $a = $("a", $span);
