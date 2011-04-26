@@ -80,6 +80,11 @@ REMOVE ACCESSIBILITY KEYS
 
     Remove the accessibility keys (off by default)
 
+DON'T GUESS HARDWARE OR OS
+
+    Don't attempt to guess the system info, but include a link to guess. (off
+    by default).
+
 ===============================================================================
 TODO / KNOWN BUGS
 -------------------------------------------------------------------------------

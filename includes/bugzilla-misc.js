@@ -1,7 +1,7 @@
-registerPref('skipprocess', 'Rewrite URL for "Bug Processed" page?', ifBug(skipProcessPage));
 registerPref('commentoverflow', 'Fix comment overflow issues?', ifBug(commentOverflow));
 registerPref('removeflags', 'Remove flags, status and blocking?', false, ifBug(removeFlags));
 registerPref('removeaccesskeys', 'Remove access keys?', false, ifBug(removeAccess));
+registerPref('dontguess', 'Don\'t guess OS and hardware?', false, dontGuess);
 registerPref('hidefirst', 'Hide first comment if empty?', ifBug(hideFirst));
 
 
@@ -49,16 +49,23 @@ function removeFlags() {
     }
 }
 
-function skipProcessPage() {
-    if(settings['skipprocess']) {
-        if($('#bugzilla-body dt').eq(0).text().match(/Changes submitted for bug/)) {
-            var $parent = $('.bz_alias_short_desc_container'),
-                $link = $parent.find('a[href^=show_bug.cgi]'),
-                href = $link.attr('href'),
-                title = $link.text() + " - " + $parent.find('#short_desc_nonedit_display').text();
+function dontGuess() {
+    if(settings['dontguess']) {
+        $('#rep_platform, #op_sys').each(function(){
+            var $span = $("<span>&nbsp;(<a>guess</a>)</span>");
+                $a = $("a", $span);
 
-            window.history.replaceState({}, title, href);
-        }
+            $a.attr({"html": "guess", "href": "#", "data-val": $(this).val()});
+            $a.click(function(){
+                $(this).closest('td').find('select').val($(this).attr('data-val'));
+                $(this).parent().hide();
+                return false;
+            });
+            $(this).val("All").after($span);
+        });
+
+        $('#os_guess_note').parent().hide();
+
     }
 }
 
