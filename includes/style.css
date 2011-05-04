@@ -298,6 +298,12 @@
     border:none;
     background-color:#fff;
     margin:0;
+    border-left: 1px solid #CCCCCC;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    border-right: 1px solid #CCCCCC;
+    padding: 6px;
 }
 
 .git_style #attachment_table {
