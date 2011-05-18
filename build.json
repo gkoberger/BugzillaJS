@@ -15,7 +15,7 @@
         "bugzilla-gravatars.js",
         "bugzilla-misc.js"
     ],
-    "version": "1.1",
+    "version": "1.1.2",
     "included_urls": [
         "https://bugzilla.mozilla.org/*",
         "https://landfill.bugzilla.org/*"

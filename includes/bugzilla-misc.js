@@ -3,6 +3,7 @@ registerPref('removeflags', 'Remove flags, status and blocking?', false, ifBug(r
 registerPref('removeaccesskeys', 'Remove access keys?', false, ifBug(removeAccess));
 registerPref('dontguess', 'Don\'t guess OS and hardware?', false, dontGuess);
 registerPref('hidefirst', 'Hide first comment if empty?', ifBug(hideFirst));
+registerPref('shortertitle', 'Remove "Bug" from the title?', ifBug(shorterTitle));
 
 
 function hideFirst() {
@@ -33,6 +34,12 @@ function removeAccess() {
         });
 
         $('body').addClass('bzJS-removeaccesskeys');
+    }
+}
+
+function shorterTitle() {
+    if(settings['shortertitle']) {
+        $('title').text($('title').text().replace(/Bug /, ''));
     }
 }
 
