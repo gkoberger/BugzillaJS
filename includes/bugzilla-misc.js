@@ -4,6 +4,8 @@ registerPref('removeaccesskeys', 'Remove access keys?', false, ifBug(removeAcces
 registerPref('dontguess', 'Don\'t guess OS and hardware?', false, dontGuess);
 registerPref('hidefirst', 'Hide first comment if empty?', ifBug(hideFirst));
 registerPref('shortertitle', 'Remove "Bug" from the title?', ifBug(shorterTitle));
+registerPref('clonebug', 'Auto-fill product when cloning a bug?', ifBug(cloneBug));
+registerPref('relatedbug', 'Add a "new" link for dependent and blocking fields?', ifBug(relatedBug));
 
 
 function hideFirst() {
@@ -76,3 +78,32 @@ function dontGuess() {
     }
 }
 
+
+function cloneBug() {
+    if(settings['clonebug']) {
+        $('.related_actions a').each(function(){
+            $el = $(this);
+            if($el.attr('href').match(/cloned_bug_id/)) {
+                $el.attr('href', $el.attr('href') + "&product=" + $('#product').val());
+            }
+        });
+    }
+}
+
+function relatedBug() {
+    if(settings['relatedbug']) {
+        var createLink = function(start, finish) {
+            var create_new = $("<span>&nbsp;(<a href='#'>new</a>)</span>"),
+                a = create_new.find('a'),
+                new_location = window.location + "&product=" + $('#product').val();
+
+            new_location = new_location.replace(/show_bug/, 'enter_bug');
+            new_location = new_location.replace(/id=/, finish + '=');
+            a.attr('href', new_location);
+
+            $('#' + start).after(create_new).css('width', '-moz-calc(100% - 60px)');
+        };
+        createLink("blocked", "dependson");
+        createLink("dependson", "blocked");
+    }
+}
