@@ -51,7 +51,11 @@ function initImageStuff() {
     }
 
     function bzLightbox() {
-        $('.lb, .overlay').remove();
+        function closeBzLightbox() {
+          $('.lb, .overlay').remove();
+        }
+        
+        closeBzLightbox();
         overlay = $('<div>').addClass('overlay').appendTo('body').css({opacity: 0});
         overlay2 = $('<div>').addClass('overlay2').appendTo('body');
 
@@ -59,10 +63,7 @@ function initImageStuff() {
 
         img = $('<img>').attr('src', $(this).attr('href')).addClass('lb').css({'opacity': 0}).appendTo(overlay2);
 
-        $(overlay).add(overlay2).click(function(e){
-            $('.lb').remove();
-            $('.overlay').remove();
-        });
+        $(overlay).add(overlay2).click(closeBzLightbox);
 
         opts = $('<div>').addClass('opts').appendTo(overlay)
         $(opts).append("<a href='"+$(this).attr('href')+
@@ -74,6 +75,13 @@ function initImageStuff() {
 
         $(img).css({'opacity': 1});
         $(overlay).css({'opacity': 1});
+
+        $(document).keyup(function(e) {
+          // Esc key
+          if (e.keyCode == 27) {
+            closeBzLightbox();
+          }
+        });
 
         return false;
     }
