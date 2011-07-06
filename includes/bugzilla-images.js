@@ -9,13 +9,13 @@ function initImageStuff() {
         var image_attachments = {};
 
         $('#attachment_table tr').each(function() {
-          if($(this).attr('class').match('image')) {
+          if($(this).prop('class').match('image')) {
             var $a = $(this).find('a b').parent();
             if (settings['lightbox']) {
                 $a.click(bzLightbox);
             }
 
-            image_attachments[$a.attr('href').match(/id=([0-9]*)/)[1]] = true;
+            image_attachments[$a.prop('href').match(/id=([0-9]*)/)[1]] = true;
           }
         });
 
@@ -23,13 +23,13 @@ function initImageStuff() {
             var comment = $(this),
                 images = new Array();
             $('a', comment).each(function () {
-                var attachment_id = $(this).attr('name').match('attach_([0-9]+)$');
+                var attachment_id = $(this).prop('name').match('attach_([0-9]+)$');
                 var is_image_attachment = (attachment_id && attachment_id[1] in image_attachments);
 
-                if ($(this).attr('href').match(/(\.(jpg|gif|png))/i) || is_image_attachment) {
+                if ($(this).prop('href').match(/(\.(jpg|gif|png))/i) || is_image_attachment) {
 
                     if (settings['gallery']) {
-                        images.push($(this).attr('href'));
+                        images.push($(this).prop('href'));
                     }
 
                     if (settings['lightbox']) {
@@ -61,12 +61,12 @@ function initImageStuff() {
 
         $(overlay2).css({'top':$(window).scrollTop() + 5});
 
-        img = $('<img>').attr('src', $(this).attr('href')).addClass('lb').css({'opacity': 0}).appendTo(overlay2);
+        img = $('<img>').prop('src', $(this).prop('href')).addClass('lb').css({'opacity': 0}).appendTo(overlay2);
 
         $(overlay).add(overlay2).click(closeBzLightbox);
 
         opts = $('<div>').addClass('opts').appendTo(overlay)
-        $(opts).append("<a href='"+$(this).attr('href')+
+        $(opts).append("<a href='"+$(this).prop('href')+
                        "' target='_blank' class='full_image'>full image</a>");
         $(opts).append(" | <a class='close_overlay' href='#'>close</a>");
 
