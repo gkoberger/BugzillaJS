@@ -79,6 +79,16 @@ come into effect.
   Don't attempt to guess the system info, but include a link to guess. (off
   by default).
 
+#### FILL IN PRODUCT FOR "CLONE BUG" LINK
+
+  Automatically select the product and componenet when clicking the Clone
+  Bug link on the bottom right of the page.
+
+#### NEW DEPENDANT/BLOCKER BUG LINK
+
+  Adds a link next to "Depends On" and "Blocks" fields to create a new
+  dependant/blocker bug for the current bug.
+
 TODO / KNOWN BUGS
 ===============================================================================
 
