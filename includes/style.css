@@ -165,7 +165,8 @@
 /** Gravatar **/
 
 
-.git_style .bz_comment_head img, .git_style .bz_first_comment_head img {
+.git_style .bz_comment_head img.gravatar,
+.git_style .bz_first_comment_head img.gravatar {
     background-color:#FFFFFF;
     border:1px solid #BBBBBB;
     padding:2px;
@@ -173,11 +174,13 @@
 }
 
 
-.bz_comment_head img, .bz_first_comment_head img {
+.bz_comment_head img.gravatar,
+.bz_first_comment_head img.gravatar {
     width:25px;
 }
 
-.git_style .bz_comment_head img, .git_style .bz_first_comment_head img {
+.git_style .bz_comment_head img.gravatar,
+.git_style .bz_first_comment_head img.gravatar {
     float:left;
 }
 
@@ -273,11 +276,11 @@
 }
 
 .bz_comment .history {
-    border:none;
-    color:#888;
-    background-color:#fff;
-    margin-bottom:0;
-    padding:0 0 10px;
+    background-color: transparent;
+    border: medium none;
+    color: #888888;
+    margin-bottom: 0;
+    padding: 10px 0 0;
 }
 
 .git_style .history {

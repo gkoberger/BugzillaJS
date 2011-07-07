@@ -11,7 +11,7 @@ bug_id = $('title').text().match(/Bug ([0-9]+)/)
 bug_id = bug_id ? bug_id[1] : false
 
 /* Register preferences */
-registerPref('gitcomments', 'Use git-style comments?', ifBug(addStyling));
+registerPref('gitcomments', 'Use github-style comments?', ifBug(addStyling));
 
 /** Run the modules **/
 addPrefs();
