@@ -78,13 +78,14 @@ function dontGuess() {
     }
 }
 
-
 function cloneBug() {
     if(settings['clonebug']) {
         $('.related_actions a').each(function(){
             $el = $(this);
             if($el.attr('href').match(/cloned_bug_id/)) {
-                $el.attr('href', $el.attr('href') + "&product=" + $('#product').val());
+                var url = $el.attr('href') + "&product=" + $('#product').val();
+                url += '&component=' + $('#component').val();
+                $el.attr('href', url);
             }
         });
     }
@@ -93,16 +94,18 @@ function cloneBug() {
 function relatedBug() {
     if(settings['relatedbug']) {
         var createLink = function(start, finish) {
-            var create_new = $("<span>&nbsp;(<a href='#'>new</a>)</span>"),
-                a = create_new.find('a'),
-                new_location = window.location + "&product=" + $('#product').val();
-
+            var new_location = window.location + "&product=" + $('#product').val();
+            new_location += '&component=' + $('#component').val();
             new_location = new_location.replace(/#[^&]*/, ''); // Strip anchor
             new_location = new_location.replace(/show_bug/, 'enter_bug');
             new_location = new_location.replace(/id=/, finish + '=');
-            a.attr('href', new_location);
 
-            $('#' + start).after(create_new).css('width', '-moz-calc(100% - 60px)');
+            var link = $('<a>new</a>').attr('href', new_location),
+                link_empty = $('<span>&nbsp;(</span>').append(link.clone()).append('<span>)'),
+                link_exists = $('<span><span>&nbsp;|&nbsp;</span></span>').append(link.clone());
+
+            $('#' + start + '_edit_action').after(link_exists);
+            $('#' + start).after(link_empty).css('width', '-moz-calc(100% - 60px)');
         };
         createLink("blocked", "dependson");
         createLink("dependson", "blocked");
