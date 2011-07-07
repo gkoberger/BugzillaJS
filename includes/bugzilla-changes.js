@@ -59,5 +59,7 @@ function initChanges() {
             }
         });
 
+        repositionScroll();
+
     }
 }

@@ -26,6 +26,14 @@ function ifBug(f) {
 function addStyling() {
     if (settings['gitcomments']) {
         $('body').addClass('git_style')
+        setTimeout(repositionScroll, 200);
+    }
+}
+
+function repositionScroll() {
+    //-- Reposition the scrollTo if necessary
+    if(location.hash.match(/#c[0-9]*/)) {
+        $(window).scrollTo($(location.hash));
     }
 }
 

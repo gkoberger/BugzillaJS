@@ -97,6 +97,7 @@ function relatedBug() {
                 a = create_new.find('a'),
                 new_location = window.location + "&product=" + $('#product').val();
 
+            new_location = new_location.replace(/#[^&]*/, ''); // Strip anchor
             new_location = new_location.replace(/show_bug/, 'enter_bug');
             new_location = new_location.replace(/id=/, finish + '=');
             a.attr('href', new_location);

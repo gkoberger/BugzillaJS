@@ -5,6 +5,7 @@
     "namespace": "http://gkoberger.net",
     "load_order": [
         "jquery.js",
+        "jquery.scrollTo.js",
         "style.css",
         "md5.js",
         "bugzilla.js",
