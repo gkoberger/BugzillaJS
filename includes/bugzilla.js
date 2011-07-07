@@ -45,28 +45,38 @@ function addPrefs() {
         .click(function(){
             $('#prefs').remove();
 
-            prefs = $('<div id="prefs">').appendTo('body')
+            var prefs = $('<div id="prefs">').appendTo('body'),
+                header = $("<div class='header'>").appendTo(prefs),
+                footer = $("<div>").appendTo(prefs);
+
+
+            $("<a>", {href: 'https://github.com/gkoberger/bugzillajs', class: 'cta'})
+                .html("<strong>Bug or Feature Request?</strong> We're on github &raquo;")
+                .appendTo(header);
+
+            $("<a>", {href: 'https://addons.mozilla.org/en-US/firefox/addon/bugzillajs/reviews/add', class: 'cta2'})
+                .html("<strong>Like BugzillaJS?</strong> Write a review! &raquo;")
+                .appendTo(header);
+
             $.each(settings_fields, function(k, v){
                 o = "<div>";
-
                 o += "<input type='checkbox' id='setting_"+v.slug+"' " +
                      "data-slug='"+v.slug+"' "+
                      (settings[v.slug] ? "checked='checked'" : "")+
                      ">";
-
                 o += "<label for='setting_"+v.slug+"'>" + v.details +
                      "</label></div>";
-
-                prefs.append(o);
+                header.append(o);
             });
 
-        $("<br>").appendTo(prefs);
+        $("<br>").appendTo(header);
 
         $("<a>", {'class': 'refresh', 'text': 'reload page', 'href': '#'})
-            .appendTo(prefs)
+            .appendTo(footer)
             .click(function(){ window.location.reload(); return false; });
 
-        $("<a href='#'>close preferences</a>").appendTo(prefs).click(function(){
+
+        $("<a href='#'>close</a>").appendTo(footer).click(function(){
             $('#prefs').remove();
             return false;
         });

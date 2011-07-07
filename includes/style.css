@@ -4,7 +4,6 @@
     border: 1px solid #777777;
     border-radius: 5px 5px 5px 5px;
     box-shadow: 0 0 30px #333333;
-    height: 300px;
     left: 50%;
     margin: auto auto auto -200px;
     overflow: auto;
@@ -12,6 +11,12 @@
     top: 40px;
     width: 400px;
 
+}
+
+#prefs .header {
+    overflow: auto;
+    margin-bottom: 1em;
+    height: 300px;
 }
 
 #prefs a.refresh {
@@ -43,13 +48,13 @@
         linear,
         left bottom,
         left top,
-        color-stop(0.33, #fff),
+        color-stop(0.33, rgb(255,255,255)),
         color-stop(0.84, rgb(232,232,232))
     );
     background-image: -moz-linear-gradient(
         center bottom,
-        rgb(255,255,255) 84%
-        rgb(232,232,232) 33%,
+        rgb(255,255,255) 33%,
+        rgb(232,232,232) 84%
     );
 }
 
@@ -73,6 +78,27 @@
 #prefs label:hover {
     color: #000;
     cursor: pointer;
+}
+
+#prefs .cta,
+#prefs .cta2 {
+    display: block;
+    padding-bottom: 4px;
+    text-decoration: border;
+    opacity: 0.7;
+}
+
+#prefs .cta:hover,
+#prefs .cta2:hover {
+    opacity: 0.9;
+}
+
+#prefs .cta {
+    color: red;
+}
+#prefs .cta2 {
+    color: green;
+    margin-bottom: 1em;
 }
 
 /** Style comments **/
