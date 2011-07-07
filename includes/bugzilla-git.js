@@ -9,7 +9,7 @@ function initGit() {
                     isGithub = url.match(/github.com\/(\w*)\/(\w*)\/commit\/(\w*)/);
 
                 if (isGithub) {
-                    giturl = 'http://github.com/api/v2/json/commits/show/' +
+                    giturl = 'https://github.com/api/v2/json/commits/show/' +
                              isGithub[1] + '/' + isGithub[2] + '/' + isGithub[3] +
                              '?callback=?'
 
@@ -50,6 +50,7 @@ function initGit() {
 
                             });
                         }
+                        repositionScroll();
                     });
                 }
             });
