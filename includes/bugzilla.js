@@ -99,30 +99,6 @@ function registerPref(slug, details, setting_default, callback) {
     });
 }
 
-// Return a formatted version of the changes
-function formatChange(c) {
-    changes_array = [];
-    $.each(c, function (ck, cv) {
-        removed = cv.removed
-        added = cv.added
-
-        if(cv.field_name == 'depends_on' || cv.field_name == 'blocks') {
-                f = function(text){
-                    u = "<a href='https://bugzilla.mozilla.org/show" +
-                        "_bug.cgi?id=$1'>$1</a>";
-                    return text.replace(/([0-9]+)/g, u);
-                }
-                if(removed) removed = f(removed);
-                if(added) added = f(added);
-        }
-
-        text = cv.field_name + ": " +
-               (removed ? "<del>" + removed + "</del> => " : "") + added;
-        changes_array.push(text);
-    });
-    return changes_array.join('; ');
-}
-
 function set_cookie(name, value) {
   var cookie_string = name + "=" + escape ( value );
 
