@@ -2,6 +2,11 @@ registerPref('changes', 'Show changes to the bug', ifBug(initChanges));
 
 function initChanges() {
     if(settings['changes']) {
+        if($('#inline-history-ext') && !window.localStorage['inlinehistory-found']) {
+            alert('It looks like you already have inline history, so you may want ' +
+                  'to disable inline history in the BugzillaJS preferences.');
+            window.localStorage['inlinehistory-found'] = true;
+        }
         url = 'https://api-dev.bugzilla.mozilla.org/latest/bug/' + bug_id + '/history'
 
         var changes = [];
@@ -48,7 +53,7 @@ function initChanges() {
             if (v.type == 'comment') {
                 comment = v;
             } else if (v.date == comment.date) {
-                $('.d' + comment.date).find('.bz_comment_text').before('<div class="history">' + formatChange(v.change.changes) + '</div>');
+                $('.d' + comment.date).find('.bz_comment_text').before('<div class="history">' + formatChange(v.change.changes));
             } else {
                 $('.d' + comment.date + ', .p' + comment.date).filter(':last').after(
                     '<div class="history p'+comment.date+'"><strong>' + v.change.changer.name + '</strong> ' +
