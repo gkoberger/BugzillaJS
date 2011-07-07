@@ -6,7 +6,8 @@ function setGravatars() {
             // Email addresses are only shown if the user is logged in
             if($('a.email', this).length > 0) {
                 email = $('a.email', this).attr('href').replace(/mailto:\s*/, '');
-                $(this).prepend('<img src="https://secure.gravatar.com/avatar/' + hex_md5(email) + '">');
+                $(this).find('.gravatar').remove();
+                $(this).prepend('<img class="gravatar" src="https://secure.gravatar.com/avatar/' + hex_md5(email) + '">');
             }
 
         });

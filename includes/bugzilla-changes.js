@@ -60,6 +60,5 @@ function initChanges() {
         });
 
         repositionScroll();
-
     }
 }
