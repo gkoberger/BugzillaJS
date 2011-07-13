@@ -3,13 +3,19 @@ registerPref('prettydate', 'Turn timestamps into a nice looking date', ifBug(ini
 function initPrettyDates() {
     if(settings['prettydate']) {
         $('.bz_comment_time').each(function () {
-            var time_ascii = $(this).text().trim();
+            var time_ascii = $(this).text().trim(),
+                time_clean = time_ascii.replace(/-/g, '/');
             if(!$(this).attr('data-timestamp')) {
-                $(this).attr('data-timestamp', time_ascii)
+                $(this).attr('data-timestamp', time_clean)
                        .attr('title', time_ascii)
-                       .text(prettydate(time_ascii.replace(/-/g, '/')));
+                       .text(prettydate(time_clean));
             }
         });
+        setInterval(function() {
+            $('[data-timestamp]').each(function(i, el) {
+                $(el).text(prettydate($(el).attr('data-timestamp')));
+            });
+        }, 1000 * 60 * 3); // 3 minutes
     }
 }
 
@@ -19,8 +25,6 @@ var prettydate = function(d) {
 
     var now = new Date(),
         diff = (now.getTime() - d.getTime()) / 1000;
-
-    console.log(now, d, diff, now.getTime(), d.getTime());
 
     // FIXME: calculation not very accurate towards months/years
     if (diff < 0)  return "just now";
