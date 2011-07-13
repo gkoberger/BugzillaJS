@@ -48,7 +48,7 @@ function initChanges() {
             }
         });
 
-        if($('#inline-history-ext') && !window.localStorage['inlinehistory-found']) {
+        if($('#inline-history-ext').length > 0 && !window.localStorage['inlinehistory-found']) {
             alert('It looks like you already have inline history, so you may want ' +
                   'to disable inline history in the BugzillaJS preferences.');
             window.localStorage['inlinehistory-found'] = true;
