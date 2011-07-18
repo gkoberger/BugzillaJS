@@ -1,0 +1,2 @@
+.graph { width: 200px; height: 200px; float: left; }
+.graph canvas.overlay { background: none repeat scroll 0 0 rgba(0, 0, 0, 0) !important; }

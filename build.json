@@ -5,7 +5,10 @@
     "namespace": "http://gkoberger.net",
     "load_order": [
         "jquery.js",
+        "jquery.flot.js",
+        "jquery.flot.pie.js",
         "style.css",
+        "bugzilla-agile.css",
         "md5.js",
         "date.js",
         "bugzilla.js",
