@@ -9,6 +9,15 @@ DOWNLOAD THE ADD-ON
 
 https://addons.mozilla.org/en-US/firefox/addon/bugzillajs/
 
+COMPILE THE ADD-ON
+-------------------------------------------------------------------------------
+
+1. git clone git://github.com/gkoberger/omnium.git
+2. pushd omnium
+3. git clone git://github.com/gkoberger/BugzillaJS.git bugzillajs
+4. popd
+5. python builder.py bugzillajs
+
 TESTING THE ADD-ON
 ===============================================================================
 
@@ -88,6 +97,11 @@ come into effect.
 
   Adds a link next to "Depends On" and "Blocks" fields to create a new
   dependant/blocker bug for the current bug.
+
+#### AGILE BACKLOG
+
+  Enable Agile backlog features on bug searches with whiteboard column
+  See http://groovecoder.com/2011/07/18/bugzilla-agile/
 
 TODO / KNOWN BUGS
 ===============================================================================
