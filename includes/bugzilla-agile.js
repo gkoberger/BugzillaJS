@@ -1,12 +1,14 @@
 function sumPoints() {
     if(settings.sprint_points) {
         var bugs = [];
+        var components_data = [];
         var closed_statuses = ["RESO","VERI"];
         var closed_points = 0;
         var closed_stories = 0;
         var open_points = 0;
         var open_stories = 0;
-        var components_data = [];
+        var assigned_points = 0;
+        var assigned_stories = 0;
 
         $('td.bz_status_whiteboard_column').each(function(){
             var bug = {};
@@ -26,8 +28,13 @@ function sumPoints() {
                 closed_stories++;
                 closed_points += bug.points;
             } else {
-                open_stories++;
-                open_points += bug.points;
+                if ($.trim($(this).siblings('.bz_assigned_to_column').text()) == "nobody@mozilla.org") {
+                    open_stories++;
+                    open_points += bug.points;
+                } else {
+                    assigned_stories++;
+                    assigned_points += bug.points;
+                }
             }
 
             if (bug.elements.c && bug.elements.c !== "") {
@@ -51,8 +58,9 @@ function sumPoints() {
         });
         $('table.bz_buglist').append('<tr><td colspan="99" align="right"><div><div id="pointsGraph" class="graph"></div><div id="componentsGraph" class="graph"></div><div>Open Stories: ' + open_stories + '<br/>Open points: ' + open_points + '<br/>Closed Stories: ' + closed_stories + '<br/>Closed points: ' + closed_points + '</div></div></td></tr>');
         var points_data = [
-            {label:"Open", data:open_points},
-            {label:"Closed", data:closed_points}
+            {label:"Open", data:open_points, color: "rgb(237, 194, 64)"},
+            {label:"Closed", data:closed_points, color: "rgb(77, 167, 77)"},
+            {label:"Assigned", data:assigned_points, color: "rgb(175, 216, 248)"}
         ];
         $.plot($('#pointsGraph'), points_data, {series:{pie:{show:true}},legend:{show:false}});
         $.plot($('#componentsGraph'), components_data, {series:{pie:{show:true}},legend:{show:false}});
