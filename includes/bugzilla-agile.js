@@ -1,5 +1,5 @@
-function sumPoints() {
-    if(settings.sprint_points) {
+function agileBacklog() {
+    if(settings.agile_backlog) {
         var bugs = [];
         var components_data = [];
         var closed_statuses = ["RESO","VERI"];
@@ -71,4 +71,4 @@ function sumPoints() {
     }
 }
 
-registerPref('sprint_points', 'Show bug and points totals from whiteboard', sumPoints);
+registerPref('agile_backlog', 'Agile Backlog', agileBacklog);
