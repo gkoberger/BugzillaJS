@@ -111,12 +111,13 @@
     padding:3px;
     margin-left:15px;
     margin-bottom:1em;
-    width: auto;
+    width: 677px;
 }
 
 .git_style .bz_first_comment,
 .git_style .no-first-comment .bz_comment {
     margin-left:0;
+    width: 692px;
 }
 
 .git_style .bz_first_comment_head,
