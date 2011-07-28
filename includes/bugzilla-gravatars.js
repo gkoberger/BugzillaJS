@@ -5,7 +5,8 @@ function setGravatars() {
         $('.bz_comment_head,.bz_first_comment_head').each(function () {
             // Email addresses are only shown if the user is logged in
             if($('a.email', this).length > 0) {
-                email = $('a.email', this).attr('href').replace(/mailto:\s*/, '');
+                var email = $('a.email', this).attr('href').replace(/mailto:\s*/, '');
+                email = email.toLowerCase().replace(/\+(.*?)@/, "@");
                 $(this).find('.gravatar').remove();
                 $(this).prepend('<img class="gravatar" src="https://secure.gravatar.com/avatar/' + hex_md5(email) + '">');
             }
