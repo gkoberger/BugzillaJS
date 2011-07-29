@@ -20,7 +20,7 @@ function initGit() {
                         head.append('<p>' + d.commit.message + '</p>');
                         head.append("<span><strong>" + d.commit.author.name +
                             "</strong>&nbsp;" +
-                            prettydate(new Date(d.commit.authored_date)) +
+                            prettydate(d.commit.authored_date) +
                             '</span>');
 
                         table = $("<table class='git'></table>").appendTo(git);

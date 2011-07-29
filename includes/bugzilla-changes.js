@@ -59,7 +59,7 @@ function initChanges() {
         $.getJSON(url, function (d) {
             $.each(d.history, function (v, k) {
                 changes.push({
-                    'date': new Date(k.change_time).getTime(),
+                    'date': fixDate(k.change_time).getTime(),
                     'change': k,
                     'type': 'change'
                 });
@@ -79,8 +79,7 @@ function initChanges() {
                 date_ascii = date_el.attr('data-timestamp');
             }
 
-            date_ascii = date_ascii.replace(/-/g,'/');
-            var timestamp = new Date(date_ascii.trim()).getTime();
+            var timestamp = fixDate(date_ascii).getTime();
 
             $(this).addClass('d' + timestamp);
             comments.push({
@@ -94,7 +93,7 @@ function initChanges() {
         });
 
         // Now, loop through them and add to the DOM
-        comment = everything[0];
+        var comment = everything[0];
         $.each(everything, function (k, v) {
             if (v.type == 'comment') {
                 comment = v;
@@ -105,7 +104,7 @@ function initChanges() {
                     '<div class="history p'+comment.date+'"><strong>' + v.change.changer.name + '</strong> ' +
                     formatChange(v.change.changes) +
                     ' <span class="bz_comment_time" title="'+new Date(v.date)+
-                    '" data-timestamp="'+new Date(v.date)+'">' + prettydate(new Date(v.date)) +
+                    '" data-timestamp="'+new Date(v.date)+'">' + prettydate(v.date) +
                     '</span></div>');
             }
         });
