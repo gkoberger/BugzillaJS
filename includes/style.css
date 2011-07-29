@@ -101,6 +101,16 @@
     margin-bottom: 1em;
 }
 
+span.assignee {
+    padding-left: 10px;
+    color: #851010;
+}
+
+span.reporter {
+    padding-left: 10px;
+    color: #888;
+}
+
 /** Style comments **/
 
 
@@ -131,11 +141,10 @@
         rgb(241,247,248) 28%,
         rgb(221,233,236) 64%
         ) repeat scroll 0% 0% transparent;
-
 }
 
-.git_style .bz_first_comment_head {
-
+.git_style .bz_first_comment_head,
+.git_style .bz_reporter .bz_comment_head {
     background: -moz-linear-gradient(
         center top,
         #E6F4EC 28%,

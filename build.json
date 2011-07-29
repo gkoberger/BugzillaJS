@@ -15,6 +15,7 @@
         "bugzilla-hidenobody.js",
         "bugzilla-git.js",
         "bugzilla-gravatars.js",
+        "bugzilla-comments.js",
         "bugzilla-misc.js"
     ],
     "version": "1.2.3",
