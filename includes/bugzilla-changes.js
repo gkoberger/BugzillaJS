@@ -48,10 +48,10 @@ function initChanges() {
             }
         });
 
-        if($('#inline-history-ext').length > 0 && !window.localStorage['inlinehistory-found']) {
-            alert('It looks like you already have inline history, so you may want ' +
+        if($('#inline-history-ext').length > 0 && !window.localStorage['inlinehistory-found2']) {
+            alert('It looks like Bugzilla already has inline history, so you may want ' +
                   'to disable inline history in the BugzillaJS preferences.');
-            window.localStorage['inlinehistory-found'] = true;
+            window.localStorage['inlinehistory-found2'] = true;
         }
         url = 'https://api-dev.bugzilla.mozilla.org/latest/bug/' + bug_id + '/history'
 
