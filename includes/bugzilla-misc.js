@@ -114,10 +114,11 @@ function relatedBug() {
 }
 
 function addCCLink() {
-    $('.bz_collapse_expand_comments').eq(0)
-                         .after("<input id='hide-cc' type='checkbox'> " +
-                                "<label for='hide-cc'>Hide CCs from history?"+
-                                "</label>");
+    var button = "<li><input id='hide-cc' type='checkbox'> " +
+                 "<label for='hide-cc'>Hide CCs from history?"+
+                 "</label></li>";
+
+    $('.bz_collapse_expand_comments').append(button);
 
     var hidecc_val = unsafeWindow.localStorage['hidecc_val'],
         hideCCToggle = function() {
