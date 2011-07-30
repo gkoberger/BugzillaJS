@@ -6,6 +6,7 @@ registerPref('hidefirst', 'Hide first comment if empty?', ifBug(hideFirst));
 registerPref('shortertitle', 'Remove "Bug" from the title?', ifBug(shorterTitle));
 registerPref('clonebug', 'Auto-fill product when cloning a bug?', ifBug(cloneBug));
 registerPref('relatedbug', 'Add a "new" link for dependent and blocking fields?', ifBug(relatedBug));
+registerPref('hidecc', 'Show a "hide cc" link?', ifBug(addCCLink));
 
 
 function hideFirst() {
@@ -111,3 +112,32 @@ function relatedBug() {
         createLink("dependson", "blocked");
     }
 }
+
+function addCCLink() {
+    $('.bz_collapse_expand_comments').eq(0)
+                         .after("<input id='hide-cc' type='checkbox'> " +
+                                "<label for='hide-cc'>Hide CCs from history?"+
+                                "</label>");
+
+    var hidecc_val = unsafeWindow.localStorage['hidecc_val'],
+        hideCCToggle = function() {
+            $('body').toggleClass('setting-hide-cc', hidecc_val);
+        };
+
+
+    if(typeof hidecc_val == 'undefined') {
+        hidecc_val = false;
+    }
+
+    // I hate this
+    hidecc_val = hidecc_val == "true" ? true : false;
+
+    $('#hide-cc').attr('checked', !!hidecc_val);
+    $('#hide-cc').change(function(){
+        hidecc_val = $(this).is(':checked');
+        unsafeWindow.localStorage['hidecc_val'] = hidecc_val;
+        hideCCToggle();
+    });
+    hideCCToggle();
+}
+

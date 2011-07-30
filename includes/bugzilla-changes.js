@@ -5,9 +5,10 @@ var bugs_all = {}; // Global-ish var.  Yucky.
 // Return a formatted version of the changes
 function formatChange(c) {
     changes_array = [];
+
     $.each(c, function (ck, cv) {
-        removed = cv.removed
-        added = cv.added
+        var removed = cv.removed,
+            added = cv.added;
 
         if(cv.field_name == 'depends_on' || cv.field_name == 'blocks') {
             f = function(text){
@@ -22,12 +23,16 @@ function formatChange(c) {
             if(removed) removed = f(removed);
             if(added) added = f(added);
         }
-
         text = cv.field_name + ": " +
                (removed ? "<del>" + removed + "</del> => " : "") + added;
+        if(cv.field_name == 'cc') {
+            text = "<span class='hide-cc'>" + text + ";</span> ";
+        } else {
+            text = text + "; ";
+        }
         changes_array.push(text);
     });
-    return changes_array.join('; ');
+    return changes_array.join('');
 }
 
 
@@ -100,12 +105,20 @@ function initChanges() {
             } else if (v.date == comment.date) {
                 $('.d' + comment.date).find('.bz_comment_text').before('<div class="history">' + formatChange(v.change.changes));
             } else {
-                $('.d' + comment.date + ', .p' + comment.date).filter(':last').after(
-                    '<div class="history p'+comment.date+'"><strong>' + v.change.changer.name + '</strong> ' +
+                var changes = v.change.changes;
+
+                var history = $('<div class="history p'+comment.date+'"><strong>' + v.change.changer.name + '</strong> ' +
                     formatChange(v.change.changes) +
                     ' <span class="bz_comment_time" title="'+new Date(v.date)+
                     '" data-timestamp="'+new Date(v.date)+'">' + prettydate(v.date) +
                     '</span></div>');
+
+                if(changes.length == 1 && changes[0].field_name == 'cc') {
+                    history.addClass('hide-cc');
+                }
+
+                $('.d' + comment.date + ', .p' + comment.date).filter(':last').after(history);
+
             }
         });
 

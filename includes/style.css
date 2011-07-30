@@ -111,6 +111,11 @@ span.reporter {
     color: #888;
 }
 
+/** Hide CSS? **/
+.setting-hide-cc .hide-cc {
+    display: none;
+}
+
 /** Style comments **/
 
 
