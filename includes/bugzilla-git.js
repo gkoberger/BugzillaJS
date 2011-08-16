@@ -6,7 +6,7 @@ function initGit() {
             var comment = $(this);
             $('a', comment).each(function () {
                 var url = $(this).attr('href')
-                    isGithub = url.match(/github.com\/(\w*)\/(\w*)\/commit\/(\w*)/);
+                    isGithub = url.match(/github.com\/([-\w]*)\/([-\w]*)\/commit\/(\w*)/);
 
                 if (isGithub) {
                     giturl = 'https://github.com/api/v2/json/commits/show/' +
