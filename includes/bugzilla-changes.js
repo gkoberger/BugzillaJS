@@ -110,7 +110,7 @@ function initChanges() {
                 var history = $('<div class="history p'+comment.date+'"><strong>' + v.change.changer.name + '</strong> ' +
                     formatChange(v.change.changes) +
                     ' <span class="bz_comment_time" title="'+new Date(v.date)+
-                    '" data-timestamp="'+new Date(v.date)+'">' + prettydate(v.date) +
+                    '" data-timestamp="'+v.date+'">' + prettydate(v.date) +
                     '</span></div>');
 
                 if(changes.length == 1 && changes[0].field_name == 'cc') {

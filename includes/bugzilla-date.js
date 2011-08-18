@@ -4,7 +4,9 @@ var tz = {'A':'+1','ADT':'-3','AFT':'+450','AKDT':'-8','AKST':'-9','ALMT':'+6','
 
 function fixDate(date) {
     if(typeof date == "object") return date;
-    if(typeof date == "number") return new Date(date);
+    if(typeof date == "number" || date.match(/^[0-9]*$/)) {
+        return new Date(parseInt(date));
+    }
 
     // Don't do anything if it's like 2011-07-22T21:49:28Z
     if(date.match(/[-0-9]+T[0-9]+/)) {
