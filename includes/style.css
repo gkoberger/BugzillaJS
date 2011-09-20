@@ -203,6 +203,36 @@ span.reporter {
     font-weight: normal;
 }
 
+/** Inline changes **/
+.git_style .ih_history .bz_comment_head {
+    background: none repeat scroll 0% 0% transparent;
+    border: 0pt none;
+    display: inline;
+    padding: 0;
+}
+
+.git_style .bz_comment.ih_history {
+    font-size: 11px;
+    padding: 5px 5px 0 5px;
+}
+
+.git_style .bz_comment.ih_history .ih_history_item {
+    margin-bottom: 5px;
+}
+
+.git_style .bz_comment.ih_history .bz_comment_user {
+    padding-top: 0;
+}
+
+.git_style .bz_comment .ih_inlinehistory {
+    background-color: #F7F7F7;
+    border-color: -moz-use-text-color #CCCCCC #CCCCCC;
+    border-style: none solid solid;
+    border-width: 0 1px 1px;
+    font-size: 11px;
+    padding: 3px;
+}
+
 /** Gravatar **/
 
 

@@ -26,6 +26,7 @@ function ifBug(f) {
 function addStyling() {
     if (settings['gitcomments']) {
         $('body').addClass('git_style')
+        $('.git_style .ih_history br').replaceWith("<span>; </span>");
         setTimeout(repositionScroll, 200);
     }
 }

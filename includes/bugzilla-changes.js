@@ -1,4 +1,6 @@
-registerPref('changes', 'Show changes to the bug', ifBug(initChanges));
+if($('#inline-history-ext').length == 0) {
+    registerPref('changes', 'Show changes to the bug', ifBug(initChanges));
+}
 
 var bugs_all = {}; // Global-ish var.  Yucky.
 
@@ -41,6 +43,7 @@ function initChanges() {
         var inputs = $('#blocked_input_area, #dependson_input_area'),
             bug_links = inputs.closest('td').find('a');
 
+        addCCLink();
         bug_links.each(function() {
             var el = $(this),
                 bug_href = el.attr('href').match(/show_bug.cgi\?id=(.*)/);
@@ -124,4 +127,32 @@ function initChanges() {
 
         repositionScroll();
     }
+}
+function addCCLink() {
+    var button = "<li><input id='hide-cc' type='checkbox'> " +
+                 "<label for='hide-cc'>Hide CCs from history?"+
+                 "</label></li>";
+
+    $('.bz_collapse_expand_comments').append(button);
+
+    var hidecc_val = unsafeWindow.localStorage['hidecc_val'],
+        hideCCToggle = function() {
+            $('body').toggleClass('setting-hide-cc', hidecc_val);
+        };
+
+
+    if(typeof hidecc_val == 'undefined') {
+        hidecc_val = false;
+    }
+
+    // I hate this
+    hidecc_val = hidecc_val == "true" ? true : false;
+
+    $('#hide-cc').attr('checked', !!hidecc_val);
+    $('#hide-cc').change(function(){
+        hidecc_val = $(this).is(':checked');
+        unsafeWindow.localStorage['hidecc_val'] = hidecc_val;
+        hideCCToggle();
+    });
+    hideCCToggle();
 }

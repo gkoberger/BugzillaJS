@@ -18,7 +18,7 @@
         "bugzilla-comments.js",
         "bugzilla-misc.js"
     ],
-    "version": "1.2.3",
+    "version": "1.3",
     "included_urls": [
         "https://bugzilla.mozilla.org/*",
         "https://landfill.bugzilla.org/*"
