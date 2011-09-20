@@ -1,3 +1,5 @@
+registerPref('agile_backlog', 'Agile Backlog', false, agileBacklog);
+
 function agileBacklog() {
     if(settings.agile_backlog) {
         var $wb = $('td.bz_status_whiteboard_column');
@@ -99,4 +101,3 @@ function agileBacklog() {
     }
 }
 
-registerPref('agile_backlog', 'Agile Backlog', agileBacklog);

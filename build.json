@@ -19,6 +19,7 @@
         "bugzilla-git.js",
         "bugzilla-gravatars.js",
         "bugzilla-comments.js",
+        "bugzilla-misc.js",
         "bugzilla-agile.js"
     ],
     "version": "1.3",
