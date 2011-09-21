@@ -2,6 +2,7 @@ function agileBacklog() {
     if(settings.agile_backlog) {
         var bugs = [];
         var components_data = [];
+        var users_data = [];
         var closed_statuses = ["RESO","VERI"];
         var closed_points = 0;
         var closed_stories = 0;
@@ -9,8 +10,11 @@ function agileBacklog() {
         var open_stories = 0;
         var assigned_points = 0;
         var assigned_stories = 0;
+        var total_stories = 0;
+        var total_points = 0;
 
         $('td.bz_status_whiteboard_column').each(function(){
+            total_stories += 1;
             var bug = {};
             bug.status = $.trim($(this).siblings('.bz_bug_status_column').text());
             bug.tags = $.trim($(this).text()).split(" ");
@@ -23,6 +27,7 @@ function agileBacklog() {
             bug.points = 0;
             if (bug.elements.p && typeof(parseInt(bug.elements.p,0)) == "number") {
                 bug.points = parseInt(bug.elements.p,0);
+                total_points += bug.points;
             }
             if ($.inArray(bug.status, closed_statuses) > -1){
                 closed_stories++;
@@ -37,6 +42,7 @@ function agileBacklog() {
                 }
             }
 
+            // build components_data
             if (bug.elements.c && bug.elements.c !== "") {
                 var component = {}, existing_component_idx = -1;
                 for (i=0, j=components_data.length; i<j; i++) {
@@ -54,9 +60,27 @@ function agileBacklog() {
                 }
             }
 
+            // build users_data
+            if (bug.elements.u && bug.elements.u !== "") {
+                var user = {}, existing_user_idx = -1;
+                for (i=0, j=users_data.length; i<j; i++) {
+                    if (bug.elements.u == users_data[i].label) {
+                        existing_user_idx = i;
+                    }
+                }
+                if (existing_user_idx > -1) {
+                    user = users_data[existing_user_idx];
+                    user.data += bug.points;
+                } else {
+                    user.label = bug.elements.u;
+                    user.data = bug.points;
+                    users_data.push(user);
+                }
+            }
+
             bugs.push(bug);
         });
-        $('table.bz_buglist').append('<tr><td colspan="99" align="right"><div><div id="pointsGraph" class="graph"></div><div id="componentsGraph" class="graph"></div><div>Open Stories: ' + open_stories + '<br/>Open points: ' + open_points + '<br/>Closed Stories: ' + closed_stories + '<br/>Closed points: ' + closed_points + '</div></div></td></tr>');
+        $('table.bz_buglist').append('<tr><td colspan="99" align="right"><div><div id="pointsGraph" class="graph"></div><div id="componentsGraph" class="graph"></div><div id="usersGraph" class="graph"></div><div>Open Stories: ' + open_stories + '<br/>Open points: ' + open_points + '<br/><div>Assigned Stories: ' + assigned_stories + '<br/>Assigned points: ' + assigned_points + '<br/>Closed Stories: ' + closed_stories + '<br/>Closed points: ' + closed_points + '<br/>Total Stories: ' + total_stories + '<br/>Total Points: ' + total_points + '</div></div></td></tr>');
         var points_data = [
             {label:"Open", data:open_points, color: "rgb(237, 194, 64)"},
             {label:"Closed", data:closed_points, color: "rgb(77, 167, 77)"},
@@ -64,6 +88,7 @@ function agileBacklog() {
         ];
         $.plot($('#pointsGraph'), points_data, {series:{pie:{show:true}},legend:{show:false}});
         $.plot($('#componentsGraph'), components_data, {series:{pie:{show:true}},legend:{show:false}});
+        $.plot($('#usersGraph'), users_data, {series:{pie:{show:true}},legend:{show:false}});
         console.log("Open Stories: " + open_stories);
         console.log("Open points: " + open_points);
         console.log("Closed Stories: " + closed_stories);
