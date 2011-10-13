@@ -1,5 +1,8 @@
 function agileBacklog() {
     if(settings.agile_backlog) {
+        var $wb = $('td.bz_status_whiteboard_column');
+        if(!$wb.length) return;
+
         var bugs = [];
         var components_data = [];
         var users_data = [];
@@ -13,7 +16,7 @@ function agileBacklog() {
         var total_stories = 0;
         var total_points = 0;
 
-        $('td.bz_status_whiteboard_column').each(function(){
+        $wb.each(function(){
             total_stories += 1;
             var bug = {};
             bug.status = $.trim($(this).siblings('.bz_bug_status_column').text());
