@@ -6,7 +6,10 @@
     "load_order": [
         "jquery.js",
         "jquery.scrollTo.js",
+        "jquery.flot.js",
+        "jquery.flot.pie.js",
         "style.css",
+        "bugzilla-agile.css",
         "md5.js",
         "bugzilla.js",
         "bugzilla-changes.js",
@@ -16,7 +19,8 @@
         "bugzilla-git.js",
         "bugzilla-gravatars.js",
         "bugzilla-comments.js",
-        "bugzilla-misc.js"
+        "bugzilla-misc.js",
+        "bugzilla-agile.js"
     ],
     "version": "1.2.3",
     "included_urls": [
