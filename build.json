@@ -16,6 +16,7 @@
         "bugzilla-date.js",
         "bugzilla-images.js",
         "bugzilla-hidenobody.js",
+        "bugzilla-listingpage.js",
         "bugzilla-git.js",
         "bugzilla-gravatars.js",
         "bugzilla-comments.js",
