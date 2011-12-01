@@ -23,7 +23,7 @@
         "bugzilla-misc.js",
         "bugzilla-agile.js"
     ],
-    "version": "1.3",
+    "version": "1.4",
     "included_urls": [
         "https://bugzilla.mozilla.org/*",
         "https://landfill.bugzilla.org/*"
