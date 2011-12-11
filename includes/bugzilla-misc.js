@@ -6,6 +6,7 @@ registerPref('hidefirst', 'Hide first comment if empty?', ifBug(hideFirst));
 registerPref('shortertitle', 'Remove "Bug" from the title?', ifBug(shorterTitle));
 registerPref('clonebug', 'Auto-fill product when cloning a bug?', ifBug(cloneBug));
 registerPref('relatedbug', 'Add a "new" link for dependent and blocking fields?', ifBug(relatedBug));
+registerPref('browseComponent', 'Add a "browse" link for component fields?', ifBug(browseComponent));
 
 
 function hideFirst() {
@@ -91,25 +92,34 @@ function cloneBug() {
     }
 }
 
+function createLink(start, text, location) {
+    var link = $('<a>' + text + '</a>').attr('href', location),
+    link_empty = $('<span>&nbsp;(</span>').append(link.clone()).append('<span>)'),
+    link_exists = $('<span><span>&nbsp;|&nbsp;</span></span>').append(link.clone());
+
+    $('#' + start + '_edit_action').after(link_exists);
+    $('#' + start).after(link_empty).css('max-width', '-moz-calc(100% - ' + (text.length + 3) + 'ch)');
+}
+
 function relatedBug() {
     if(settings['relatedbug']) {
-        var createLink = function(start, finish) {
-            var new_location = window.location + "&product=" + $('#product').val();
-            new_location += '&component=' + $('#component').val();
-            new_location = new_location.replace(/#[^&]*/, ''); // Strip anchor
-            new_location = new_location.replace(/show_bug/, 'enter_bug');
-            new_location = new_location.replace(/id=/, finish + '=');
+        var new_location = window.location + "&product=" + $('#product').val();
+        new_location += '&component=' + $('#component').val();
+        new_location = new_location.replace(/#[^&]*/, ''); // Strip anchor
+        new_location = new_location.replace(/show_bug/, 'enter_bug');
 
-            var link = $('<a>new</a>').attr('href', new_location),
-                link_empty = $('<span>&nbsp;(</span>').append(link.clone()).append('<span>)'),
-                link_exists = $('<span><span>&nbsp;|&nbsp;</span></span>').append(link.clone());
-
-            $('#' + start + '_edit_action').after(link_exists);
-            $('#' + start).after(link_empty).css('width', '-moz-calc(100% - 60px)');
-        };
-        createLink("blocked", "dependson");
-        createLink("dependson", "blocked");
+        createLink("blocked", "new", new_location.replace(/id=/,  'dependson='));
+        createLink("dependson", "new", new_location.replace(/id=/,  'blocked='));
     }
 }
 
+function browseComponent() {
+    // TODO: add setting
+    var browse_location = window.location + "&product=" + $('#product').val();
+    browse_location += '&component=' + $('#component').val();
+    browse_location = browse_location.replace(/#[^&]*/, ''); // Strip anchor
+    browse_location = browse_location.replace(/show_bug/, 'buglist');
+    browse_location = browse_location.replace(/id=[^&]*&/, '');
 
+    createLink("component", "browse", browse_location);
+}
