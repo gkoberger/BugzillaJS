@@ -6,17 +6,16 @@
     box-shadow: 0 0 30px #333333;
     left: 50%;
     margin: auto auto auto -200px;
-    overflow: auto;
     position: fixed;
     top: 40px;
-    width: 400px;
-
 }
 
 #prefs .header {
     overflow: auto;
     margin-bottom: 1em;
-    height: 300px;
+    min-width: 400px;
+    height: 350px;
+    resize: both;
 }
 
 #prefs a.refresh {
