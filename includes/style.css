@@ -246,7 +246,7 @@ span.reporter {
 
 .bz_comment_head img.gravatar,
 .bz_first_comment_head img.gravatar {
-    width:25px;
+    height:25px;
 }
 
 .git_style .bz_comment_head img.gravatar,
