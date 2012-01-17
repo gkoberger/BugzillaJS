@@ -217,6 +217,7 @@ span.reporter {
 
 .git_style .bz_comment.ih_history .ih_history_item {
     margin-bottom: 5px;
+    overflow: hidden;
 }
 
 .git_style .bz_comment.ih_history .bz_comment_user {
