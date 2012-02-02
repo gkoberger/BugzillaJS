@@ -106,21 +106,22 @@ function initChanges() {
             if (v.type == 'comment') {
                 comment = v;
             } else if (v.date == comment.date) {
-                $('.d' + comment.date).find('.bz_comment_text').before('<div class="history">' + formatChange(v.change.changes));
+                var $his = $('<div>', {'class': 'history', 'text': formatChange(v.change.changes)});
+                $('.d' + comment.date).find('.bz_comment_text').before($his);
             } else {
-                var changes = v.change.changes;
+                var changes = v.change.changes,
+                    $history = $('<div>', {'class': 'history p'+comment.date});
 
-                var history = $('<div class="history p'+comment.date+'"><strong>' + v.change.changer.name + '</strong> ' +
-                    formatChange(v.change.changes) +
-                    ' <span class="bz_comment_time" title="'+new Date(v.date)+
-                    '" data-timestamp="'+v.date+'">' + prettydate(v.date) +
-                    '</span></div>');
+                $history.append($('<strong>', {'text': v.change.changer.name + ' '}));
+                $history.append($('<span>', {'text': formatChange(v.change.changes)}));
+                $history.append($('<span>', {'class': 'bz_comment_time', 'title': new Date(v.date),
+                                             'data-timestamp': v.date, 'text': prettydate(v.date)}));
 
                 if(changes.length == 1 && changes[0].field_name == 'cc') {
-                    history.addClass('hide-cc');
+                    $history.addClass('hide-cc');
                 }
 
-                $('.d' + comment.date + ', .p' + comment.date).filter(':last').after(history);
+                $('.d' + comment.date + ', .p' + comment.date).filter(':last').after($history);
 
             }
         });
