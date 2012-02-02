@@ -3,7 +3,8 @@ var settings = [],
     bug_id = false,
     joinCount = 0,
     bz_comments = $('.bz_comment_text'),
-    hidenobody_val = false;
+    hidenobody_val = false,
+    already_run = [];
 
 /** Get the bug ID **/
 
@@ -95,22 +96,26 @@ function addPrefs() {
 }
 
 function registerPref(slug, details, setting_default, callback) {
-    if(typeof setting_default == "function") callback = setting_default;
-    if(setting_default == undefined) setting_default = true
+    if(! already_run[slug]) {
+        if(typeof setting_default == "function") callback = setting_default;
+        if(setting_default == undefined) setting_default = true
 
-    callback = callback || function(){};
+        callback = callback || function(){};
 
-    settings[slug] = setting_default;
+        settings[slug] = setting_default;
 
-    _.storage.request('settings_' + slug, function(v){
-        if(typeof v != "undefined") {
-            settings[slug] = v;
-        }
+        _.storage.request('settings_' + slug, function(v){
+            if(typeof v != "undefined") {
+                settings[slug] = v;
+            }
 
-        settings_fields.push({'slug':slug, 'details':details});
+            settings_fields.push({'slug':slug, 'details':details});
 
-        callback();
-    });
+            callback();
+        });
+
+        already_run[slug] = true;
+    }
 }
 
 function set_cookie(name, value) {
