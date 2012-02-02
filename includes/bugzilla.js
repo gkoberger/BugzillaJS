@@ -51,6 +51,9 @@ function addPrefs() {
                 footer = $("<div>").appendTo(prefs);
 
 
+            $("<div>").html("Extension now works on any Bugzilla installation! Edit URLs in the Add-on Preferences")
+                .appendTo(header);
+
             $("<a>", {href: 'https://github.com/gkoberger/bugzillajs', class: 'cta'})
                 .html("<strong>Bug or Feature Request?</strong> We're on github &raquo;")
                 .appendTo(header);

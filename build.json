@@ -24,9 +24,12 @@
         "bugzilla-agile.js"
     ],
     "version": "1.4",
-    "included_urls": [
-        "https://bugzilla.mozilla.org/*",
-        "https://landfill.bugzilla.org/*"
-    ],
-    "name": "BugzillaJS"
+    "included_urls": "prefs.prefs.urls.split(/\\s*,\\s*/)",
+    "name": "BugzillaJS",
+    "preferences": [{
+        "name": "urls",
+        "title": "Active URLs (comma separated, each ending in '*')",
+        "type": "string",
+        "value": "https://bugzilla.mozilla.org/*, https://landfill.bugzilla.org/*"
+    }]
 }
