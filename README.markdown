@@ -12,7 +12,7 @@ https://addons.mozilla.org/en-US/firefox/addon/bugzillajs/
 DEVELOPING THE ADD-ON (OSX Only!)
 -------------------------------------------------------------------------------
 
-BugzillaJS requires Omnium (cross platform pagemods), and can be installed
+BugzillaJS requires Omnium (cross browser pagemods), and can be installed
 like this:
 
     mkdir omnium
