@@ -9,14 +9,22 @@ DOWNLOAD THE ADD-ON
 
 https://addons.mozilla.org/en-US/firefox/addon/bugzillajs/
 
-COMPILE THE ADD-ON
+DEVELOPING THE ADD-ON (OSX Only!)
 -------------------------------------------------------------------------------
 
-1. git clone git://github.com/gkoberger/omnium.git
-2. pushd omnium
-3. git clone git://github.com/gkoberger/BugzillaJS.git bugzillajs
-4. popd
-5. python builder.py bugzillajs
+BugzillaJS requires Omnium (cross platform pagemods), and can be installed
+like this:
+
+    mkdir omnium
+    cd omnium
+    git clone git@github.com:gkoberger/omnium.git --recursive .
+    git clone git@github.com:gkoberger/BugzillaJS.git bugzillajs
+    python builder.py bugzillajs
+
+This should open up an install button in Firefox.
+
+Omnium is just a wrapper that I use to generate XPI files.  It takes care of
+figuring out all the page mod logic.
 
 TESTING THE ADD-ON
 ===============================================================================
@@ -114,22 +122,6 @@ CONTRIBUTE
 If you have an idea for an extra feature, either ask me to implement it or
 you can implement it yourself and submit a patch.  I'll do a better job in the
 future of cleaning up the code and possibly making it API-like.
-
-DEVELOPING ON BUGZILLAJS (OSX ONLY!)
-===============================================================================
-
-BugzillaJS requires Omnium, and can be installed like this:
-
-    mkdir omnium
-    cd omnium
-    git clone git@github.com:gkoberger/omnium.git --recursive .
-    git clone git@github.com:gkoberger/BugzillaJS.git bugzillajs
-    python builder.py bugzillajs
-
-This should open up an install button in Firefox.
-
-Omnium is just a wrapper that I use to generate XPI files.  It takes care of
-figuring out all the page mod logic.
 
 TROUBLESHOOTING
 ===============================================================================
