@@ -17,6 +17,7 @@ function agileBacklog() {
         var assigned_stories = 0;
         var total_stories = 0;
         var total_points = 0;
+        var points_dist_data = {};
 
         $wb.each(function(){
             total_stories += 1;
@@ -45,6 +46,13 @@ function agileBacklog() {
                     assigned_stories++;
                     assigned_points += bug.points;
                 }
+            }
+
+            // points distribution data
+            if(points_dist_data[bug.points]) {
+                points_dist_data[bug.points] += bug.points;
+            } else {
+                points_dist_data[bug.points] = bug.points;
             }
 
             // build components_data
@@ -85,7 +93,7 @@ function agileBacklog() {
 
             bugs.push(bug);
         });
-        $('table.bz_buglist').append('<tr><td colspan="99" align="right"><div><div id="pointsGraph" class="graph"></div><div id="componentsGraph" class="graph"></div><div id="usersGraph" class="graph"></div><div>Open Stories: ' + open_stories + '<br/>Open points: ' + open_points + '<br/><div>Assigned Stories: ' + assigned_stories + '<br/>Assigned points: ' + assigned_points + '<br/>Closed Stories: ' + closed_stories + '<br/>Closed points: ' + closed_points + '<br/>Total Stories: ' + total_stories + '<br/>Total Points: ' + total_points + '</div></div></td></tr>');
+        $('table.bz_buglist').append('<tr><td colspan="99" align="right"><div><div id="pointsGraph" class="graph"></div><div id="componentsGraph" class="graph"></div><div id="usersGraph" class="graph"></div><div id="pointsDistGraph" class="graph"></div><div>Open Stories: ' + open_stories + '<br/>Open points: ' + open_points + '<br/><div>Assigned Stories: ' + assigned_stories + '<br/>Assigned points: ' + assigned_points + '<br/>Closed Stories: ' + closed_stories + '<br/>Closed points: ' + closed_points + '<br/>Total Stories: ' + total_stories + '<br/>Total Points: ' + total_points + '</div></div></td></tr>');
         var points_data = [
             {label:"Open", data:open_points, color: "rgb(237, 194, 64)"},
             {label:"Closed", data:closed_points, color: "rgb(77, 167, 77)"},
@@ -94,6 +102,13 @@ function agileBacklog() {
         $.plot($('#pointsGraph'), points_data, {series:{pie:{show:true}},legend:{show:false}});
         $.plot($('#componentsGraph'), components_data, {series:{pie:{show:true}},legend:{show:false}});
         $.plot($('#usersGraph'), users_data, {series:{pie:{show:true}},legend:{show:false}});
+
+        points_data = [];
+        $.each(points_dist_data, function(p,v) {
+            points_data.push({label:p + 'pts', data:v});
+        });
+        $.plot($('#pointsDistGraph'), points_data, {series:{pie:{show:true}},legend:{show:false}});
+
         console.log("Open Stories: " + open_stories);
         console.log("Open points: " + open_points);
         console.log("Closed Stories: " + closed_stories);
