@@ -8,7 +8,7 @@ var settings = [],
 
 /** Get the bug ID **/
 
-bug_id = $('title').text().match(/Bug ([0-9]+)/)
+bug_id = $('title').text().match(/^([0-9]+)/)
 bug_id = bug_id ? bug_id[1] : false
 
 /* Register preferences */
