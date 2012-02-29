@@ -85,7 +85,37 @@ function agileBacklog() {
 
             bugs.push(bug);
         });
-        $('table.bz_buglist').append('<tr><td colspan="99" align="right"><div><div id="pointsGraph" class="graph"></div><div id="componentsGraph" class="graph"></div><div id="usersGraph" class="graph"></div><div>Open Stories: ' + open_stories + '<br/>Open points: ' + open_points + '<br/><div>Assigned Stories: ' + assigned_stories + '<br/>Assigned points: ' + assigned_points + '<br/>Closed Stories: ' + closed_stories + '<br/>Closed points: ' + closed_points + '<br/>Total Stories: ' + total_stories + '<br/>Total Points: ' + total_points + '</div></div></td></tr>');
+
+        var $tr = $('<tr>'),
+            $td1 = $('<td>', {'colspan': 99, 'align': 'right'}),
+            $div = $('<div>'),
+            $pointsGraph = $('<div>', {'id': 'pointsGraph', 'class': 'graph'}),
+            $componentsGraph = $('<div>', {'id': 'componentsGraph', 'class': 'graph'}),
+            $usersGraph = $('<div>', {'id': 'usersGraph', 'class': 'graph'}),
+
+            $text = $('<div>');
+
+        $text.append($('<span>', {'text': 'Open Stories: ' + open_stories}));
+        $text.append($('<br>'));
+        $text.append($('<span>', {'text': 'Assigned Stories: ' + assigned_stories}));
+        $text.append($('<br>'));
+        $text.append($('<span>', {'text': 'Closed Stories: ' + closed_stories}));
+        $text.append($('<br>'));
+        $text.append($('<span>', {'text': 'Closed Points: ' + closed_points}));
+        $text.append($('<br>'));
+        $text.append($('<span>', {'text': 'Total Stories: ' + total_stories}));
+        $text.append($('<br>'));
+        $text.append($('<span>', {'text': 'Total Points: ' + total_points}));
+
+        $div.append($pointsGraph);
+        $div.append($componentsGraph);
+        $div.append($usersGraph);
+        $div.append($text);
+        $td1.append($div);
+        $tr.append($td1);
+
+        $('table.bz_buglist').append($tr);
+
         var points_data = [
             {label:"Open", data:open_points, color: "rgb(237, 194, 64)"},
             {label:"Closed", data:closed_points, color: "rgb(77, 167, 77)"},

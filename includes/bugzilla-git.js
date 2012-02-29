@@ -14,16 +14,19 @@ function initGit() {
                              '?callback=?'
 
                     $.getJSON(giturl, function (d) {
-                        git = $('<div class="git-body">').insertAfter(comment);
-                        head = $('<div class="git-head">').appendTo(git);
+                        git = $('<div>', {'class': "git-body"}).insertAfter(comment);
+                        head = $('<div>', {'class': "git-head"}).appendTo(git);
 
-                        head.append('<p>' + d.commit.message + '</p>');
-                        head.append("<span><strong>" + d.commit.author.name +
-                            "</strong>&nbsp;" +
-                            prettydate(d.commit.authored_date) +
-                            '</span>');
+                        head.append($('<p>', {'text': d.commit.message});
 
-                        table = $("<table class='git'></table>").appendTo(git);
+                        var $span = $('<span>'),
+                            $strong = $('<strong>', {'text': d.commit.author.name}),
+                            $date = $('<span>', {'text': d.commit.authored_date});
+
+                        $span.append($strong).append($date);
+                        head.append($span);
+
+                        table = $("<table>", {'class': 'git'}).appendTo(git);
 
                         if (d.commit.added) {
                             $.each(d.commit.added, function (k, v) {

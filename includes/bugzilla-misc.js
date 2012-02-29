@@ -62,16 +62,20 @@ function removeFlags() {
 function dontGuess() {
     if(settings['dontguess'] && location.href.match(/enter_bug/)) {
         $('#rep_platform, #op_sys').each(function(){
-            var $span = $("<span>&nbsp;(<a>guess</a>)</span>");
-                $a = $("a", $span);
+            var $parent = $('<span>', {'css': {'padding-left': 10}}),
+                $s1 = $("<span>", {'text': '('}),
+                $a = $("<a>", {'text': 'guess'}),
+                $s2 = $("<span>", {'text': ')'});
 
-            $a.attr({"html": "guess", "href": "#", "data-val": $(this).val()});
+            $parent.append($s1).append($a).append($s2);
+
+            $a.attr({"href": "#", "data-val": $(this).val()});
             $a.click(function(){
                 $(this).closest('td').find('select').val($(this).attr('data-val'));
                 $(this).parent().hide();
                 return false;
             });
-            $(this).val("All").after($span);
+            $(this).val("All").after($parent);
         });
 
         $('#os_guess_note').parent().hide();
@@ -93,9 +97,9 @@ function cloneBug() {
 }
 
 function createLink(start, text, location) {
-    var link = $('<a>' + text + '</a>').attr('href', location),
-    link_empty = $('<span>&nbsp;(</span>').append(link.clone()).append('<span>)'),
-    link_exists = $('<span><span>&nbsp;|&nbsp;</span></span>').append(link.clone());
+    var link = $('<a>', {'text': text, 'href': location}),
+        link_empty = $('<span>', {'css': {'padding-left': 5}, 'text': '('}).append(link.clone()).append($('<span>', {'text': ')'})),
+        link_exists = $('<span>', {'text': '|', 'css': {'padding': '0 5px'}}).after(link.clone());
 
     $('#' + start + '_edit_action').after(link_exists);
     $('#' + start).after(link_empty).css('max-width', '-moz-calc(100% - ' + (text.length + 3) + 'ch)');

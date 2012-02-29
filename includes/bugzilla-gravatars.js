@@ -9,7 +9,7 @@ function setGravatars() {
                 var email = $('a.email', this).attr('href').replace(/mailto:\s*/, '');
                 email = email.toLowerCase().replace(/\+(.*?)@/, "@");
                 $(this).find('.gravatar').remove();
-                $(this).prepend('<img class="gravatar" src="https://secure.gravatar.com/avatar/' + hex_md5(email) + '">');
+                $(this).prepend($('<img>', {'class': "gravatar", 'src': "https://secure.gravatar.com/avatar/" + hex_md5(email)}));
             }
 
         });
