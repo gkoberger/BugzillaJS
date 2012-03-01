@@ -23,7 +23,7 @@
         "bugzilla-misc.js",
         "bugzilla-agile.js"
     ],
-    "version": "2.0",
+    "version": "2.0.1",
     "included_urls": "prefs.prefs.urls.split(/\\s*,\\s*/)",
     "name": "BugzillaJS",
     "preferences": [{
