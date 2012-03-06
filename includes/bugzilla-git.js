@@ -17,7 +17,7 @@ function initGit() {
                         git = $('<div>', {'class': "git-body"}).insertAfter(comment);
                         head = $('<div>', {'class': "git-head"}).appendTo(git);
 
-                        head.append($('<p>', {'text': d.commit.message});
+                        head.append($('<p>', {'text': d.commit.message}));
 
                         var $span = $('<span>'),
                             $strong = $('<strong>', {'text': d.commit.author.name}),

@@ -3,7 +3,7 @@ registerPref('hidenobody', 'Have a "Show only assigned bugs" option?', loadHideN
 function loadHideNobody() {
     var $rc = $('.bz_result_count').eq(0);
 
-    $rc.after($('<label>', {'for': 'hide-nobody', 'text': 'Show only assigned bugs'});
+    $rc.after($('<label>', {'for': 'hide-nobody', 'text': 'Show only assigned bugs'}));
     $rc.after($('<input>', {'id': 'hide-nobody', 'type': 'checkbox'}));
 
     hidenobody_val = false;
