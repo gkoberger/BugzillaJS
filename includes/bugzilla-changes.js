@@ -5,15 +5,20 @@ if($('#inline-history-ext').length == 0) {
 var bugs_all = {}; // Global-ish var.  Yucky.
 
 // Return a formatted version of the changes
-function formatChange(c) {
-    changes_array = [];
-
+function formatChange(c, $el) {
+    function t(text, type) {
+        type = type ? type : 'span';
+        return $('<' + type + '>', {'text': text});
+    }
     $.each(c, function (ck, cv) {
         var removed = cv.removed,
-            added = cv.added;
+            added = cv.added,
+            content = $('<span>');
 
+            /*
+            Buggy and not worth fixing right now.
         if(cv.field_name == 'depends_on' || cv.field_name == 'blocks') {
-            f = function(text){
+            var f = function(text){
                 if(text in bugs_all) {
                     return new XMLSerializer().serializeToString(bugs_all[text][0])
                 }
@@ -21,20 +26,25 @@ function formatChange(c) {
                 u = "<a href='https://bugzilla.mozilla.org/show" +
                 "_bug.cgi?id=$1'>$1</a>";
                 return text.replace(/([0-9]+)/g, u);
-            }
+            };
             if(removed) removed = f(removed);
             if(added) added = f(added);
         }
-        text = cv.field_name + ": " +
-               (removed ? "<del>" + removed + "</del> => " : "") + added;
-        if(cv.field_name == 'cc') {
-            text = "<span class='hide-cc'>" + text + ";</span> ";
-        } else {
-            text = text + "; ";
+        */
+        content.append(t(cv.field_name + ': '));
+        if(removed) {
+            content.append(t(removed, 'del'));
+            content.append(t(' => '));
         }
-        changes_array.push(text);
+        content.append(t(added));
+
+        if(cv.field_name == 'cc') {
+            content.addClass('hide-cc');
+        }
+        content.append(t('; '));
+
+        $el.append(content);
     });
-    return changes_array.join('');
 }
 
 
@@ -106,14 +116,16 @@ function initChanges() {
             if (v.type == 'comment') {
                 comment = v;
             } else if (v.date == comment.date) {
-                var $his = $('<div>', {'class': 'history', 'text': formatChange(v.change.changes)});
+                var $his = $('<div>', {'class': 'history'});
+                formatChange(v.change.changes, $his);
+
                 $('.d' + comment.date).find('.bz_comment_text').before($his);
             } else {
                 var changes = v.change.changes,
                     $history = $('<div>', {'class': 'history p'+comment.date});
 
                 $history.append($('<strong>', {'text': v.change.changer.name + ' '}));
-                $history.append($('<span>', {'text': formatChange(v.change.changes)}));
+                formatChange(v.change.changes, $history);
                 $history.append($('<span>', {'class': 'bz_comment_time', 'title': new Date(v.date),
                                              'data-timestamp': v.date, 'text': prettydate(v.date)}));
 
