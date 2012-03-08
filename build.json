@@ -5,6 +5,7 @@
     "namespace": "http://gkoberger.net",
     "load_order": [
         "jquery.js",
+        "jsonp.js",
         "jquery.scrollTo.js",
         "jquery.flot.js",
         "jquery.flot.pie.js",
@@ -23,7 +24,7 @@
         "bugzilla-misc.js",
         "bugzilla-agile.js"
     ],
-    "version": "2.0.2",
+    "version": "2.0.3",
     "included_urls": "prefs.prefs.urls.split(/\\s*,\\s*/)",
     "name": "BugzillaJS",
     "preferences": [{

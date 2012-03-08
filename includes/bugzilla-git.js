@@ -10,10 +10,12 @@ function initGit() {
 
                 if (isGithub) {
                     giturl = 'https://github.com/api/v2/json/commits/show/' +
-                             isGithub[1] + '/' + isGithub[2] + '/' + isGithub[3] +
-                             '?callback=?'
+                             isGithub[1] + '/' + isGithub[2] + '/' + isGithub[3];
+                             //'?callback=cbk'
 
-                    $.getJSON(giturl, function (d) {
+
+
+                    JSONP.get( giturl, {}, function (d) {
                         git = $('<div>', {'class': "git-body"}).insertAfter(comment);
                         head = $('<div>', {'class': "git-head"}).appendTo(git);
 
