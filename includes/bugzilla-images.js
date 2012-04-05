@@ -41,9 +41,15 @@ function initImageStuff() {
             if (settings['gallery'] && images.length) {
                 gal = $('<div class="img-gal">').insertAfter(comment);
                 $.each(images, function (k, v) {
-                    a = $('<a href="' + v + '" title="' + v + '" target="_blank"><img src="' + v + '"></a>').appendTo(gal);
+                    var $a = $('<a class="preview-img" href="' + v + '" target="_blank">').appendTo(gal);
+
+                    _.getImage(v, function(src) {
+                        $img = $('<img>', {'src': src});
+                        $a.append($img);
+                    });
+
                     if(settings['lightbox']) {
-                        $(a).click(bzLightbox);
+                        $a.click(bzLightbox);
                     }
                 });
             }
@@ -54,7 +60,7 @@ function initImageStuff() {
         function closeBzLightbox() {
           $('.lb, .overlay').remove();
         }
-        
+
         closeBzLightbox();
         overlay = $('<div>').addClass('overlay').appendTo('body').css({opacity: 0});
         overlay2 = $('<div>').addClass('overlay2').appendTo('body');
