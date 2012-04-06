@@ -3,15 +3,13 @@ var $shortcuts = $('<div>', {'class': 'shortcuts'}).hide(),
     kbCallback = {},
     is_focused = false;
 
-var kbMap = {',': '188'};
-
 $shortcuts.append($shortcuts_table);
 
 function addShortcut(key, title, callback) {
     /* Do something */
     var keycode =  "";
     for(var i=0;i<key.length;i++) {
-        keycode += (key[i] in kbMap ? kbMap[key[i]] : key.charCodeAt(i)) + "_";
+        keycode += key.charCodeAt(i) + "_";
     }
     keycode = keycode.slice(0,-1);
 
@@ -104,6 +102,4 @@ addShortcut('gs', 'Go to advanced search', './query.cgi?format=advanced');
 
 addShortcut('gp', 'Go to preferences', './userprefs.cgi');
 
-addShortcut('g,', 'Go to BugzillaJS prefs', function() {
-    alert('BugzillaJS prefs!');
-});
+addShortcut('g,', 'Go to BugzillaJS prefs', openPrefs);

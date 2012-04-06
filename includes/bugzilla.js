@@ -40,59 +40,64 @@ function repositionScroll() {
 }
 
 function addPrefs() {
-    d = "<span class='separator'>| </span>" +
-        "<li><a href=''>BugzillaJS Preferences</a></li>";
+    var $appendTo = $('#header .links, #links-actions .links'),
+        $li = $('<li>'),
+        $a = $('<a>', {'class': 'bjs-prefs', 'href':'#', 'text': 'BugzillaJS Preferences'});
 
-    $(d).appendTo('#header .links, #links-actions .links')
-        .click(function(){
-            $('#prefs').remove();
+    $appendTo.append($('<span>', {'class': 'separator', 'text': '| '}));
+    $li.append($a);
+    $appendTo.append($li.clone());
 
-            var prefs = $('<div id="prefs">').appendTo('body'),
-                header = $("<div class='header'>").appendTo(prefs),
-                footer = $("<div>").appendTo(prefs);
+    $('a.bjs-prefs').click(openPrefs);
+}
 
+function openPrefs(){
+    $('#prefs').remove();
 
-            $("<div>").html("Now works on any Bugzilla installation! Add sites in <em>Add-on Preferences</em>.")
-                .appendTo(header);
-
-            $("<a>", {href: 'https://github.com/gkoberger/bugzillajs', class: 'cta'})
-                .html("<strong>Bug or Feature Request?</strong> We're on github &raquo;")
-                .appendTo(header);
-
-            $("<a>", {href: 'https://addons.mozilla.org/en-US/firefox/addon/bugzillajs/reviews/add', class: 'cta2'})
-                .html("<strong>Like BugzillaJS?</strong> Write a review! &raquo;")
-                .appendTo(header);
-
-            $.each(settings_fields, function(k, v){
-                o = "<div>";
-                o += "<input type='checkbox' id='setting_"+v.slug+"' " +
-                     "data-slug='"+v.slug+"' "+
-                     (settings[v.slug] ? "checked='checked'" : "")+
-                     ">";
-                o += "<label for='setting_"+v.slug+"'>" + v.details +
-                     "</label></div>";
-                header.append(o);
-            });
-
-        $("<br>").appendTo(header);
-
-        $("<a>", {'class': 'refresh', 'text': 'reload page', 'href': '#'})
-            .appendTo(footer)
-            .click(function(){ window.location.reload(); return false; });
+    var prefs = $('<div id="prefs">').appendTo('body'),
+    header = $("<div class='header'>").appendTo(prefs),
+    footer = $("<div>").appendTo(prefs);
 
 
-        $("<a href='#'>close</a>").appendTo(footer).click(function(){
-            $('#prefs').remove();
-            return false;
-        });
+    $("<div>").html("Now works on any Bugzilla installation! Add sites in <em>Add-on Preferences</em>.")
+    .appendTo(header);
 
-        $('input', prefs).change(function(){
-            _.storage.save('settings_' + $(this).attr('data-slug'), $(this).is(':checked'));
-        });
+    $("<a>", {href: 'https://github.com/gkoberger/bugzillajs', class: 'cta'})
+    .html("<strong>Bug or Feature Request?</strong> We're on github &raquo;")
+    .appendTo(header);
 
+    $("<a>", {href: 'https://addons.mozilla.org/en-US/firefox/addon/bugzillajs/reviews/add', class: 'cta2'})
+    .html("<strong>Like BugzillaJS?</strong> Write a review! &raquo;")
+    .appendTo(header);
+
+    $.each(settings_fields, function(k, v){
+        o = "<div>";
+        o += "<input type='checkbox' id='setting_"+v.slug+"' " +
+            "data-slug='"+v.slug+"' "+
+            (settings[v.slug] ? "checked='checked'" : "")+
+            ">";
+        o += "<label for='setting_"+v.slug+"'>" + v.details +
+            "</label></div>";
+        header.append(o);
+    });
+
+    $("<br>").appendTo(header);
+
+    $("<a>", {'class': 'refresh', 'text': 'reload page', 'href': '#'})
+    .appendTo(footer)
+    .click(function(){ window.location.reload(); return false; });
+
+
+    $("<a href='#'>close</a>").appendTo(footer).click(function(){
+        $('#prefs').remove();
         return false;
     });
 
+    $('input', prefs).change(function(){
+        _.storage.save('settings_' + $(this).attr('data-slug'), $(this).is(':checked'));
+    });
+
+    return false;
 }
 
 function registerPref(slug, details, setting_default, callback) {
