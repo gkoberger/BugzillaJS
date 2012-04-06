@@ -563,3 +563,40 @@ color:#fff;
     -moz-transition: opacity 0.3s ease;
 }
 
+
+.shortcuts {
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 5px 5px 5px 5px;
+    color: #FFFFFF;
+    left: 50%;
+    margin-left: -265px;
+    margin-top: 100px;
+    padding: 15px;
+    position: fixed;
+    top: 0;
+    width: 500px;
+}
+
+.shortcuts th {
+    text-align: left;
+    color: #8895B7;
+}
+
+.shortcuts .left {
+    text-align: right;
+    padding-right: 5px;
+    min-width: 100px;
+}
+
+.shortcuts .left strong {
+    color: #8895B7;
+    font-weight: bold;
+}
+
+.shortcuts .left em {
+    font-size: 0.7em;
+    font-style: normal;
+    font-weight: bold;
+    padding: 0 5px;
+    text-transform: uppercase;
+}
