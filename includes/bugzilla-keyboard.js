@@ -73,9 +73,7 @@ function initKB() {
         last_g = e.which == 103 ? "103_" : "";
     });
 
-    setTimeout(function() {
-        $(document.activeElement).blur(); // Some fields auto-focus, which ruins this.
-    }, 200);
+    $(document.activeElement).blur(); // Some fields auto-focus, which ruins this.
 
     $('body').append($shortcuts);
 
