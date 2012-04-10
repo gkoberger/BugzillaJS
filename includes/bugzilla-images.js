@@ -21,7 +21,7 @@ function initImageStuff() {
 
         /* Close on <esc> */
         $(window).bind('close', function(e) {
-            closeBzLightbox();
+            $('.lb, .overlay').remove();
         });
 
         bz_comments.each(function() {
