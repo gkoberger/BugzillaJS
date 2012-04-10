@@ -82,7 +82,6 @@ function initKB() {
      * ====================== */
     addShortcut('?', 'View shortcuts', function() {
         $('#shortcuts').toggle();
-        console.log($('#shortcuts'), $('#shortcuts').is(':visible'));
     });
 
     addShortcut('n', 'File a new bug', function() {
