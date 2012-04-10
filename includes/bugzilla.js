@@ -4,7 +4,9 @@ var settings = [],
     joinCount = 0,
     bz_comments = $('.bz_comment_text'),
     hidenobody_val = false,
-    already_run = [];
+    already_run = [],
+    total_new = 0,
+    show_new = "<span class='show_new'>new</span>";
 
 /** Get the bug ID **/
 
@@ -61,9 +63,8 @@ function openPrefs(){
     $('#prefs').remove();
 
     var prefs = $('<div id="prefs">').appendTo('body'),
-    header = $("<div class='header'>").appendTo(prefs),
-    footer = $("<div>").appendTo(prefs);
-
+        header = $("<div class='header'>").appendTo(prefs),
+        footer = $("<div>").appendTo(prefs);
 
     $("<div>").html("Now works on any Bugzilla installation! Add sites in <em>Add-on Preferences</em>.")
     .appendTo(header);
@@ -82,9 +83,15 @@ function openPrefs(){
             "data-slug='"+v.slug+"' "+
             (settings[v.slug] ? "checked='checked'" : "")+
             ">";
-        o += "<label for='setting_"+v.slug+"'>" + v.details +
+        o += "<label for='setting_"+v.slug+"'>" +
+            (v.is_new ? show_new : "") + v.details +
             "</label></div>";
         header.append(o);
+
+        if(v.is_new) {
+            /* Save it so we don't get annoyed with notifications anymore. */
+            _.storage.save('settings_' + v.slug, settings[v.slug]);
+        }
     });
 
     $("<br>").appendTo(header);
@@ -92,7 +99,6 @@ function openPrefs(){
     $("<a>", {'class': 'refresh', 'text': 'reload page', 'href': '#'})
     .appendTo(footer)
     .click(function(){ window.location.reload(); return false; });
-
 
     $("<a href='#'>close</a>").appendTo(footer).click(function(){
         $('#prefs').remove();
@@ -108,19 +114,26 @@ function openPrefs(){
 
 function registerPref(slug, details, setting_default, callback) {
     if(! already_run[slug]) {
-        if(typeof setting_default == "function") callback = setting_default;
-        if(setting_default == undefined) setting_default = true
+        if(typeof setting_default == "function") {
+            callback = setting_default;
+            setting_default = null;
+        }
+        if(setting_default == null || setting_default == undefined) setting_default = true;
 
         callback = callback || function(){};
 
         settings[slug] = setting_default;
 
         _.storage.request('settings_' + slug, function(v){
+            var is_new = true;
             if(typeof v != "undefined") {
                 settings[slug] = v;
+                is_new = false;
+            } else {
+                total_new++;
             }
 
-            settings_fields.push({'slug':slug, 'details':details});
+            settings_fields.push({'slug':slug, 'details':details, 'is_new': is_new});
 
             /* If it's enabled, run it! */
             if(settings[slug]) {
@@ -131,6 +144,13 @@ function registerPref(slug, details, setting_default, callback) {
         already_run[slug] = true;
     }
 }
+
+// New feature? Notify them!
+setTimeout(function() {
+    if(total_new > 0) {
+        $('.bjs-prefs').after($('<span class="notify">'+total_new+'</span>'));
+    }
+}, 500);
 
 function set_cookie(name, value) {
   var cookie_string = name + "=" + escape ( value );

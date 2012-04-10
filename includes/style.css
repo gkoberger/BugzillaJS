@@ -600,3 +600,32 @@ color:#fff;
     padding: 0 5px;
     text-transform: uppercase;
 }
+
+.notify {
+    background-color: #990505;
+    border-radius: 5px 5px 5px 5px;
+    color: #FFFFFF;
+    margin-left: 10px;
+    padding: 2px 5px;
+    position: relative;
+}
+
+.notify:before {
+    border-color-right: #990505;
+    border: 5px solid transparent;
+    content: " ";
+    height: 0;
+    left: -9px;
+    margin-top: -6px;
+    position: absolute;
+    top: 50%;
+    width: 0;
+}
+
+.show_new {
+    color: red;
+    font-size: 0.8em;
+    font-weight: bold;
+    padding-right: 5px;
+    text-transform: uppercase;
+}
