@@ -19,6 +19,11 @@ function initImageStuff() {
           }
         });
 
+        /* Close on <esc> */
+        $(window).bind('close', function(e) {
+            closeBzLightbox();
+        });
+
         bz_comments.each(function() {
             var comment = $(this),
                 images = new Array();
@@ -82,13 +87,7 @@ function initImageStuff() {
         $(img).css({'opacity': 1});
         $(overlay).css({'opacity': 1});
 
-        $(document).keyup(function(e) {
-          // Esc key
-          if (e.keyCode == 27) {
-            closeBzLightbox();
-          }
-        });
-
         return false;
     }
+
 }

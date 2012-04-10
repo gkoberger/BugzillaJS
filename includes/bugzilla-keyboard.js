@@ -1,5 +1,13 @@
 registerPref('keyboard', 'Enable keyboard shortcuts?', false, initKB);
 
+// Watch for <esc>
+$(window).keypress(function(e) {
+  if(e.keyCode == 27) {
+    $(window).trigger("close");
+    $(document.activeElement).blur();
+  }
+});
+
 function initKB() {
     var $shortcuts = $('<div>', {'class': 'shortcuts', 'id': 'shortcuts'}).hide(),
         $shortcuts_table = $('<table>'),
@@ -48,6 +56,10 @@ function initKB() {
         $tr.append($td2);
     }
 
+    $(window).bind('close', function() {
+        $shortcuts.hide();
+    });
+
     var last_g = "";
     $(unsafeWindow).keypress(function(e) {
         if($(e.target).is('input, textarea, select') || e.ctrlKey || e.metaKey || e.altKey) return;
@@ -62,7 +74,7 @@ function initKB() {
     });
 
     setTimeout(function() {
-        $('html').focus(); // Some fields auto-focus, which ruins this.
+        $(document.activeElement).blur(); // Some fields auto-focus, which ruins this.
     }, 200);
 
     $('body').append($shortcuts);

@@ -49,6 +49,12 @@ function addPrefs() {
     $appendTo.append($li.clone());
 
     $('a.bjs-prefs').click(openPrefs);
+
+    // Close on <esc>
+    $(window).bind('close', function(e) {
+        $('#prefs').remove();
+    });
+
 }
 
 function openPrefs(){
