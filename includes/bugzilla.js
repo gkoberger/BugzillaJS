@@ -116,7 +116,10 @@ function registerPref(slug, details, setting_default, callback) {
 
             settings_fields.push({'slug':slug, 'details':details});
 
-            callback();
+            /* If it's enabled, run it! */
+            if(settings[slug]) {
+                callback();
+            }
         });
 
         already_run[slug] = true;
