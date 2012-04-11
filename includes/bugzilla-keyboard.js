@@ -99,7 +99,7 @@ function initKB() {
         $('#shortcuts').toggle();
     });
 
-    addShortcut('n', 'File a new bug', function() {
+    addShortcut('n', 'Quick file a new bug', function() {
         $(window).trigger('close');
         $fileit = $('<div>', {'class': 'quickmodal', 'id': 'fileit_quick'}).appendTo('body');
         $fileit.fileit();
