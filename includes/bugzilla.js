@@ -115,7 +115,7 @@ function openPrefs(e){
     });
 
     /* Close button */
-    $('<a>', {'href': '#', 'text': 'close'}).appendTo($prefs_f).click(function(){
+    $('<a>', {'href': '#', 'text': 'cancel'}).appendTo($prefs_f).click(function(){
         $(window).trigger('close');
     });
 }
