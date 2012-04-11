@@ -3,12 +3,22 @@ registerPref('keyboard', {'title': 'Enable keyboard shortcuts',
                           'callback': initKB,
                           'category': 'keyboard'});
 
-// Watch for <esc>
+// Watch for <esc> or '?'
+var keyboard_is_enabled = false;
 $(window).keypress(function(e) {
-  if(e.keyCode == 27) {
-    $(window).trigger("close");
-    $(document.activeElement).blur();
-  }
+    if(e.keyCode == 27) { // <esc>
+        $(window).trigger("close");
+        $(document.activeElement).blur();
+    }
+    if(e.which == 63 && !keyboard_is_enabled) { // ?
+        var enable = confirm('Keyboard shortcuts are disabled. Do you want to enable them?');
+        if(enable) {
+            _.storage.save('settings_keyboard', true);
+            settings['keyboard'] = true;
+            initKB();
+            $('#shortcuts').show();
+        }
+    }
 });
 
 function initKB() {
@@ -16,6 +26,8 @@ function initKB() {
         $shortcuts_table = $('<table>'),
         kbCallback = {},
         is_focused = false;
+
+    keyboard_is_enabled = true;
 
     $shortcuts.append($shortcuts_table);
 
