@@ -1,5 +1,8 @@
 if($('#inline-history-ext').length == 0) {
-    registerPref('changes', 'Show changes to the bug', ifBug(initChanges));
+    registerPref('changes', {'title': 'Show inline changes to the bug',
+                             'setting_default': true,
+                             'callback': ifBug(initChanges),
+                             'category': 'bug'});
 }
 
 var bugs_all = {}; // Global-ish var.  Yucky.
@@ -49,98 +52,97 @@ function formatChange(c, $el) {
 
 
 function initChanges() {
-    if(settings['changes']) {
-        var inputs = $('#blocked_input_area, #dependson_input_area'),
-            bug_links = inputs.closest('td').find('a');
+    var inputs = $('#blocked_input_area, #dependson_input_area'),
+        bug_links = inputs.closest('td').find('a');
 
-        addCCLink();
-        bug_links.each(function() {
-            var el = $(this),
-                bug_href = el.attr('href').match(/show_bug.cgi\?id=(.*)/);
+    addCCLink();
+    bug_links.each(function() {
+        var el = $(this),
+            bug_href = el.attr('href').match(/show_bug.cgi\?id=(.*)/);
 
-            if(bug_href) {
-                if(el.parent().is('.bz_closed')) {
-                    el = el.parent();
-                }
-                bugs_all[bug_href[1]] = el;
+        if(bug_href) {
+            if(el.parent().is('.bz_closed')) {
+                el = el.parent();
             }
-        });
-
-        if($('#inline-history-ext').length > 0 && !window.localStorage['inlinehistory-found2']) {
-            alert('It looks like Bugzilla already has inline history, so you may want ' +
-                  'to disable inline history in the BugzillaJS preferences.');
-            window.localStorage['inlinehistory-found2'] = true;
+            bugs_all[bug_href[1]] = el;
         }
-        url = 'https://api-dev.bugzilla.mozilla.org/latest/bug/' + bug_id + '/history'
+    });
 
-        var changes = [];
-        $.getJSON(url, function (d) {
-            $.each(d.history, function (v, k) {
-                changes.push({
-                    'date': fixDate(k.change_time).getTime(),
-                    'change': k,
-                    'type': 'change'
-                });
-            });
-            apply_changes(changes);
-        });
+    if($('#inline-history-ext').length > 0 && !window.localStorage['inlinehistory-found2']) {
+        alert('It looks like Bugzilla already has inline history, so you may want ' +
+              'to disable inline history in the BugzillaJS preferences.');
+        window.localStorage['inlinehistory-found2'] = true;
     }
+    url = 'https://api-dev.bugzilla.mozilla.org/latest/bug/' + bug_id + '/history'
 
-    var comments = [];
-    function apply_changes(changes) {
-        var i = 0;
-        $('.bz_comment').each(function (v, k) {
-            var date_el = $(this).find('.bz_comment_time'),
-                date_ascii = date_el.text();
-
-            if(date_el.attr('data-timestamp')) {
-                date_ascii = date_el.attr('data-timestamp');
-            }
-
-            var timestamp = fixDate(date_ascii).getTime();
-
-            $(this).addClass('d' + timestamp);
-            comments.push({
-                'date': timestamp,
-                'type': 'comment'
+    var changes = [];
+    $.getJSON(url, function (d) {
+        $.each(d.history, function (v, k) {
+            changes.push({
+                'date': fixDate(k.change_time).getTime(),
+                'change': k,
+                'type': 'change'
             });
         });
-
-        everything = $.merge(comments, changes).sort(function (x, y) {
-            return (x.date + (x.type == 'change')) - (y.date + (y.type == 'change'));
-        });
-
-        // Now, loop through them and add to the DOM
-        var comment = everything[0];
-        $.each(everything, function (k, v) {
-            if (v.type == 'comment') {
-                comment = v;
-            } else if (v.date == comment.date) {
-                var $his = $('<div>', {'class': 'history'});
-                formatChange(v.change.changes, $his);
-
-                $('.d' + comment.date).find('.bz_comment_text').before($his);
-            } else {
-                var changes = v.change.changes,
-                    $history = $('<div>', {'class': 'history p'+comment.date});
-
-                $history.append($('<strong>', {'text': v.change.changer.name + ' '}));
-                formatChange(v.change.changes, $history);
-                $history.append($('<span>', {'class': 'bz_comment_time', 'title': new Date(v.date),
-                                             'data-timestamp': v.date, 'text': prettydate(v.date)}));
-
-                if(changes.length == 1 && changes[0].field_name == 'cc') {
-                    $history.addClass('hide-cc');
-                }
-
-                $('.d' + comment.date + ', .p' + comment.date).filter(':last').after($history);
-
-            }
-        });
-
-        repositionScroll();
-    }
+        apply_changes(changes);
+    });
 }
+
+var comments = [];
+function apply_changes(changes) {
+    var i = 0;
+    $('.bz_comment').each(function (v, k) {
+        var date_el = $(this).find('.bz_comment_time'),
+            date_ascii = date_el.text();
+
+        if(date_el.attr('data-timestamp')) {
+            date_ascii = date_el.attr('data-timestamp');
+        }
+
+        var timestamp = fixDate(date_ascii).getTime();
+
+        $(this).addClass('d' + timestamp);
+        comments.push({
+            'date': timestamp,
+            'type': 'comment'
+        });
+    });
+
+    everything = $.merge(comments, changes).sort(function (x, y) {
+        return (x.date + (x.type == 'change')) - (y.date + (y.type == 'change'));
+    });
+
+    // Now, loop through them and add to the DOM
+    var comment = everything[0];
+    $.each(everything, function (k, v) {
+        if (v.type == 'comment') {
+            comment = v;
+        } else if (v.date == comment.date) {
+            var $his = $('<div>', {'class': 'history'});
+            formatChange(v.change.changes, $his);
+
+            $('.d' + comment.date).find('.bz_comment_text').before($his);
+        } else {
+            var changes = v.change.changes,
+                $history = $('<div>', {'class': 'history p'+comment.date});
+
+            $history.append($('<strong>', {'text': v.change.changer.name + ' '}));
+            formatChange(v.change.changes, $history);
+            $history.append($('<span>', {'class': 'bz_comment_time', 'title': new Date(v.date),
+                                         'data-timestamp': v.date, 'text': prettydate(v.date)}));
+
+            if(changes.length == 1 && changes[0].field_name == 'cc') {
+                $history.addClass('hide-cc');
+            }
+
+            $('.d' + comment.date + ', .p' + comment.date).filter(':last').after($history);
+
+        }
+    });
+
+    repositionScroll();
+}
+
 function addCCLink() {
     var $li = $("<li>"),
         $input = $('<input>', {'id': 'hide-cc', 'type': 'checkbox'}),

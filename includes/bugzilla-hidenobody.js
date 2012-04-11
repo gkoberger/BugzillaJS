@@ -1,4 +1,10 @@
-registerPref('hidenobody', 'Have a "Show only assigned bugs" option?', loadHideNobody);
+/* I don't think anyone actuall uses this... */
+
+/*
+registerPref('hidenobody', {'title': 'Have a "Show only assigned bugs" option',
+                            'setting_default': true,
+                            'callback': loadHideNobody,
+                            'category': 'listings'});
 
 function loadHideNobody() {
     var $rc = $('.bz_result_count').eq(0);
@@ -32,3 +38,4 @@ function hideNobodyToggle() {
         }
     });
 }
+*/

@@ -1,4 +1,7 @@
-registerPref('openall', 'Option to open all bugs in tabs?', loadOpenAll);
+registerPref('openall', {'title': 'Option to open all bugs in tabs',
+                         'setting_default': true,
+                         'callback': loadOpenAll,
+                         'category': 'listings'});
 
 function loadOpenAll() {
     var openAll = function(e) {

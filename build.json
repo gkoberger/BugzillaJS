@@ -12,6 +12,7 @@
         "style.css",
         "bugzilla-agile.css",
         "md5.js",
+        "bugzilla-defs.js",
         "bugzilla.js",
         "bugzilla-changes.js",
         "bugzilla-date.js",

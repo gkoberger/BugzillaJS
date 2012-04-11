@@ -18,6 +18,24 @@
     resize: both;
 }
 
+#prefs h3 {
+    margin: 1em 0 0;
+}
+#prefs h3:first-child {
+    margin-top: 0;
+}
+#prefs p {
+    font-size: 0.9em;
+    margin: 0 0 5px;
+    color: #555;
+}
+#prefs input {
+    margin-right: 10px;
+}
+#prefs label {
+    font-size: 0.9em;
+}
+
 #prefs a.refresh {
     background-color: #FFFFFF;
     background-image: -webkit-gradient(

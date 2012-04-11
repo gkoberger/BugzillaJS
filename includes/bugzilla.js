@@ -5,8 +5,7 @@ var settings = [],
     bz_comments = $('.bz_comment_text'),
     hidenobody_val = false,
     already_run = [],
-    total_new = 0,
-    show_new = "<span class='show_new'>new</span>";
+    total_new = 0;
 
 /** Get the bug ID **/
 
@@ -14,7 +13,10 @@ bug_id = $('title').text().match(/^(?:Bug )?([0-9]+)/)
 bug_id = bug_id ? bug_id[1] : false
 
 /* Register preferences */
-registerPref('gitcomments', 'Use github-style comments?', ifBug(addStyling));
+registerPref('gitcomments', {'title': 'Style the comments',
+                             'setting_default': true,
+                             'callback': ifBug(addStyling),
+                             'category': 'bug'});
 
 /** Run the modules **/
 addPrefs();
@@ -59,60 +61,71 @@ function addPrefs() {
 
 }
 
-function openPrefs(){
+function openPrefs(e){
+    if(e) e.preventDefault();
+
     $('#prefs').remove();
 
-    var prefs = $('<div id="prefs">').appendTo('body'),
-        header = $("<div class='header'>").appendTo(prefs),
-        footer = $("<div>").appendTo(prefs);
+    var $prefs = $('<div>', {'id': 'prefs'}),
+        $prefs_h = $('<div>', {'class': 'header'});
+        $prefs_f = $('<div>', {'class': 'footer'});
 
-    $("<div>").html("Now works on any Bugzilla installation! Add sites in <em>Add-on Preferences</em>.")
-    .appendTo(header);
+    $('body').append($prefs);
+    $prefs.append($prefs_h).append($prefs_f);
 
-    $("<a>", {href: 'https://github.com/gkoberger/bugzillajs', class: 'cta'})
-    .html("<strong>Bug or Feature Request?</strong> We're on github &raquo;")
-    .appendTo(header);
+    $.each(categories, function(v, k) {
+        var content = k.split(' | '),
+            title = content[0],
+            desc = content[1];
 
-    $("<a>", {href: 'https://addons.mozilla.org/en-US/firefox/addon/bugzillajs/reviews/add', class: 'cta2'})
-    .html("<strong>Like BugzillaJS?</strong> Write a review! &raquo;")
-    .appendTo(header);
+        var $h3 = $('<h3>', {'text': title}),
+            $desc = $('<p>', {'text': desc}),
+            $opts = $('<div>', {'id': 'cat-' + v});
 
-    $.each(settings_fields, function(k, v){
-        o = "<div>";
-        o += "<input type='checkbox' id='setting_"+v.slug+"' " +
-            "data-slug='"+v.slug+"' "+
-            (settings[v.slug] ? "checked='checked'" : "")+
-            ">";
-        o += "<label for='setting_"+v.slug+"'>" +
-            (v.is_new ? show_new : "") + v.details +
-            "</label></div>";
-        header.append(o);
-
-        if(v.is_new) {
-            /* Save it so we don't get annoyed with notifications anymore. */
-            _.storage.save('settings_' + v.slug, settings[v.slug]);
-        }
+        $prefs_h.append($h3);
+        $prefs_h.append($desc);
+        $prefs_h.append($opts);
     });
 
-    $("<br>").appendTo(header);
+    $.each(settings_fields, function(k, v){
+        var $opt = $('<div>');
 
-    $("<a>", {'class': 'refresh', 'text': 'reload page', 'href': '#'})
-    .appendTo(footer)
-    .click(function(){ window.location.reload(); return false; });
+        $opt.append($('<input>', {'type': 'checkbox', 'id': 'setting_' + v.slug,
+                                  'data-slug': v.slug, 'checked': settings[v.slug]}));
 
-    $("<a href='#'>close</a>").appendTo(footer).click(function(){
-        $('#prefs').remove();
+        $opt.append($('<label>', {'for': 'setting_' + v.slug, 'text': v.details}));
+
+        if(v.is_new) {
+            $opt.find('label').prepend($('<span>', {'class': 'show_new', 'text': 'new'}));
+        }
+
+        $('#cat-' + v.category).append($opt);
+    });
+
+    /* Save button */
+    var $save = $("<a>", {'class': 'refresh', 'text': 'Save Changes', 'href': '#'});
+    $save.appendTo($prefs_f);
+    $save.click(function(){
+        $('input', $prefs_h).each(function(){
+            _.storage.save('settings_' + $(this).attr('data-slug'), $(this).is(':checked'));
+        });
+
+        window.location.reload();
         return false;
     });
 
-    $('input', prefs).change(function(){
-        _.storage.save('settings_' + $(this).attr('data-slug'), $(this).is(':checked'));
+    /* Close button */
+    $('<a>', {'href': '#', 'text': 'close'}).appendTo($prefs_f).click(function(){
+        $(window).trigger('close');
     });
-
-    return false;
 }
 
-function registerPref(slug, details, setting_default, callback) {
+function registerPref(slug, o) {
+    /* TODO: integrate these */
+    registerPref_old(slug, o.title, o.setting_default, o.callback, o.category, o.is_new);
+}
+
+function registerPref_old(slug, details, setting_default, callback, category, is_new) {
     if(! already_run[slug]) {
         if(typeof setting_default == "function") {
             callback = setting_default;
@@ -125,15 +138,17 @@ function registerPref(slug, details, setting_default, callback) {
         settings[slug] = setting_default;
 
         _.storage.request('settings_' + slug, function(v){
-            var is_new = true;
+            var show_new = false;
             if(typeof v != "undefined") {
                 settings[slug] = v;
-                is_new = false;
             } else {
-                total_new++;
+                if(is_new) {
+                    total_new++;
+                    show_new = true;
+                }
             }
 
-            settings_fields.push({'slug':slug, 'details':details, 'is_new': is_new});
+            settings_fields.push({'slug':slug, 'details':details, 'is_new': show_new, 'category': category});
 
             /* If it's enabled, run it! */
             if(settings[slug]) {

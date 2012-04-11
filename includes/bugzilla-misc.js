@@ -1,66 +1,91 @@
-registerPref('commentoverflow', 'Fix comment overflow issues?', ifBug(commentOverflow));
-registerPref('removeflags', 'Remove flags, status and blocking?', false, ifBug(removeFlags));
-registerPref('removeaccesskeys', 'Remove access keys?', false, ifBug(removeAccess));
-registerPref('dontguess', 'Don\'t guess OS and hardware?', false, dontGuess);
-registerPref('hidefirst', 'Hide first comment if empty?', ifBug(hideFirst));
-registerPref('shortertitle', 'Remove "Bug" from the title?', ifBug(shorterTitle));
-registerPref('clonebug', 'Auto-fill product when cloning a bug?', ifBug(cloneBug));
-registerPref('relatedbug', 'Add a "new" link for dependent and blocking fields?', ifBug(relatedBug));
-registerPref('browseComponent', 'Add a "browse" link for component fields?', ifBug(browseComponent));
+registerPref('commentoverflow', {'title': 'Add scrollbar to overflowing comments',
+                          'setting_default': true,
+                          'callback': ifBug(commentOverflow),
+                          'category': 'comments'});
+
+registerPref('removeflags', {'title': 'Remove flags, status and blocking',
+                             'setting_default': false,
+                             'callback': ifBug(removeFlags),
+                             'category': 'bug'});
+
+registerPref('removeaccesskeys', {'title': 'Remove access keys',
+                                  'setting_default': false,
+                                  'callback': ifBug(removeAccess),
+                                  'category': 'bug'});
+
+registerPref('dontguess', {'title': 'Don\'t guess OS and hardware',
+                                    'setting_default': false,
+                                    'callback': dontGuess,
+                                    'category': 'bug'});
+
+registerPref('hidefirst', {'title': 'Hide the first comment if empty',
+                                    'setting_default': true,
+                                    'callback': ifBug(hideFirst),
+                                    'category': 'comments'});
+
+registerPref('shortertitle', {'title': 'Make the page title easier to read in tabs',
+                                       'setting_default': true,
+                                       'callback': ifBug(shorterTitle),
+                                       'category': 'bug'});
+
+registerPref('clonebug', {'title': 'Auto-fill product when cloning a bug',
+                                   'setting_default': true,
+                                   'callback': ifBug(cloneBug),
+                                   'category': 'bug'});
+
+registerPref('relatedbug', {'title': 'Add a "new" link for dependant and blocking fields',
+                                     'setting_default': true,
+                                     'callback': ifBug(relatedBug),
+                                     'category': 'bug'});
+
+registerPref('browseComponent', {'title': 'Add a "browse" link for component fields',
+                                 'setting_default': true,
+                                 'callback': ifBug(browseComponent),
+                                 'category': 'bug'});
 
 
 function hideFirst() {
     // Hide the first comment if it's blank?
-    if(settings['hidefirst']) {
-        if($('.bz_first_comment .bz_comment_text').text() == "") {
-            $('.bz_first_comment').hide();
-            $('.bz_comment_table').addClass('no-first-comment');
-        }
+    if($('.bz_first_comment .bz_comment_text').text() == "") {
+        $('.bz_first_comment').hide();
+        $('.bz_comment_table').addClass('no-first-comment');
     }
 }
 
 function commentOverflow() {
     // Fix comment overflow
     // Idea by fwenzel
-    if(settings['commentoverflow']) {
-        $('body').addClass('bzJS-commentoverflow');
-    }
+    $('body').addClass('bzJS-commentoverflow');
 }
 
 function removeAccess() {
     // Remove accessibility keys
     // Inspired by jbalogh, who evidently hates accessibility.
-    if(settings['removeaccesskeys']) {
-        $('[accesskey]').each(function(i, e) {
-            $(e).attr('accessKey', undefined);
-            $(e).addClass('accessKey');
-        });
+    $('[accesskey]').each(function(i, e) {
+        $(e).attr('accessKey', undefined);
+        $(e).addClass('accessKey');
+    });
 
-        $('body').addClass('bzJS-removeaccesskeys');
-    }
+    $('body').addClass('bzJS-removeaccesskeys');
 }
 
 function shorterTitle() {
-    if(settings['shortertitle']) {
-        $('title').text($('title').text().replace(/Bug /, ''));
-    }
+    $('title').text($('title').text().replace(/Bug /, ''));
 }
 
 function removeFlags() {
     // Remove flags
     // Idea by jbalogh
-    if(settings['removeflags']) {
-        $('#flags, .flags_label').remove();
+    $('#flags, .flags_label').remove();
 
-        $('#bz_show_bug_column_2 [id^=field_label_cf_]').each(function(){
-            $(this).next().remove();
-            $(this).remove();
-        });
-    }
+    $('#bz_show_bug_column_2 [id^=field_label_cf_]').each(function(){
+        $(this).next().remove();
+        $(this).remove();
+    });
 }
 
 function dontGuess() {
-    if(settings['dontguess'] && location.href.match(/enter_bug/)) {
+    if(location.href.match(/enter_bug/)) {
         $('#rep_platform, #op_sys').each(function(){
             var $parent = $('<span>', {'css': {'padding-left': 10}}),
                 $s1 = $("<span>", {'text': '('}),
@@ -79,21 +104,18 @@ function dontGuess() {
         });
 
         $('#os_guess_note').parent().hide();
-
     }
 }
 
 function cloneBug() {
-    if(settings['clonebug']) {
-        $('.related_actions a').each(function(){
-            $el = $(this);
-            if($el.attr('href').match(/cloned_bug_id/)) {
-                var url = $el.attr('href') + "&product=" + $('#product').val();
-                url += '&component=' + $('#component').val();
-                $el.attr('href', url);
-            }
-        });
-    }
+    $('.related_actions a').each(function(){
+        $el = $(this);
+        if($el.attr('href').match(/cloned_bug_id/)) {
+            var url = $el.attr('href') + "&product=" + $('#product').val();
+            url += '&component=' + $('#component').val();
+            $el.attr('href', url);
+        }
+    });
 }
 
 function createLink(start, text, location) {

@@ -1,4 +1,7 @@
-registerPref('keyboard', 'Enable keyboard shortcuts? (Type "?" to view shortcuts)', false, initKB);
+registerPref('keyboard', {'title': 'Enable keyboard shortcuts',
+                          'setting_default': false,
+                          'callback': initKB,
+                          'category': 'keyboard'});
 
 // Watch for <esc>
 $(window).keypress(function(e) {
