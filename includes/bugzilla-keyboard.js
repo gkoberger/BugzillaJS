@@ -22,7 +22,7 @@ $(window).keypress(function(e) {
 });
 
 function initKB() {
-    var $shortcuts = $('<div>', {'class': 'shortcuts', 'id': 'shortcuts'}).hide(),
+    var $shortcuts = $('<div>', {'class': 'shortcuts quickmodal', 'id': 'shortcuts'}).hide(),
         $shortcuts_table = $('<table>'),
         kbCallback = {},
         is_focused = false;
@@ -72,7 +72,7 @@ function initKB() {
     }
 
     $(window).bind('close', function() {
-        $shortcuts.hide();
+        $('.quickmodal').hide();
     });
 
     var last_g = "";
@@ -100,8 +100,14 @@ function initKB() {
     });
 
     addShortcut('n', 'File a new bug', function() {
-        alert('This will soon be a "file it" box!');
-        unsafeWindow.location = './enter_bug.cgi';
+        $(window).trigger('close');
+        $fileit = $('<div>', {'class': 'quickmodal', 'id': 'fileit_quick'}).appendTo('body');
+        $fileit.fileit();
+
+        $fileit.append($('<div>', {'class':'light',
+                                    'html': "To close, hit &lt;esc&gt; &middot; To browse components, use shortcut 'gn'"}));
+
+        $fileit.find('input').focus();
     });
 
     addShortcut('r', 'Reply to bug', function() {

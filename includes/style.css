@@ -582,9 +582,9 @@ color:#fff;
 }
 
 
-.shortcuts {
+.quickmodal {
     background-color: rgba(0, 0, 0, 0.8);
-    border-radius: 5px 5px 5px 5px;
+    border-radius: 5px;
     color: #FFFFFF;
     left: 50%;
     margin-left: -265px;
@@ -646,4 +646,73 @@ color:#fff;
     font-weight: bold;
     padding-right: 5px;
     text-transform: uppercase;
+}
+
+#bugzilla-body .fileit {
+    width: 600px;
+    margin: auto;
+    margin-bottom: 1em;
+    border-bottom: 1px dotted #ccc;
+    padding: 1em 0;
+}
+
+#fileit_quick .light {
+   padding-top: 10px;
+   font-size: 0.8em;
+   color: #CCC;
+   text-align: center;
+}
+
+.fileit {
+    text-align: center;
+    position: relative;
+}
+
+.fileit input {
+    width: 350px;
+    border: 1px solid #AAAAAA;
+    margin: 0 10px;
+    padding: 5px;
+}
+
+.fileit button {
+    background-color: #DDDDDD;
+    border: 1px solid #CCCCCC;
+    color: #555555;
+    font-weight: bold;
+    padding: 5px 10px;
+    text-shadow: 1px 1px #FFFFFF;
+}
+
+.fileit ul {
+    position: absolute;
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border: 1px solid #999999;
+    border-top: 0 none;
+    margin-top: -1px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.fileit ul li {
+    padding: 5px;
+    font-size: 0.85em;
+    text-align: left;
+}
+.fileit ul li.active {
+    background-color: #eee;
+}
+.fileit ul li span {
+    color: #888;
+    font-size: 0.9em;
+    width: 120px;
+    display: inline-block;
+}
+
+.fileit ul li strong {
+    font-weight: normal;
+    color: #000;
 }
