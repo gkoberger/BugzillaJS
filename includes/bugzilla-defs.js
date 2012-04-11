@@ -1,4 +1,4 @@
-var categories = {'keyboard': 'Keyboard Shortcuts | To view all keyboard shortcuts, click "?" on any page.',
+var categories = {'keyboard': 'Keyboard Shortcuts | To view all keyboard shortcuts, type "?" on any page.',
                   'comments': 'Improve Comments | Make the comments on bugs more readable.',
                   'inline': 'Show inline media | Show images and other types of content right in the comments.',
                   'bug': 'Improve Bugs | These pertain to editing bugs.',

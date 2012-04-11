@@ -73,7 +73,7 @@ function initChanges() {
               'to disable inline history in the BugzillaJS preferences.');
         window.localStorage['inlinehistory-found2'] = true;
     }
-    url = 'https://api-dev.bugzilla.mozilla.org/latest/bug/' + bug_id + '/history'
+    var url = 'https://api-dev.bugzilla.mozilla.org/latest/bug/' + bug_id + '/history'
 
     var changes = [];
     $.getJSON(url, function (d) {
