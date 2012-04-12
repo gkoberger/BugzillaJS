@@ -124,7 +124,30 @@
             }
         });
 
-        $input.blur(dd_reset);
+        var dd_close = false;
+        $input.blur(function() {
+            dd_close = setTimeout(function() {
+                dd_reset();
+                dd_close = false;
+            }, 300); // In case they click something in the dropdown
+        });
+
+        $dropdown.delegate('li', 'click', function() {
+            if(dd_close) clearTimeout(dd_close);
+
+            $dropdown.find('.active').removeClass('active');
+            $(this).addClass('active');
+
+            $dropdown.find('li').each(function(i) {
+                if($(this).hasClass('active')) {
+                    dd_active = i;
+                    return false;
+                }
+            });
+
+
+            $fileit.submit();
+        });
 
         function dd_update(diff) {
             dd_active += diff;

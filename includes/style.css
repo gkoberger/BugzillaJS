@@ -714,7 +714,13 @@ color:#fff;
     padding: 5px;
     font-size: 0.85em;
     text-align: left;
+    cursor: pointer;
 }
+
+.fileit ul li:hover {
+    background-color: #ddd !important;
+}
+
 .fileit ul li.active {
     background-color: #eee;
 }
