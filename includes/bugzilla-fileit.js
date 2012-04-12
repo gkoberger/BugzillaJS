@@ -69,7 +69,7 @@
 
             if(go.indexOf('/') == -1) return; // Not the right format
 
-            $input.val(go);
+            $input.val(go).css({'background-color': '#ddd'});
             dd_current = go;
             dd_reset();
 
