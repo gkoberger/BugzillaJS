@@ -48,11 +48,11 @@
             dd_total = 0,
             dd_current = "";
 
-        var $input = $('<input>', {'placeholder': 'in component...'}),
+        var $input = $('<input>', {'placeholder': 'component...'}),
             $fileit = $('<form>', {'class': 'fileit'}),
             $dropdown = $('<ul>').hide();
 
-        $fileit.append($('<span>', {'text': 'File a bug'}));
+        $fileit.append($('<span>', {'text': 'File a bug in'}));
         $fileit.append($input);
         $fileit.append($('<button>', {'text': 'Go'}));
         $fileit.append($dropdown);
