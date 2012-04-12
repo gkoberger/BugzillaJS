@@ -31,12 +31,33 @@ function initKB() {
 
     $shortcuts.append($shortcuts_table);
 
+    function addTitle(title) {
+        var $tr = $('<tr>');
+        var $th1 = $('<th>');
+        var $th2 = $('<th>', {'text': title});
+
+        $tr.append($th1).append($th2);
+
+        $shortcuts_table.append($tr);
+    }
+
+    function newTable() {
+        $shortcuts_table = $('<table>');
+        $shortcuts.append($shortcuts_table);
+    }
+
     function addShortcut(key, title, callback) {
         /* Make it do something */
         var keycode =  "";
         for(var i=0;i<key.length;i++) {
             keycode += key.charCodeAt(i) + "_";
         }
+
+        if(key == '+') {
+            keycode = '13_';
+            key = "&lt;enter&gt;";
+        }
+
         keycode = keycode.slice(0,-1);
 
         if(typeof callback == "string") {
@@ -57,11 +78,11 @@ function initKB() {
             $td2 = $('<td>', {'text': title});
 
         if(key[0] == "g") {
-            $td1.append($('<strong>', {'text': key[0]}));
+            $td1.append($('<strong>', {'html': key[0]}));
             $td1.append($('<em>', {'text': 'then'}));
-            $td1.append($('<strong>', {'text': key[1]}));
+            $td1.append($('<strong>', {'html': key[1]}));
         } else {
-            $td1.append($('<strong>', {'text': key}));
+            $td1.append($('<strong>', {'html': key}));
         }
 
         $td1.append($('<span>', {'text': ':'}));
@@ -92,9 +113,47 @@ function initKB() {
 
     $('body').append($shortcuts);
 
+    function getNav(text) {
+        return function() {
+            $('.navigation:first a').each(function() {
+              var $a = $(this);
+              if($a.text() == text) {
+                window.location.href = $a.attr('href');
+              }
+            });
+        };
+    }
+
+    var $elements = [];
+
+    if($('.bz_buglist').length) {
+        $elements = $('.sorttable_body tr');
+    }
+
+    var el_count = $elements.length,
+        el_current = 0;
+
+    if(el_count) {
+        $elements.eq(0).addClass('is-selected');
+    }
+
+    function updateSelected(diff) {
+        if(!el_count) return;
+        el_current += diff;
+
+        if(el_current > el_count) el_current = 0;
+        if(el_current < 0) el_current = el_count - 1;
+
+        $elements.filter('.is-selected').removeClass('is-selected');
+        $elements.eq(el_current).addClass('is-selected');
+    }
+
     /* ======================
      * Shortcuts
      * ====================== */
+
+    addTitle('Global Shortcuts');
+
     addShortcut('?', 'View shortcuts', function() {
         $('#shortcuts').toggle();
     });
@@ -110,10 +169,6 @@ function initKB() {
         $fileit.find('input').focus();
     });
 
-    addShortcut('r', 'Reply to bug', function() {
-        $('#comment').focus();
-    });
-
     addShortcut('s', 'Search', function() {
         var qs = $('#quicksearch_main');
         if(!qs.length) {
@@ -121,6 +176,8 @@ function initKB() {
         }
         qs.removeClass('quicksearch_help_text').val("").focus();
     });
+
+    addTitle('Site Navigation');
 
     addShortcut('gh', 'Go Home', './');
 
@@ -138,4 +195,39 @@ function initKB() {
     addShortcut('gp', 'Go to preferences', './userprefs.cgi');
 
     addShortcut('g,', 'Go to BugzillaJS prefs', openPrefs);
+
+    newTable();
+
+    addTitle('Bug Shortcuts');
+
+    addShortcut('r', 'Reply to bug', function() {
+        $('#comment').focus();
+    });
+
+    addShortcut('J', 'Next bug in list', getNav('Next'));
+
+    addShortcut('K', 'Previous bug in list', getNav('Prev'));
+
+    addShortcut('H', 'First bug in list', getNav('First'));
+
+    addShortcut('L', 'Last bug in list', getNav('Last'));
+
+    addShortcut('gl', 'Go back to list of results', getNav('Show last search results'));
+
+    addTitle('List Navigation');
+
+    addShortcut('j', 'Next entry', function() {
+        updateSelected(1);
+    });
+
+    addShortcut('k', 'Previous entry', function() {
+        updateSelected(-1);
+    });
+
+    addShortcut('+', 'Go to selected row', function() {
+        if(el_count) {
+            window.location.href = $elements.filter('.is-selected').find('a').eq(0).attr('href');
+        }
+    });
 }
+

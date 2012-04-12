@@ -587,23 +587,36 @@ color:#fff;
     border-radius: 5px;
     color: #FFFFFF;
     left: 50%;
-    margin-left: -265px;
+    margin-left: -315px;
     margin-top: 100px;
     padding: 15px;
     position: fixed;
     top: 0;
-    width: 500px;
+    width: 600px;
 }
 
+.shortcuts tr:first-child th {
+    padding-top: 0;
+}
 .shortcuts th {
+    padding-top: 20px;
     text-align: left;
     color: #8895B7;
+    border-bottom: 1px dotted #888;
+    padding-bottom: 3px;
+}
+
+.shortcuts table {
+    float: left;
+    border-collapse: collapse;
+    margin: 10px;
+    width: 280px;
 }
 
 .shortcuts .left {
     text-align: right;
     padding-right: 5px;
-    min-width: 100px;
+    min-width: 70px;
 }
 
 .shortcuts .left strong {
@@ -716,3 +729,8 @@ color:#fff;
     font-weight: normal;
     color: #000;
 }
+
+.is-selected {
+    background-color: #BEBEBE !important;
+}
+
