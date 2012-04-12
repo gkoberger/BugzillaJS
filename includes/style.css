@@ -730,7 +730,19 @@ color:#fff;
     color: #000;
 }
 
-.is-selected {
-    background-color: #BEBEBE !important;
+/* Arrow for up/down keyboard shortcuts */
+.sorttable_body tr.is-selected .first-child a {
+    position: relative;
 }
-
+.sorttable_body tr.is-selected .first-child a:before {
+     border-color: transparent transparent transparent #666666;
+     border-style: solid;
+     border-width: 5px;
+     content: " ";
+     display: block;
+     height: 0;
+     left: -11px;
+     position: absolute;
+     top: 5px;
+     width: 0;
+}

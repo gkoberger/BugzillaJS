@@ -141,11 +141,23 @@ function initKB() {
         if(!el_count) return;
         el_current += diff;
 
-        if(el_current > el_count) el_current = 0;
+        if(el_current >= el_count) el_current = 0;
         if(el_current < 0) el_current = el_count - 1;
 
         $elements.filter('.is-selected').removeClass('is-selected');
-        $elements.eq(el_current).addClass('is-selected');
+
+        var $selected = $elements.eq(el_current);
+        $selected.addClass('is-selected');
+
+        // Scroll it into view
+        var el_position = $selected.position()['top'];
+
+        var visible_top = $(window).scrollTop(),
+            visible_bottom = visible_top + $(window).height();
+
+        if($selected.length && (el_position < visible_top || el_position > visible_bottom)) {
+            $selected[0].scrollIntoView();
+        }
     }
 
     /* ======================
