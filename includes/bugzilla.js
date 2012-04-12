@@ -115,7 +115,8 @@ function openPrefs(e){
     });
 
     /* Close button */
-    $('<a>', {'href': '#', 'text': 'cancel'}).appendTo($prefs_f).click(function(){
+    $('<a>', {'href': '#', 'text': 'cancel'}).appendTo($prefs_f).click(function(e){
+        e.preventDefault();
         $(window).trigger('close');
     });
 }
