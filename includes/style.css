@@ -642,8 +642,8 @@ color:#fff;
 }
 
 .notify:before {
-    border-color-right: #990505;
     border: 5px solid transparent;
+    border-color: transparent #990505 transparent transparent;
     content: " ";
     height: 0;
     left: -9px;
