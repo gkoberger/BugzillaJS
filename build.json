@@ -27,7 +27,7 @@
         "bugzilla-keyboard.js",
         "bugzilla-fileit.js"
     ],
-    "version": "2.0.3",
+    "version": "3.0",
     "included_urls": "prefs.prefs.urls.split(/\\s*,\\s*/)",
     "name": "BugzillaJS",
     "preferences": [{
