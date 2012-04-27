@@ -1,6 +1,7 @@
 registerPref('keyboard', {'title': 'Enable keyboard shortcuts',
                           'setting_default': false,
                           'callback': initKB,
+                          'is_new': true,
                           'category': 'keyboard'});
 
 // Watch for <esc> or '?'
@@ -10,7 +11,7 @@ $(window).keypress(function(e) {
         $(window).trigger("close");
         $(document.activeElement).blur();
     }
-    if(e.which == 63 && !keyboard_is_enabled) { // ?
+    if(e.which == 63 && !keyboard_is_enabled && !$(e.target).is('input, textarea, select')) { // ?
         var enable = confirm('Keyboard shortcuts are disabled. Do you want to enable them?');
         if(enable) {
             _.storage.save('settings_keyboard', true);
@@ -24,8 +25,7 @@ $(window).keypress(function(e) {
 function initKB() {
     var $shortcuts = $('<div>', {'class': 'shortcuts quickmodal', 'id': 'shortcuts'}).hide(),
         $shortcuts_table = $('<table>'),
-        kbCallback = {},
-        is_focused = false;
+        kbCallback = {};
 
     keyboard_is_enabled = true;
 
