@@ -686,15 +686,17 @@ color:#fff;
     border: 1px solid #AAAAAA;
     margin: 0 10px;
     padding: 5px;
+    font-size: 13px;
 }
 
 .fileit button {
     background-color: #DDDDDD;
-    border: 1px solid #CCCCCC;
+    border: 1px solid #AAA;
     color: #555555;
     font-weight: bold;
-    padding: 5px 10px;
+    padding: 4px 10px;
     text-shadow: 1px 1px #FFFFFF;
+    font-size: 13px;
 }
 
 .fileit ul {
@@ -705,7 +707,6 @@ color:#fff;
     list-style: none;
     border: 1px solid #999999;
     border-top: 0 none;
-    margin-top: -1px;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
