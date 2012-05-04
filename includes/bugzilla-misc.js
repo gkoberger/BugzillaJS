@@ -10,7 +10,7 @@ registerPref('removeflags', {'title': 'Remove flags, status and blocking',
 
 registerPref('removeaccesskeys', {'title': 'Remove access keys',
                                   'setting_default': false,
-                                  'callback': ifBug(removeAccess),
+                                  'callback': removeAccess,
                                   'category': 'bug'});
 
 registerPref('dontguess', {'title': 'Don\'t guess OS and hardware',
@@ -61,8 +61,8 @@ function commentOverflow() {
 function removeAccess() {
     // Remove accessibility keys
     // Inspired by jbalogh, who evidently hates accessibility.
-    $('[accesskey]').each(function(i, e) {
-        $(e).attr('accessKey', undefined);
+    $('label[accesskey]').each(function(i, e) {
+        $(e).removeAttr('accessKey accesskey');
         $(e).addClass('accessKey');
     });
 
