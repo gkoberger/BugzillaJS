@@ -15,7 +15,7 @@
                                 'category': 'bug'});
     }
 
-    var o = {'minLength': 3, 'maxDisplay': 10};
+    var o = {'minLength': 3, 'maxDisplay': 20, 'time_diff': 12 * 60 * 60 /* 12 hours */ };
     var KEY = { ESC: 27, RETURN: 13, TAB: 9, BS: 8, DEL: 46, UP: 38, DOWN: 40 };
 
     var components = false;
@@ -24,11 +24,16 @@
         if(!components) {
             components = window.localStorage['fileit-components'];
 
-            if(!components) {
+            var last_updated = window.localStorage['fileit-updated'],
+                new_time = new Date().getTime() / 1000;
+
+            if(!last_updated || new_time > parseInt(last_updated) + o['time_diff'] || !components) {
                 getConfig();
             } else {
                 components = JSON.parse(components);
             }
+
+            window.localStorage['fileit-updated'] = new_time;
         }
     }
 
