@@ -25,7 +25,8 @@
         "bugzilla-misc.js",
         "bugzilla-agile.js",
         "bugzilla-keyboard.js",
-        "bugzilla-fileit.js"
+        "bugzilla-fileit.js",
+        "bugzilla-tbpl.js"
     ],
     "version": "3.0.4",
     "included_urls": "prefs.prefs.urls.split(/\\s*,\\s*/)",
