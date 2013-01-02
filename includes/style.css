@@ -753,3 +753,9 @@ color:#fff;
      top: 5px;
      width: 0;
 }
+
+.tbpl_inline_result {
+  width: 100%;
+  border: none;
+  background-color: white;
+}
