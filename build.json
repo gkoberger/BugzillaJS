@@ -28,7 +28,7 @@
         "bugzilla-fileit.js",
         "bugzilla-tbpl.js"
     ],
-    "version": "3.0.4",
+    "version": "3.1.0",
     "included_urls": "prefs.prefs.urls.split(/\\s*,\\s*/)",
     "name": "BugzillaJS",
     "preferences": [{
