@@ -52,6 +52,14 @@ function formatChange(c, $el) {
 
 
 function initChanges() {
+    // If there is too many changes, the page will contain a node saying:
+    // This bug contains too many changes to be displayed inline.
+    // If Bugzilla says so, we should probably not try to display them
+    var too_many_changes = document.querySelectorAll('#comments > p').length
+    if (too_many_changes) {
+        return;
+    }
+
     var inputs = $('#blocked_input_area, #dependson_input_area'),
         bug_links = inputs.closest('td').find('a');
 
