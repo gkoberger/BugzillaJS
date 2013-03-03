@@ -118,25 +118,50 @@ function cloneBug() {
     });
 }
 
-function createLink(start, text, location) {
-    var link = $('<a>', {'text': text, 'href': location}),
-        link_empty = $('<span>', {'css': {'padding-left': 5}, 'text': '('}).append(link.clone()).append($('<span>', {'text': ')'})),
-        link_exists = $('<span>', {'text': '|', 'css': {'padding': '0 5px'}}).after(link.clone());
+function _build_query_string(dict) {
+    var parts = []
+    for (var key in dict) {
+        parts.push(key + "=" + dict[key]);
+    }
+    return parts.join('&');
+}
 
-    $('#' + start + '_edit_action').after(link_exists);
-    $('#' + start).after(link_empty).css('max-width', '-moz-calc(100% - ' + (text.length + 3) + 'ch)');
+function _attachLinkToField(field_id, text, location) {
+    var link = document.createElement('a');
+    link.href = location;
+    link.appendChild(document.createTextNode(text));
+
+    var field = document.getElementById(field_id);
+    var text_length = text.length + 3;
+    field.style.maxWidth = 'calc(100% - ' + text_length + 'ch)';
+
+    var td = field;
+    while (td.nodeName.toLowerCase() != 'td') {
+        td = td.parentNode;
+    }
+    td.appendChild(document.createTextNode(' ('));
+    td.appendChild(link);
+    td.appendChild(document.createTextNode(')'));
 }
 
 function relatedBug() {
-    if(settings['relatedbug']) {
-        var new_location = window.location + "&product=" + $('#product').val();
-        new_location += '&component=' + $('#component').val();
-        new_location = new_location.replace(/#[^&]*/, ''); // Strip anchor
-        new_location = new_location.replace(/show_bug/, 'enter_bug');
-
-        createLink("blocked", "new", new_location.replace(/id=/,  'dependson='));
-        createLink("dependson", "new", new_location.replace(/id=/,  'blocked='));
+    if(!settings['relatedbug']) {
+        return;
     }
+
+    var prefix = window.location.origin + '/enter_bug.cgi?';
+    var url_parts = {};
+    url_parts.product = document.querySelector('#product option[selected]').value;
+    url_parts.component = document.querySelector('#component option[selected]').value;
+
+    url_parts.dependson = bug_id;
+    var new_blocked_bug_location = prefix + _build_query_string(url_parts);
+    _attachLinkToField("blocked", "new", new_blocked_bug_location);
+
+    delete url_parts.dependson;
+    url_parts.blocked = bug_id;
+    var new_dependson_bug_location = prefix + _build_query_string(url_parts);
+    _attachLinkToField("dependson", "new", new_dependson_bug_location);
 }
 
 function browseComponent() {
@@ -147,5 +172,6 @@ function browseComponent() {
     browse_location = browse_location.replace(/show_bug/, 'buglist');
     browse_location = browse_location.replace(/id=[^&]*&/, '');
 
-    createLink("component", "browse", browse_location);
+    _attachLinkToField("component", "browse", browse_location);
 }
+
