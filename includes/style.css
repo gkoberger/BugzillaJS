@@ -756,6 +756,11 @@ color:#fff;
 
 .tbpl_inline_result {
   width: 100%;
-  border: none;
+  border: 1px solid #ddd;
   background-color: white;
+  height: 200px;
+}
+
+.iframe_focused {
+    height: 600px;
 }
