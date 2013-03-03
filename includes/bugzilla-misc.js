@@ -23,11 +23,6 @@ registerPref('hidefirst', {'title': 'Hide the first comment if empty',
                                     'callback': ifBug(hideFirst),
                                     'category': 'comments'});
 
-registerPref('shortertitle', {'title': 'Make the page title easier to read in tabs',
-                                       'setting_default': true,
-                                       'callback': ifBug(shorterTitle),
-                                       'category': 'bug'});
-
 registerPref('clonebug', {'title': 'Auto-fill product when cloning a bug',
                                    'setting_default': true,
                                    'callback': ifBug(cloneBug),
@@ -67,10 +62,6 @@ function removeAccess() {
     });
 
     $('body').addClass('bzJS-removeaccesskeys');
-}
-
-function shorterTitle() {
-    $('title').text($('title').text().replace(/Bug /, ''));
 }
 
 function removeFlags() {
