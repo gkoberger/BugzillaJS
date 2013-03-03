@@ -165,12 +165,15 @@ function relatedBug() {
 }
 
 function browseComponent() {
-    // TODO: add setting
-    var browse_location = window.location + "&product=" + $('#product').val();
-    browse_location += '&component=' + $('#component').val();
-    browse_location = browse_location.replace(/#[^&]*/, ''); // Strip anchor
-    browse_location = browse_location.replace(/show_bug/, 'buglist');
-    browse_location = browse_location.replace(/id=[^&]*&/, '');
+    if (!settings['browseComponent']) {
+        return;
+    }
+
+    var prefix = window.location.origin + '/buglist.cgi?';
+    var url_parts = {};
+    url_parts.product = document.querySelector('#product option[selected]').value;
+    url_parts.component = document.querySelector('#component option[selected]').value;
+    var browse_location = prefix + _build_query_string(url_parts);
 
     _attachLinkToField("component", "browse", browse_location);
 }
