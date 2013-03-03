@@ -23,11 +23,6 @@ registerPref('hidefirst', {'title': 'Hide the first comment if empty',
                                     'callback': ifBug(hideFirst),
                                     'category': 'comments'});
 
-registerPref('clonebug', {'title': 'Auto-fill product when cloning a bug',
-                                   'setting_default': true,
-                                   'callback': ifBug(cloneBug),
-                                   'category': 'bug'});
-
 registerPref('relatedbug', {'title': 'Add a "new" link for dependant and blocking fields',
                                      'setting_default': true,
                                      'callback': ifBug(relatedBug),
@@ -96,17 +91,6 @@ function dontGuess() {
 
         $('#os_guess_note').parent().hide();
     }
-}
-
-function cloneBug() {
-    $('.related_actions a').each(function(){
-        $el = $(this);
-        if($el.attr('href').match(/cloned_bug_id/)) {
-            var url = $el.attr('href') + "&product=" + $('#product').val();
-            url += '&component=' + $('#component').val();
-            $el.attr('href', url);
-        }
-    });
 }
 
 function _build_query_string(dict) {
