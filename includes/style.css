@@ -8,6 +8,7 @@
     margin: auto auto auto -200px;
     position: fixed;
     top: 40px;
+    z-index: 2;
 }
 
 #prefs .header {
