@@ -44,7 +44,7 @@ function repositionScroll() {
 }
 
 function addPrefs() {
-    var $appendTo = $('#header .links, #links-actions .links'),
+    var $appendTo = $('#header > .links, #header :not(#login) > .links, #links-actions .links'),
         $li = $('<li>'),
         $a = $('<a>', {'class': 'bjs-prefs', 'href':'#', 'text': 'BugzillaJS Preferences'});
 
