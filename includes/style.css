@@ -553,13 +553,14 @@ width:8px;
 }
 
 .overlay {
-background:none repeat scroll 0 0 rgba(0, 0, 0, 0.5);
-height:100%;
-left:0;
-position:fixed;
-text-align:center;
-top:0;
-width:100%;
+    background:none repeat scroll 0 0 rgba(0, 0, 0, 0.5);
+    height:100%;
+    left:0;
+    position:fixed;
+    text-align:center;
+    top:0;
+    width:100%;
+    z-index: 2;
 }
 
 .opts {
