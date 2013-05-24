@@ -11,7 +11,7 @@
         registerPref('fileit', {'title': 'Add a "File It" box to the new bug page',
                                 'setting_default': true,
                                 'callback': initFileit,
-                                'is_new': true,
+                                'is_new': false,
                                 'category': 'bug'});
     }
 
