@@ -1,7 +1,7 @@
-registerPref('openall', {'title': 'Option to open all bugs in tabs',
-                         'setting_default': true,
-                         'callback': loadOpenAll,
-                         'category': 'listings'});
+BugzillaJS.registerPref('openall', {'title': 'Option to open all bugs in tabs',
+                                    'setting_default': true,
+                                    'callback': loadOpenAll,
+                                    'category': 'listings'});
 
 function loadOpenAll() {
     var openAll = function(e) {

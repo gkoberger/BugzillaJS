@@ -1,7 +1,7 @@
-registerPref('agile_backlog', {'title': 'Agile Backlog',
-                               'setting_default': false,
-                               'callback': agileBacklog,
-                               'category': 'listings'});
+BugzillaJS.registerPref('agile_backlog', {'title': 'Agile Backlog',
+                                          'setting_default': false,
+                                          'callback': agileBacklog,
+                                          'category': 'listings'});
 
 function agileBacklog() {
     if(settings.agile_backlog) {

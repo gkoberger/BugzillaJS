@@ -1,11 +1,11 @@
-registerPref('git', {'title': 'Show GitHub logs inline',
-                     'setting_default': true,
-                     'callback': ifBug(initGit),
-                     'category': 'inline'});
+BugzillaJS.registerPref('git', {'title': 'Show GitHub logs inline',
+                                'setting_default': true,
+                                'callback': ifBug(initGit),
+                                'category': 'inline'});
 
 function initGit() {
-    bz_comments.each(function() {
-        var comment = $(this);
+    BugzillaJS.on("comment", function(comment) {
+        var comment = $(comment).find(".bz_comment_text");
         $('a', comment).each(function () {
             var url = $(this).attr('href')
                 isGithub = url.match(/github.com\/([-\w]*)\/([-\w]*)\/commit\/(\w*)/);
@@ -57,7 +57,7 @@ function initGit() {
 
                         });
                     }
-                    repositionScroll();
+                    BugzillaJS.repositionScroll();
                 });
             }
         });

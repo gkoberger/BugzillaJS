@@ -14,6 +14,7 @@
         "bugzilla-agile.css",
         "md5.js",
         "marked.js",
+        "events.js",
         "highlight.pack.js",
         "bugzilla-defs.js",
         "bugzilla.js",

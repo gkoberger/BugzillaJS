@@ -1,8 +1,8 @@
 if($('#inline-history-ext').length == 0) {
-    registerPref('changes', {'title': 'Show inline changes to the bug',
-                             'setting_default': true,
-                             'callback': ifBug(initChanges),
-                             'category': 'bug'});
+    BugzillaJS.registerPref('changes', {'title': 'Show inline changes to the bug',
+                                        'setting_default': true,
+                                        'callback': ifBug(initChanges),
+                                        'category': 'bug'});
 }
 
 var bugs_all = {}; // Global-ish var.  Yucky.
@@ -148,7 +148,7 @@ function apply_changes(changes) {
         }
     });
 
-    repositionScroll();
+    BugzillaJS.repositionScroll();
 }
 
 function addCCLink() {

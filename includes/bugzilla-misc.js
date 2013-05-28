@@ -1,37 +1,37 @@
-registerPref('commentoverflow', {'title': 'Add scrollbar to overflowing comments',
-                          'setting_default': true,
-                          'callback': ifBug(commentOverflow),
-                          'category': 'comments'});
+BugzillaJS.registerPref('commentoverflow', {'title': 'Add scrollbar to overflowing comments',
+                                            'setting_default': true,
+                                            'callback': ifBug(commentOverflow),
+                                            'category': 'comments'});
 
-registerPref('removeflags', {'title': 'Remove flags, status and blocking',
-                             'setting_default': false,
-                             'callback': ifBug(removeFlags),
-                             'category': 'bug'});
+BugzillaJS.registerPref('removeflags', {'title': 'Remove flags, status and blocking',
+                                        'setting_default': false,
+                                        'callback': ifBug(removeFlags),
+                                        'category': 'bug'});
 
-registerPref('removeaccesskeys', {'title': 'Remove access keys',
-                                  'setting_default': false,
-                                  'callback': removeAccess,
-                                  'category': 'bug'});
+BugzillaJS.registerPref('removeaccesskeys', {'title': 'Remove access keys',
+                                             'setting_default': false,
+                                             'callback': removeAccess,
+                                             'category': 'bug'});
 
-registerPref('dontguess', {'title': 'Don\'t guess OS and hardware',
-                                    'setting_default': false,
-                                    'callback': dontGuess,
-                                    'category': 'bug'});
+BugzillaJS.registerPref('dontguess', {'title': 'Don\'t guess OS and hardware',
+                                      'setting_default': false,
+                                      'callback': dontGuess,
+                                      'category': 'bug'});
 
-registerPref('hidefirst', {'title': 'Hide the first comment if empty',
-                                    'setting_default': true,
-                                    'callback': ifBug(hideFirst),
-                                    'category': 'comments'});
+BugzillaJS.registerPref('hidefirst', {'title': 'Hide the first comment if empty',
+                                      'setting_default': true,
+                                      'callback': ifBug(hideFirst),
+                                      'category': 'comments'});
 
-registerPref('relatedbug', {'title': 'Add a "new" link for dependant and blocking fields',
-                                     'setting_default': true,
-                                     'callback': ifBug(relatedBug),
-                                     'category': 'bug'});
+BugzillaJS.registerPref('relatedbug', {'title': 'Add a "new" link for dependant and blocking fields',
+                                       'setting_default': true,
+                                       'callback': ifBug(relatedBug),
+                                       'category': 'bug'});
 
-registerPref('browseComponent', {'title': 'Add a "browse" link for component fields',
-                                 'setting_default': true,
-                                 'callback': ifBug(browseComponent),
-                                 'category': 'bug'});
+BugzillaJS.registerPref('browseComponent', {'title': 'Add a "browse" link for component fields',
+                                            'setting_default': true,
+                                            'callback': ifBug(browseComponent),
+                                            'category': 'bug'});
 
 
 function hideFirst() {

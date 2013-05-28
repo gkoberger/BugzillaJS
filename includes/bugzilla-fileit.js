@@ -8,11 +8,11 @@
 (function() {
     // Mozilla only, since it uses the API
     if(window.location.href.match('bugzilla.mozilla.org')) {
-        registerPref('fileit', {'title': 'Add a "File It" box to the new bug page',
-                                'setting_default': true,
-                                'callback': initFileit,
-                                'is_new': true,
-                                'category': 'bug'});
+        BugzillaJS.registerPref('fileit', {'title': 'Add a "File It" box to the new bug page',
+                                           'setting_default': true,
+                                           'callback': initFileit,
+                                           'is_new': true,
+                                           'category': 'bug'});
     }
 
     var o = {'minLength': 3, 'maxDisplay': 20, 'time_diff': 12 * 60 * 60 /* 12 hours */ };

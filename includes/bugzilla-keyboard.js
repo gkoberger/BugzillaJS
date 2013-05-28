@@ -1,8 +1,8 @@
-registerPref('keyboard', {'title': 'Enable keyboard shortcuts',
-                          'setting_default': false,
-                          'callback': initKB,
-                          'is_new': true,
-                          'category': 'keyboard'});
+BugzillaJS.registerPref('keyboard', {'title': 'Enable keyboard shortcuts',
+                                     'setting_default': false,
+                                     'callback': initKB,
+                                     'is_new': true,
+                                     'category': 'keyboard'});
 
 // Watch for <esc> or '?'
 var keyboard_is_enabled = false;
@@ -206,7 +206,7 @@ function initKB() {
 
     addShortcut('gp', 'Go to preferences', './userprefs.cgi');
 
-    addShortcut('g,', 'Go to BugzillaJS prefs', openPrefs);
+    addShortcut('g,', 'Go to BugzillaJS prefs', BugzillaJS.openPrefs);
 
     newTable();
 

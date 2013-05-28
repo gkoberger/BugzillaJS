@@ -1,25 +1,13 @@
-var settings = [],
-    settings_fields = [],
-    bug_id = false,
-    joinCount = 0,
-    bz_comments = $('.bz_comment_text'),
-    hidenobody_val = false,
-    already_run = [],
-    total_new = 0;
+var settings = {},
+    settings_fields = []
+    hidenobody_val = false;
 
 /** Get the bug ID **/
 
-bug_id = $('title').text().match(/^(?:Bug )?([0-9]+)/)
+var bug_id = $('title').text().match(/^(?:Bug )?([0-9]+)/)
 bug_id = bug_id ? bug_id[1] : false
 
-/* Register preferences */
-registerPref('gitcomments', {'title': 'Style the comments',
-                             'setting_default': true,
-                             'callback': ifBug(addStyling),
-                             'category': 'bug'});
-
 /** Run the modules **/
-addPrefs();
 function ifBug(f) {
     if(bug_id) {
         return f;
@@ -28,25 +16,69 @@ function ifBug(f) {
     }
 }
 
-function addStyling() {
-    if (settings['gitcomments']) {
+var BugzillaJS = new EventEmitter();
+
+BugzillaJS.bugID = bug_id;
+BugzillaJS.already_run = {};
+BugzillaJS.total_new = 0;
+
+BugzillaJS.run = function() {
+    function addStyling() {
+        if (!settings['gitcomments'])
+            return;
+
         $('body').addClass('git_style')
         $('.git_style .ih_history br').replaceWith("<span>; </span>");
-        bz_comments.each(function() {
-            this.innerHTML = marked(this.innerHTML);
-        });
-        setTimeout(repositionScroll, 200);
+        setTimeout(BugzillaJS.repositionScroll, 200);
     }
-}
+    /* Register preferences */
+    BugzillaJS.registerPref('gitcomments', {'title': 'Style the comments',
+                                            'setting_default': true,
+                                            'callback': ifBug(addStyling),
+                                            'category': 'bug'});
 
-function repositionScroll() {
+    BugzillaJS.addPrefs();
+
+    // Initialize the Marked markdown parser
+    marked.setOptions({
+        gfm: true,
+        tables: true,
+        breaks: true,
+        pedantic: false,
+        sanitize: false,
+        smartLists: true,
+        highlight: function(code, lang) {
+            return hljs.highlight(lang, code).value;
+        }
+    });
+
+    // Allow all features to register themselves
+    setTimeout(function() {
+        BugzillaJS.comments.each(function() {
+            //this.innerHTML = marked(this.innerHTML);
+            BugzillaJS.emit("comment", this);
+        });
+    }, 0);
+
+    // New feature? Notify them!
+    setTimeout(function() {
+        if(BugzillaJS.total_new > 0) {
+            $('.bjs-prefs').after($('<span class="notify">'
+                + BugzillaJS.total_new + '</span>'));
+        }
+    }, 500);
+};
+
+BugzillaJS.comments = $('.bz_comment');
+
+BugzillaJS.repositionScroll = function() {
     //-- Reposition the scrollTo if necessary
     if(location.hash.match(/#c[0-9]*/)) {
         $(window).scrollTo($(location.hash));
     }
-}
+};
 
-function addPrefs() {
+BugzillaJS.addPrefs = function() {
     var $appendTo = $('#header .links, #links-actions .links'),
         $li = $('<li>'),
         $a = $('<a>', {'class': 'bjs-prefs', 'href':'#', 'text': 'BugzillaJS Preferences'});
@@ -55,16 +87,15 @@ function addPrefs() {
     $li.append($a);
     $appendTo.append($li.clone());
 
-    $('a.bjs-prefs').click(openPrefs);
+    $('a.bjs-prefs').click(this.openPrefs);
 
     // Close on <esc>
     $(window).bind('close', function(e) {
         $('#prefs').remove();
     });
+};
 
-}
-
-function openPrefs(e){
+BugzillaJS.openPrefs = function(e){
     if(e) e.preventDefault();
 
     $('#prefs').remove();
@@ -122,87 +153,48 @@ function openPrefs(e){
         e.preventDefault();
         $(window).trigger('close');
     });
-}
+};
 
-function registerPref(slug, o) {
+BugzillaJS.registerPref = function(slug, o) {
     /* TODO: integrate these */
-    registerPref_old(slug, o.title, o.setting_default, o.callback, o.category, o.is_new);
-}
+    this._registerPref_old(slug, o.title, o.setting_default, o.callback, o.category, o.is_new);
+};
 
-function registerPref_old(slug, details, setting_default, callback, category, is_new) {
-    if(! already_run[slug]) {
-        if(typeof setting_default == "function") {
-            callback = setting_default;
-            setting_default = null;
+BugzillaJS._registerPref_old = function(slug, details, setting_default, callback, category, is_new) {
+    if(this.already_run[slug])
+        return;
+
+    if(typeof setting_default == "function") {
+        callback = setting_default;
+        setting_default = null;
+    }
+    if(setting_default == null || setting_default == undefined) setting_default = true;
+
+    callback = callback || function(){};
+
+    settings[slug] = setting_default;
+
+    _.storage.request('settings_' + slug, function(v){
+        var show_new = false;
+        if(typeof v != "undefined") {
+            settings[slug] = v;
+        } else {
+            if(is_new) {
+                BugzillaJS.total_new++;
+                show_new = true;
+            }
         }
-        if(setting_default == null || setting_default == undefined) setting_default = true;
 
-        callback = callback || function(){};
+        settings_fields.push({'slug':slug, 'details':details, 'is_new': show_new, 'category': category});
 
-        settings[slug] = setting_default;
+        /* If it's enabled, run it! */
+        if(settings[slug]) {
+            callback();
+        }
+    });
 
-        _.storage.request('settings_' + slug, function(v){
-            var show_new = false;
-            if(typeof v != "undefined") {
-                settings[slug] = v;
-            } else {
-                if(is_new) {
-                    total_new++;
-                    show_new = true;
-                }
-            }
+    this.already_run[slug] = true;
+};
 
-            settings_fields.push({'slug':slug, 'details':details, 'is_new': show_new, 'category': category});
-
-            /* If it's enabled, run it! */
-            if(settings[slug]) {
-                callback();
-            }
-        });
-
-        already_run[slug] = true;
-    }
-}
-
-// New feature? Notify them!
-setTimeout(function() {
-    if(total_new > 0) {
-        $('.bjs-prefs').after($('<span class="notify">'+total_new+'</span>'));
-    }
-}, 500);
-
-function set_cookie(name, value) {
-  var cookie_string = name + "=" + escape ( value );
-
-  if (exp_y) {
-    var expires = new Date();
-    cookie_string += "; expires=" + expires.toGMTString();
-  }
-  cookie_string += "; secure";
-
-  document.cookie = cookie_string;
-}
-
-function get_cookie ( cookie_name ) {
-  var results = document.cookie.match ( '(^|;) ?' + cookie_name + '=([^;]*)(;|$)' );
-
-  if (results) {
-    return (unescape(results[2]));
-  } else {
-    return null;
-  }
-}
-
-// Initialize the Marked markdown parser
-marked.setOptions({
-    gfm: true,
-    tables: true,
-    breaks: true,
-    pedantic: false,
-    sanitize: false,
-    smartLists: true,
-    highlight: function(code, lang) {
-        return hljs.highlight(lang, code).value;
-    }
-});
+BugzillaJS.run();
 

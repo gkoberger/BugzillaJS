@@ -2959,7 +2959,15 @@ NEW_COLLECTIONS to get it back.</pre>
 
 
 
-<pre class="bz_comment_text"  id="comment_text_9">Verified FIXED (implemented).</pre>
+<pre class="bz_comment_text"  id="comment_text_9">
+  
+```javascript
+var x = 1;
+var y = 3;
+console.log("TEST: " + [x, y].reduce(function(prev, curr) { return prev + curr; }));
+```
+
+  Verified FIXED (implemented).</pre>
     </div>
 
 

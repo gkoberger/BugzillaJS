@@ -1,0 +1,30 @@
+{
+  "dependencies": {
+    "node-static": {
+      "version": "0.6.9",
+      "from": "node-static@",
+      "resolved": "https://registry.npmjs.org/node-static/-/node-static-0.6.9.tgz",
+      "dependencies": {
+        "optimist": {
+          "version": "0.4.0",
+          "from": "optimist@>=0.3.4",
+          "resolved": "https://registry.npmjs.org/optimist/-/optimist-0.4.0.tgz",
+          "dependencies": {
+            "wordwrap": {
+              "version": "0.0.2",
+              "from": "wordwrap@~0.0.2"
+            }
+          }
+        },
+        "colors": {
+          "version": "0.6.0-1",
+          "from": "colors@>=0.6.0"
+        },
+        "mime": {
+          "version": "1.2.9",
+          "from": "mime@>=1.2.9"
+        }
+      }
+    }
+  }
+}

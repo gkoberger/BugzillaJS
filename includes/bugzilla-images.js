@@ -1,12 +1,12 @@
-registerPref('gallery', {'title': 'Display images and attachments as an inline gallery',
-                          'setting_default': true,
-                          'callback': ifBug(initImageInline),
-                          'category': 'inline'});
+BugzillaJS.registerPref('gallery', {'title': 'Display images and attachments as an inline gallery',
+                                    'setting_default': true,
+                                    'callback': ifBug(initImageInline),
+                                    'category': 'inline'});
 
-registerPref('lightbox', {'title': 'Use lightbox for images',
-                          'setting_default': true,
-                          'callback': ifBug(initImageLightbox),
-                          'category': 'inline'});
+BugzillaJS.registerPref('lightbox', {'title': 'Use lightbox for images',
+                                     'setting_default': true,
+                                     'callback': ifBug(initImageLightbox),
+                                     'category': 'inline'});
 
 
 var image_attachments = {},
@@ -25,8 +25,8 @@ function initImageBoth() {
         }
     });
 
-    bz_comments.each(function() {
-        var $comment = $(this);
+    BugzillaJS.on("comment", function(comment) {
+        var $comment = $(comment).find(".bz_comment_text");
 
         $('a', $comment).each(function() {
             var $a = $(this);
@@ -88,8 +88,8 @@ function initImageLightbox() {
 function initImageInline() {
     initImageBoth();
 
-    bz_comments.each(function() {
-        var $comment = $(this);
+    BugzillaJS.on("comment", function(comment) {
+        var $comment = $(comment).find(".bz_comment_text");
         if($comment.hasClass('has-image')) {
             var $gal = $('<div>', {'class':"img-gal"}).insertAfter($comment);
             $comment.find('.is-image').each(function() {
@@ -110,7 +110,6 @@ function initImageInline() {
 
             });
         }
-
     });
 }
 

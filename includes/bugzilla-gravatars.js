@@ -1,7 +1,7 @@
-registerPref('gravatar', {'title': 'Show gravatars in comments',
-                          'setting_default': true,
-                          'callback': ifBug(setGravatars),
-                          'category': 'inline'});
+BugzillaJS.registerPref('gravatar', {'title': 'Show gravatars in comments',
+                                     'setting_default': true,
+                                     'callback': ifBug(setGravatars),
+                                     'category': 'inline'});
 
 function setGravatars() {
     $('.bz_comment_head,.bz_first_comment_head').each(function () {

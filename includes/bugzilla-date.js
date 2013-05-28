@@ -1,7 +1,7 @@
-registerPref('prettydate', {'title': 'Turn timestamps into relative dates',
-                            'setting_default': true,
-                            'callback': ifBug(initPrettyDates),
-                            'category': 'comments'});
+BugzillaJS.registerPref('prettydate', {'title': 'Turn timestamps into relative dates',
+                                       'setting_default': true,
+                                       'callback': ifBug(initPrettyDates),
+                                       'category': 'comments'});
 
 function fixDate(date) {
     if(typeof date == "object") return date;

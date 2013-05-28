@@ -1,7 +1,7 @@
-registerPref('show_tbpl', {'title': 'Show inline TBPL results',
-                                    'setting_default': true,
-                                    'callback': ifBug(initTBPL),
-                                    'category': 'bug'});
+BugzillaJS.registerPref('show_tbpl', {'title': 'Show inline TBPL results',
+                                      'setting_default': true,
+                                      'callback': ifBug(initTBPL),
+                                      'category': 'bug'});
 
 function initTBPL() {
     if (!settings['show_tbpl']) {
