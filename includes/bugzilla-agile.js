@@ -134,3 +134,4 @@ function agileBacklog() {
     }
 }
 
+BugzillaJS.addFeature();

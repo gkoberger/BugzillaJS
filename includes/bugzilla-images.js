@@ -26,7 +26,7 @@ function initImageBoth() {
     });
 
     BugzillaJS.on("comment", function(comment) {
-        var $comment = $(comment).find(".bz_comment_text");
+        var $comment = $(comment);
 
         $('a', $comment).each(function() {
             var $a = $(this);
@@ -89,7 +89,7 @@ function initImageInline() {
     initImageBoth();
 
     BugzillaJS.on("comment", function(comment) {
-        var $comment = $(comment).find(".bz_comment_text");
+        var $comment = $(comment);
         if($comment.hasClass('has-image')) {
             var $gal = $('<div>', {'class':"img-gal"}).insertAfter($comment);
             $comment.find('.is-image').each(function() {
@@ -113,3 +113,4 @@ function initImageInline() {
     });
 }
 
+BugzillaJS.addFeature();

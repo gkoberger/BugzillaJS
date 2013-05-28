@@ -85,3 +85,5 @@ var prettydate = function(d) {
     if (months == 1) return output + ", 1 month ago";
     return output += ", " + months + " months ago";
 };
+
+BugzillaJS.addFeature();

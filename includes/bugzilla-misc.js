@@ -153,3 +153,4 @@ function browseComponent() {
     _attachLinkToField("component", "browse", browse_location);
 }
 
+BugzillaJS.addFeature();

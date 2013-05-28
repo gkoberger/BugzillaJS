@@ -13,9 +13,7 @@
         "github.css",
         "bugzilla-agile.css",
         "md5.js",
-        "marked.js",
         "events.js",
-        "highlight.pack.js",
         "bugzilla-defs.js",
         "bugzilla.js",
         "bugzilla-changes.js",
@@ -32,6 +30,12 @@
         "bugzilla-fileit.js",
         "bugzilla-tbpl.js"
     ],
+    "workers": {
+        "worker-markdown.js": [
+            "marked.js",
+            "highlight.pack.js"
+        ]
+    },
     "version": "3.1.0",
     "included_urls": "prefs.prefs.urls.split(/\\s*,\\s*/)",
     "name": "BugzillaJS",

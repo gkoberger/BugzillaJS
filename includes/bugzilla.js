@@ -21,8 +21,13 @@ var BugzillaJS = new EventEmitter();
 BugzillaJS.bugID = bug_id;
 BugzillaJS.already_run = {};
 BugzillaJS.total_new = 0;
+BugzillaJS.comments = $('.bz_comment_text');
+BugzillaJS.featuresToAdd = Infinity;
+BugzillaJS.featuresAdded = 0;
 
-BugzillaJS.run = function() {
+BugzillaJS.run = function(featuresToAdd) {
+    this.featuresToAdd = parseInt(featuresToAdd, 10);
+
     function addStyling() {
         if (!settings['gitcomments'])
             return;
@@ -31,6 +36,7 @@ BugzillaJS.run = function() {
         $('.git_style .ih_history br').replaceWith("<span>; </span>");
         setTimeout(BugzillaJS.repositionScroll, 200);
     }
+
     /* Register preferences */
     BugzillaJS.registerPref('gitcomments', {'title': 'Style the comments',
                                             'setting_default': true,
@@ -39,37 +45,25 @@ BugzillaJS.run = function() {
 
     BugzillaJS.addPrefs();
 
-    // Initialize the Marked markdown parser
-    marked.setOptions({
-        gfm: true,
-        tables: true,
-        breaks: true,
-        pedantic: false,
-        sanitize: false,
-        smartLists: true,
-        highlight: function(code, lang) {
-            return hljs.highlight(lang, code).value;
-        }
+    // Allow all features to register themselves
+    this.on("ready", function() {
+        setTimeout(function() {
+            BugzillaJS.comments.each(function() {
+                BugzillaJS.emit("comment", this);
+            });
+        }, 0);
+
+        // New feature? Notify them!
+        setTimeout(function() {
+            if(BugzillaJS.total_new > 0) {
+                $('.bjs-prefs').after($('<span class="notify">'
+                    + BugzillaJS.total_new + '</span>'));
+            }
+        }, 500);
     });
 
-    // Allow all features to register themselves
-    setTimeout(function() {
-        BugzillaJS.comments.each(function() {
-            //this.innerHTML = marked(this.innerHTML);
-            BugzillaJS.emit("comment", this);
-        });
-    }, 0);
-
-    // New feature? Notify them!
-    setTimeout(function() {
-        if(BugzillaJS.total_new > 0) {
-            $('.bjs-prefs').after($('<span class="notify">'
-                + BugzillaJS.total_new + '</span>'));
-        }
-    }, 500);
+    this.checkReady();
 };
-
-BugzillaJS.comments = $('.bz_comment');
 
 BugzillaJS.repositionScroll = function() {
     //-- Reposition the scrollTo if necessary
@@ -155,6 +149,18 @@ BugzillaJS.openPrefs = function(e){
     });
 };
 
+BugzillaJS.addFeature = function(feature) {
+    this.featuresAdded++;
+    this.checkReady();
+};
+
+BugzillaJS.checkReady = function() {
+    if (!this._ready && this.featuresAdded >= this.featuresToAdd) {
+        this.emit("ready");
+        this._ready = true;
+    }
+};
+
 BugzillaJS.registerPref = function(slug, o) {
     /* TODO: integrate these */
     this._registerPref_old(slug, o.title, o.setting_default, o.callback, o.category, o.is_new);
@@ -196,5 +202,4 @@ BugzillaJS._registerPref_old = function(slug, details, setting_default, callback
     this.already_run[slug] = true;
 };
 
-BugzillaJS.run();
-
+_.getFeaturesToAdd(BugzillaJS.run.bind(BugzillaJS));

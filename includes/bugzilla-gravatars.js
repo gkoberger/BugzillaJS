@@ -17,3 +17,4 @@ function setGravatars() {
     });
 }
 
+BugzillaJS.addFeature();

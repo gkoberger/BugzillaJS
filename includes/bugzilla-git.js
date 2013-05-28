@@ -4,8 +4,8 @@ BugzillaJS.registerPref('git', {'title': 'Show GitHub logs inline',
                                 'category': 'inline'});
 
 function initGit() {
-    BugzillaJS.on("comment", function(comment) {
-        var comment = $(comment).find(".bz_comment_text");
+    BugzillaJS.on("comment", function(comment, _) {
+        var comment = $(comment);
         $('a', comment).each(function () {
             var url = $(this).attr('href')
                 isGithub = url.match(/github.com\/([-\w]*)\/([-\w]*)\/commit\/(\w*)/);
@@ -81,3 +81,5 @@ function initGit() {
         return "<div class='changes_box'><strong>" + total + "</strong> " + output + "</div>";
     }
 }
+
+BugzillaJS.addFeature();

@@ -24,3 +24,5 @@ function loadOpenAll() {
     td.append(a).append(pipe);
     $('.bz_query_edit').before(td);
 }
+
+BugzillaJS.addFeature();

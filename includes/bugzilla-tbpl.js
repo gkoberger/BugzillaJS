@@ -38,3 +38,5 @@ function detectIframeFocused() {
         }
     }, 0);
 }
+
+BugzillaJS.addFeature();

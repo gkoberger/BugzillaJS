@@ -243,3 +243,4 @@ function initKB() {
     });
 }
 
+BugzillaJS.addFeature();

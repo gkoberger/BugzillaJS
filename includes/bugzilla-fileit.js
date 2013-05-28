@@ -212,3 +212,5 @@
       return name.replace(/[\/\s]/g, "").toLowerCase();
     }
 })();
+
+BugzillaJS.addFeature();

@@ -1,4 +1,21 @@
+BugzillaJS.registerPref('markdown_comments', {'title': 'Parse markdown inside comments',
+                                              'setting_default': true,
+                                              'callback': ifBug(initParseMarkdown),
+                                              'category': 'bug'});
+
 BugzillaJS.registerPref('reporter_assignee', 'Highlight reporter and assignee comments?', ifBug(initHighlightRA));
+
+function initParseMarkdown() {
+    BugzillaJS.on("comment", function(comment) {
+        var text = comment.innerHTML;
+        _.invokeWorker('markdown', text, function(msg) {
+            // TODO: make this check smarter. We don't want to set innerHTML this
+            //       often.
+            if (msg != text)
+                comment.innerHTML = msg;
+        });
+    });
+}
 
 function initHighlightRA() {
     if(!settings['reporter_assignee'])
@@ -18,7 +35,7 @@ function initHighlightRA() {
     });
 
     BugzillaJS.on("comment", function(comment) {
-        var $comment = $(comment),
+        var $comment = $(comment).parent(),
             text = $comment.find('.vcard').text();
         if(text == assignee) {
             $comment.find('.fn').after($('<span>', {'text':'(assignee)', 'class':'assignee'}));
@@ -30,3 +47,5 @@ function initHighlightRA() {
         }
     });
 }
+
+BugzillaJS.addFeature();
