@@ -32,6 +32,9 @@ function addStyling() {
     if (settings['gitcomments']) {
         $('body').addClass('git_style')
         $('.git_style .ih_history br').replaceWith("<span>; </span>");
+        bz_comments.each(function() {
+            this.innerHTML = marked(this.innerHTML);
+        });
         setTimeout(repositionScroll, 200);
     }
 }
@@ -189,4 +192,17 @@ function get_cookie ( cookie_name ) {
     return null;
   }
 }
+
+// Initialize the Marked markdown parser
+marked.setOptions({
+    gfm: true,
+    tables: true,
+    breaks: true,
+    pedantic: false,
+    sanitize: false,
+    smartLists: true,
+    highlight: function(code, lang) {
+        return hljs.highlight(lang, code).value;
+    }
+});
 
