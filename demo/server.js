@@ -8,4 +8,6 @@ require("http").createServer(function(req, res) {
   req.addListener("end", function () {
     fileServer.serve(req, res);
   });
-}).listen(4444);
+}).listen(4444, function() {
+	console.log("Server listening at http://localhost:4444");
+});
