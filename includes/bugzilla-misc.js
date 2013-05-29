@@ -96,7 +96,7 @@ function dontGuess() {
 function _build_query_string(dict) {
     var parts = []
     for (var key in dict) {
-        parts.push(key + "=" + dict[key]);
+        parts.push(key + "=" + encodeURIComponent(dict[key]));
     }
     return parts.join('&');
 }
