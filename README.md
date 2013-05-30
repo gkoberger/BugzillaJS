@@ -12,14 +12,15 @@ https://addons.mozilla.org/en-US/firefox/addon/bugzillajs/
 DEVELOPING THE ADD-ON (OSX Only!)
 -------------------------------------------------------------------------------
 
-BugzillaJS requires Omnium (cross browser pagemods), and can be installed
+BugzillaJS requires Omnium (cross-browser pagemods), and can be installed
 like this:
 
-    mkdir omnium
+    git clone git@github.com:gkoberger/omnium.git --recursive
     cd omnium
-    git clone git@github.com:gkoberger/omnium.git --recursive .
+    npm install
+    
     git clone git@github.com:gkoberger/BugzillaJS.git bugzillajs
-    python builder.py bugzillajs
+    ./builder.js bugzillajs
 
 This should open up an install button in Firefox.
 
@@ -135,4 +136,4 @@ IF THERE IS A CONFLICT WITH ANOTHER SCRIPT:
   Simply disabling the feature in the Bugzilla Preferences should fix it.
 
 STILL HAVE ISSUES?
-  Contact me at gkoberger [a] mozilla [dot] com
+  Post an issue, or contact me at gkoberger [a] gkoberger [dot] com
