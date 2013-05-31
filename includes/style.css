@@ -210,7 +210,7 @@ span.reporter {
 
 }
 
-.git_style .bz_comment_user a.email {
+body:not(.skin-Mozilla).git_style .bz_comment_user a.email {
     text-decoration:none;
     color:#333;
     font-weight:bold;
