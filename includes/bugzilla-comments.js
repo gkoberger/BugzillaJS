@@ -5,13 +5,23 @@ BugzillaJS.registerPref('markdown_comments', {'title': 'Parse markdown inside co
 
 BugzillaJS.registerPref('reporter_assignee', 'Highlight reporter and assignee comments?', ifBug(initHighlightRA));
 
+var RE_TAGS = /<[^>]*>/g;
+
 function initParseMarkdown() {
+    function getTagCount(text) {
+        var m = text.match(RE_TAGS);
+        if (!m || !m.length)
+            return 0;
+        return m.length;
+    }
+
     BugzillaJS.on("comment", function(comment) {
         var text = comment.innerHTML;
-        _.invokeWorker('markdown', text, function(msg) {
+        var tagCount = getTagCount(text);
+        _.invokeWorker("markdown", text, function(msg) {
             // TODO: make this check smarter. We don't want to set innerHTML this
             //       often.
-            if (msg != text)
+            if (getTagCount(msg) > tagCount)
                 comment.innerHTML = msg;
         });
     });

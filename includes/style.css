@@ -198,11 +198,85 @@ span.reporter {
     margin:0;
     padding:10px;
     width:655px;
+    line-height: 1em;
 }
 
-.git_style .bz_comment_text p {
-    padding:0;
-    margin:0;
+.git_style .bz_comment_text p,
+.git_style .bz_comment_text table,
+.git_style .bz_comment_text tr,
+.git_style .bz_comment_text th,
+.git_style .bz_comment_text td {
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+.git_style .bz_comment_text ol,
+.git_style .bz_comment_text ul,
+.git_style .bz_comment_text dl,
+.git_style .bz_comment_text dt,
+.git_style .bz_comment_text pre {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.git_style .bz_comment_text h1,
+.git_style .bz_comment_text h2,
+.git_style .bz_comment_text h3,
+.git_style .bz_comment_text h4,
+.git_style .bz_comment_text h5 {
+    margin-top: 8px;
+    margin-bottom: 4px;
+}
+
+.git_style .bz_comment_text p code {
+    margin: 0 2px;
+    padding: 0px 5px;
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+    border-radius: 3px;
+    display: inline;
+}
+
+.git_style .bz_comment_text pre {
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    font-size: 13px;
+    line-height: 19px;
+    overflow: auto;
+    padding: 6px 10px;
+    border-radius: 3px;
+}
+
+.git_style .bz_comment_text pre code {
+    background-color: transparent;
+}
+
+.git_style .bz_comment_text table {
+    margin: 15px 0;
+    border-collapse: collapse;
+    border-spacing: 0;
+    vertical-align: middle;
+}
+
+.git_style .bz_comment_text table tr {
+    border-top: 1px solid #ccc;
+    background-color: #fff;
+}
+
+.git_style .bz_comment_text table tr:nth-child(2n) {
+    background-color: #f8f8f8;
+}
+
+.git_style .bz_comment_text table th,
+.git_style .bz_comment_text table td {
+    border: 1px solid #ddd;
+    padding: 6px 13px;
+}
+
+.git_style .bz_comment_text table th {
+    font-weight: bold;
+    text-align: center !important;
 }
 
 .git_style .bz_first_comment .bz_comment_text,
@@ -212,7 +286,6 @@ span.reporter {
 
 .git_style .bz_comment_user {
     display: inline-block; padding-top: 7px;
-
 }
 
 .git_style .bz_comment_user a.email {

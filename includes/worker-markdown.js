@@ -3,12 +3,14 @@
 // Initialize the Marked markdown parser
 marked.setOptions({
     gfm: true,
-    tables: true,
-    breaks: true,
+    tables: false,
+    breaks: false,
     pedantic: false,
     sanitize: false,
     smartLists: true,
     highlight: function(code, lang) {
+        if (!code || !lang)
+            return code;
         return hljs.highlight(lang, code).value;
     }
 });
