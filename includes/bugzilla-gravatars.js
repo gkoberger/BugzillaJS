@@ -4,6 +4,11 @@ registerPref('gravatar', {'title': 'Show gravatars in comments',
                           'category': 'inline'});
 
 function setGravatars() {
+    // Some Bugzilla themes have gravatar support
+    if (document.body.classList.contains('bz_gravatar')) {
+        return;
+    }
+
     var comments = document.querySelectorAll('.bz_comment_head, .bz_first_comment_head');
     for (var i=0, il=comments.length; i<il; i++) {
         var comment = comments[i];
