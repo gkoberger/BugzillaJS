@@ -33,6 +33,11 @@ registerPref('browseComponent', {'title': 'Add a "browse" link for component fie
                                  'callback': ifBug(browseComponent),
                                  'category': 'bug'});
 
+registerPref('savedSearchDropDown', {'title': 'Makes saved searches into a dropdown (requires Mozilla skin)',
+                                     'setting_default': true,
+                                     'callback': savedSearchDropDown,
+                                     'category': 'misc'});
+
 
 function hideFirst() {
     // Hide the first comment if it's blank?
@@ -153,3 +158,27 @@ function browseComponent() {
     _attachLinkToField("component", "browse", browse_location);
 }
 
+function savedSearchDropDown() {
+    if (!is_mozilla_theme) {
+        return;
+    }
+
+    var dropdown = document.createElement('li');
+    dropdown.className = 'dropdown';
+
+    var anchor = document.createElement('span');
+    anchor.className = 'anchor';
+    anchor.textContent = 'Saved Searches';
+    dropdown.appendChild(anchor);
+
+    var list = document.createElement('ul');
+    var saved = document.querySelectorAll('#links-saved .links li');
+    var saved_length = saved.length;
+    for (var i = 0; i < saved_length; i++) {
+        list.appendChild(saved[i]);
+    }
+    dropdown.appendChild(list);
+    var topbar = document.querySelector('#header .wrapper > .links')
+    topbar.appendChild(dropdown);
+    document.querySelector('#links-saved').remove()
+}
