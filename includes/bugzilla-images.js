@@ -1,13 +1,20 @@
 registerPref('gallery', {'title': 'Display images and attachments as an inline gallery',
                           'setting_default': true,
-                          'callback': ifBug(initImageInline),
+                          'callback': ifNotSecurityBug(initImageInline),
                           'category': 'inline'});
 
 registerPref('lightbox', {'title': 'Use lightbox for images',
                           'setting_default': true,
-                          'callback': ifBug(initImageLightbox),
+                          'callback': ifNotSecurityBug(initImageLightbox),
                           'category': 'inline'});
 
+function ifNotSecurityBug(func) {
+    if (document.body.classList.contains('bz_group_websites-security')) {
+        return function() {};
+    }
+
+    return ifBug(func);
+}
 
 var image_attachments = {},
     imageBothRun = false;
