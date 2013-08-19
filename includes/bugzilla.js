@@ -5,12 +5,15 @@ var settings = [],
     bz_comments = $('.bz_comment_text'),
     hidenobody_val = false,
     already_run = [],
-    total_new = 0;
+    total_new = 0,
+    is_mozilla_theme;
 
 /** Get the bug ID **/
 
-bug_id = $('title').text().match(/^(?:Bug )?([0-9]+)/)
-bug_id = bug_id ? bug_id[1] : false
+bug_id = $('title').text().match(/^(?:Bug )?([0-9]+)/);
+bug_id = bug_id ? bug_id[1] : false;
+
+is_mozilla_theme = document.body.classList.contains('skin-Mozilla');
 
 /* Register preferences */
 registerPref('gitcomments', {'title': 'Style the comments',
@@ -44,13 +47,19 @@ function repositionScroll() {
 }
 
 function addPrefs() {
-    var $appendTo = $('#header > .links, #header :not(#login) > .links, #links-actions .links'),
-        $li = $('<li>'),
-        $a = $('<a>', {'class': 'bjs-prefs', 'href':'#', 'text': 'BugzillaJS Preferences'});
-
-    $appendTo.append($('<span>', {'class': 'separator', 'text': '| '}));
+    var $appendTo;
+    var $li = $('<li>');
+    var $a = $('<a>', {'class': 'bjs-prefs', 'href':'#', 'text': 'BugzillaJS Preferences'});
     $li.append($a);
-    $appendTo.append($li.clone());
+
+    if (is_mozilla_theme) {
+        $appendTo = $('#moz_login .dropdown li:eq(1)');
+        $appendTo.after($li);
+    } else {
+        $appendTo = $('#header > .links, #links-actions .links');
+        $appendTo.append($('<span>', {'class': 'separator', 'text': '| '}));
+        $appendTo.append($li.clone());
+    }
 
     $('a.bjs-prefs').click(openPrefs);
 
