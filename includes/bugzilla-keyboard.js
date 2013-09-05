@@ -46,6 +46,32 @@ function initKB() {
         $shortcuts.append($shortcuts_table);
     }
 
+    function addToMenu(key, title) {
+        /* Add to menu */
+        var $tr = $('<tr>'),
+            $td1 = $('<td>', {'class': 'left'}),
+            $td2 = $('<td>', {'text': title});
+
+        if (key == "^+") {
+            key = "&lt;cmd&gt;+&lt;enter&gt;"
+        }
+
+        if (key[0] == "g") {
+            $td1.append($('<strong>', {'html': key[0]}));
+            $td1.append($('<em>', {'text': 'then'}));
+            $td1.append($('<strong>', {'html': key[1]}));
+        }
+        else {
+            $td1.append($('<strong>', {'html': key}));
+        }
+
+        $td1.append($('<span>', {'text': ':'}));
+
+        $shortcuts_table.append($tr);
+        $tr.append($td1);
+        $tr.append($td2);
+    }
+
     function addShortcut(key, title, callback) {
         /* Make it do something */
         var keycode =  "";
@@ -72,24 +98,7 @@ function initKB() {
             callback();
         };
 
-        /* Add to menu */
-        var $tr = $('<tr>'),
-            $td1 = $('<td>', {'class': 'left'}),
-            $td2 = $('<td>', {'text': title});
-
-        if(key[0] == "g") {
-            $td1.append($('<strong>', {'html': key[0]}));
-            $td1.append($('<em>', {'text': 'then'}));
-            $td1.append($('<strong>', {'html': key[1]}));
-        } else {
-            $td1.append($('<strong>', {'html': key}));
-        }
-
-        $td1.append($('<span>', {'text': ':'}));
-
-        $shortcuts_table.append($tr);
-        $tr.append($td1);
-        $tr.append($td2);
+        addToMenu(key, title);
     }
 
     $(window).bind('close', function() {
@@ -98,7 +107,11 @@ function initKB() {
 
     var last_g = "";
     $(unsafeWindow).keypress(function(e) {
-        if($(e.target).is('input, textarea, select') || e.ctrlKey || e.metaKey || e.altKey) return;
+        var $target = $(e.target);
+        if($target.is('textarea') && e.keyCode == 13 && (e.metaKey || e.ctrlKey)) {
+            $target.closest('form').submit();
+        }
+        else if($target.is('input, textarea, select') || e.ctrlKey || e.metaKey || e.altKey) return;
 
         var keycode = last_g + e.which;
 
@@ -215,6 +228,8 @@ function initKB() {
     addShortcut('r', 'Reply to bug', function() {
         $('#comment').focus();
     });
+
+    addToMenu('^+', 'Submit comment');
 
     addShortcut('J', 'Next bug in list', getNav('Next'));
 
