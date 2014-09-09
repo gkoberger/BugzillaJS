@@ -18,14 +18,14 @@ like this:
     git clone git@github.com:gkoberger/omnium.git --recursive
     cd omnium
     npm install
-    
+
     git clone git@github.com:gkoberger/BugzillaJS.git bugzillajs
     ./builder.js bugzillajs
 
 This should open up an install button in Firefox.
 
 Omnium is just a wrapper that I use to generate XPI files.  It takes care of
-figuring out all the page mod logic.
+figuring out all the page-mod logic.
 
 TESTING THE ADD-ON
 ===============================================================================
@@ -51,22 +51,22 @@ come into effect.
 #### SHOW CHANGES
 
   This will show the changes to the bug inline.  Things like status,
-  assigned_to, cc, etc are shown (and, if applicable, attached to the relevant
+  assigned_to, cc, etc. are shown (and, if applicable, attached to the relevant
   comment).
 
-  [Inspired by Bugzilla Tweaks; thanks to potch for the idea/help]
+  [Inspired by Bugzilla Tweaks; thanks to @potch for the idea/help]
 
 #### GIT LOGS INLINE
 
-  If a link to a github commit is posted, the changes will be shown inline.
+  If a link to a GitHub commit is posted, the changes will be shown inline.
 
 #### IMAGE GALLERY
 
-  If a link to an image is posted, there will be a gallery inline
+  If a link to an image is posted, there will be a gallery inline.
 
 #### LIGHTBOX
 
-  View images as a lightbox, so you don't have to open a new window
+  View images as a lightbox, so you don't have to open a new window.
 
 #### HIDE EMPTY FIRST COMMENT
 
@@ -74,43 +74,43 @@ come into effect.
 
 #### PRETTY DATES
 
-  Replaces timestamps with relative dates (such as "Last week")
+  Replaces timestamps with relative dates (such as "Last week").
 
 #### GRAVATARS
 
-  Show an avatar in the comments
+  Show an avatar in the comments.
 
 #### GIT STYLE COMMENTS
 
-  Sylizes the comments to look like github comments
+  Stylizes the comments to look like GitHub comments.
 
 #### REMOVE FLAGS
 
-  Remove the flags field in the bugs (off by default)
+  Remove the flags field in the bugs (off by default).
 
 #### REMOVE ACCESSIBILITY KEYS
 
-  Remove the accessibility keys (off by default)
+  Remove the accessibility keys (off by default).
 
 #### DON'T GUESS HARDWARE OR OS
 
-  Don't attempt to guess the system info, but include a link to guess. (off
+  Don't attempt to guess the system info, but include a link to guess (off
   by default).
 
 #### FILL IN PRODUCT FOR "CLONE BUG" LINK
 
-  Automatically select the product and componenet when clicking the Clone
-  Bug link on the bottom right of the page.
+  Automatically select the product and component when clicking the "Clone
+  Bug" link on the bottom right of the page.
 
-#### NEW DEPENDANT/BLOCKER BUG LINK
+#### NEW DEPENDENT/BLOCKER BUG LINK
 
   Adds a link next to "Depends On" and "Blocks" fields to create a new
-  dependant/blocker bug for the current bug.
+  dependent/blocker bug for the current bug.
 
 #### AGILE BACKLOG
 
-  Enable Agile backlog features on bug searches with whiteboard column
-  See http://groovecoder.com/2011/07/18/bugzilla-agile/
+  Enable [Agile backlog](http://groovecoder.com/2011/07/18/bugzilla-agile/)
+  features on bug searches with whiteboard column.
 
 TODO / KNOWN BUGS
 ===============================================================================
@@ -127,13 +127,15 @@ future of cleaning up the code and possibly making it API-like.
 TROUBLESHOOTING
 ===============================================================================
 
- - It conflicts with other Bugzilla Jetpacks and Userscripts, including the
-   Bugzilla Tweaks Jetpack running.
- - Developing on it has only been tested on OSX; it probably won't work anywhere
-   else.
+- It conflicts with other Bugzilla Jetpacks and Userscripts, including the
+  Bugzilla Tweaks Jetpack running.
+- Developing on it has only been tested on OSX; it probably won't work anywhere
+  else.
 
-IF THERE IS A CONFLICT WITH ANOTHER SCRIPT:
+#### IF THERE IS A CONFLICT WITH ANOTHER SCRIPT
+
   Simply disabling the feature in the Bugzilla Preferences should fix it.
 
-STILL HAVE ISSUES?
+#### STILL HAVE ISSUES?
+
   Post an issue, or contact me at gkoberger [a] gkoberger [dot] com
