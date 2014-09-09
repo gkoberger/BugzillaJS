@@ -23,7 +23,7 @@ registerPref('hidefirst', {'title': 'Hide the first comment if empty',
                                     'callback': ifBug(hideFirst),
                                     'category': 'comments'});
 
-registerPref('relatedbug', {'title': 'Add a "new" link for dependant and blocking fields',
+registerPref('relatedbug', {'title': 'Add a "new" link for dependent and blocking fields',
                                      'setting_default': true,
                                      'callback': ifBug(relatedBug),
                                      'category': 'bug'});
