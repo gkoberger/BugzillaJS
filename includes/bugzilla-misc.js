@@ -129,7 +129,7 @@ function relatedBug() {
         return;
     }
 
-    var prefix = window.location.origin + '/enter_bug.cgi?';
+    var prefix = 'enter_bug.cgi?';
     var url_parts = {};
     url_parts.product = document.querySelector('#product option[selected]').value;
     url_parts.component = document.querySelector('#component option[selected]').value;
@@ -148,8 +148,7 @@ function browseComponent() {
     if (!settings['browseComponent']) {
         return;
     }
-
-    var prefix = window.location.origin + '/buglist.cgi?';
+    var prefix = 'buglist.cgi?';
     var url_parts = {};
     url_parts.product = document.querySelector('#product option[selected]').value;
     url_parts.component = document.querySelector('#component option[selected]').value;
