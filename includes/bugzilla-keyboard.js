@@ -1,3 +1,7 @@
+'use strict';
+
+/* global registerPref, $, _, settings, unsafeWindow, openPrefs */
+
 registerPref('keyboard', {'title': 'Enable keyboard shortcuts',
                           'setting_default': false,
                           'callback': initKB,
@@ -7,15 +11,19 @@ registerPref('keyboard', {'title': 'Enable keyboard shortcuts',
 // Watch for <esc> or '?'
 var keyboard_is_enabled = false;
 $(window).keypress(function(e) {
-    if(e.keyCode == 27) { // <esc>
-        $(window).trigger("close");
+    if (e.keyCode == 27) { // <esc>
+        $(window).trigger('close');
         $(document.activeElement).blur();
     }
-    if(e.which == 63 && !keyboard_is_enabled && !$(e.target).is('input, textarea, select')) { // ?
-        var enable = confirm('Keyboard shortcuts are disabled. Do you want to enable them?');
-        if(enable) {
+    if (e.which == 63 &&
+            !keyboard_is_enabled &&
+            !$(e.target).is('input, textarea, select')) { // ?
+        var msg = 'Keyboard shortcuts are disabled. ';
+        msg += 'Do you want to enable them?';
+        var enable = confirm(msg);
+        if (enable) {
             _.storage.save('settings_keyboard', true);
-            settings['keyboard'] = true;
+            settings.keyboard = true;
             initKB();
             $('#shortcuts').show();
         }
@@ -23,7 +31,8 @@ $(window).keypress(function(e) {
 });
 
 function initKB() {
-    var $shortcuts = $('<div>', {'class': 'shortcuts quickmodal', 'id': 'shortcuts'}).hide(),
+    var $shortcuts = $('<div>', {'class': 'shortcuts quickmodal',
+        'id': 'shortcuts'}).hide(),
         $shortcuts_table = $('<table>'),
         kbCallback = {};
 
@@ -48,25 +57,25 @@ function initKB() {
 
     function addShortcut(key, title, callback) {
         /* Make it do something */
-        var keycode =  "";
-        for(var i=0;i<key.length;i++) {
-            keycode += key.charCodeAt(i) + "_";
+        var keycode = '';
+        for (var i = 0; i < key.length; i++) {
+            keycode += key.charCodeAt(i) + '_';
         }
 
-        if(key == '+') {
+        if (key == '+') {
             keycode = '13_';
-            key = "&lt;enter&gt;";
+            key = '&lt;enter&gt;';
         }
 
-        keycode = keycode.slice(0,-1);
+        keycode = keycode.slice(0, -1);
 
-        if(typeof callback == "string") {
+        if (typeof callback == 'string') {
             var url = callback;
-            callback = function() { unsafeWindow.location = url };
+            callback = function() { unsafeWindow.location = url; };
         }
 
         kbCallback[keycode] = function() {
-            if(key != "?") {
+            if (key != '?') {
                 $shortcuts.hide();
             }
             callback();
@@ -77,7 +86,7 @@ function initKB() {
             $td1 = $('<td>', {'class': 'left'}),
             $td2 = $('<td>', {'text': title});
 
-        if(key[0] == "g") {
+        if (key[0] == 'g') {
             $td1.append($('<strong>', {'html': key[0]}));
             $td1.append($('<em>', {'text': 'then'}));
             $td1.append($('<strong>', {'html': key[1]}));
@@ -96,20 +105,26 @@ function initKB() {
         $('.quickmodal').hide();
     });
 
-    var last_g = "";
+    var last_g = '';
     $(unsafeWindow).keypress(function(e) {
-        if($(e.target).is('input, textarea, select') || e.ctrlKey || e.metaKey || e.altKey) return;
+        if ($(e.target).is('input, textarea, select') ||
+                e.ctrlKey ||
+                e.metaKey ||
+                e.altKey) {
+            return;
+        }
 
         var keycode = last_g + e.which;
 
-        if(keycode in kbCallback) {
+        if (keycode in kbCallback) {
             e.preventDefault();
             kbCallback[keycode]();
         }
-        last_g = e.which == 103 ? "103_" : "";
+        last_g = e.which == 103 ? '103_' : '';
     });
 
-    $(document.activeElement).blur(); // Some fields auto-focus, which ruins this.
+    // Some fields auto-focus, which ruins this.
+    $(document.activeElement).blur();
 
     $('body').append($shortcuts);
 
@@ -117,7 +132,7 @@ function initKB() {
         return function() {
             $('.navigation:first a').each(function() {
               var $a = $(this);
-              if($a.text() == text) {
+              if ($a.text() == text) {
                 window.location.href = $a.attr('href');
               }
             });
@@ -126,23 +141,29 @@ function initKB() {
 
     var $elements = [];
 
-    if($('.bz_buglist').length) {
+    if ($('.bz_buglist').length) {
         $elements = $('.sorttable_body tr');
     }
 
     var el_count = $elements.length,
         el_current = 0;
 
-    if(el_count) {
+    if (el_count) {
         $elements.eq(0).addClass('is-selected');
     }
 
     function updateSelected(diff) {
-        if(!el_count) return;
+        if (!el_count) {
+            return;
+        }
         el_current += diff;
 
-        if(el_current >= el_count) el_current = 0;
-        if(el_current < 0) el_current = el_count - 1;
+        if (el_current >= el_count) {
+            el_current = 0;
+        }
+        if (el_current < 0) {
+            el_current = el_count - 1;
+        }
 
         $elements.filter('.is-selected').removeClass('is-selected');
 
@@ -150,12 +171,13 @@ function initKB() {
         $selected.addClass('is-selected');
 
         // Scroll it into view
-        var el_position = $selected.position()['top'];
+        var el_position = $selected.position().top;
 
         var visible_top = $(window).scrollTop(),
             visible_bottom = visible_top + $(window).height();
 
-        if($selected.length && (el_position < visible_top || el_position > visible_bottom)) {
+        if ($selected.length &&
+                (el_position < visible_top || el_position > visible_bottom)) {
             $selected[0].scrollIntoView();
         }
     }
@@ -172,21 +194,24 @@ function initKB() {
 
     addShortcut('n', 'Quick file a new bug', function() {
         $(window).trigger('close');
-        $fileit = $('<div>', {'class': 'quickmodal', 'id': 'fileit_quick'}).appendTo('body');
+        var $fileit = $('<div>', {'class': 'quickmodal',
+            'id': 'fileit_quick'}).appendTo('body');
         $fileit.fileit();
 
-        $fileit.append($('<div>', {'class':'light',
-                                    'html': "To close, hit &lt;esc&gt; &middot; To browse components, use shortcut 'gn'"}));
+        var msg = 'To close, hit &lt;esc&gt; &middot; ';
+        msg += 'To browse components, use shortcut "gn"';
+        $fileit.append($('<div>', {'class': 'light',
+                                    'html': msg}));
 
         $fileit.find('input').focus();
     });
 
     addShortcut('s', 'Search', function() {
         var qs = $('#quicksearch_main');
-        if(!qs.length) {
+        if (!qs.length) {
             qs = $('#quicksearch_top');
         }
-        qs.removeClass('quicksearch_help_text').val("").focus();
+        qs.removeClass('quicksearch_help_text').val('').focus();
     });
 
     addTitle('Site Navigation');
@@ -196,8 +221,8 @@ function initKB() {
     addShortcut('gn', 'Go to new bug page', './enter_bug.cgi');
 
     addShortcut('gb', 'Go to bug #___', function() {
-        var bug = prompt("What is the bug number?");
-        if(bug) {
+        var bug = prompt('What is the bug number?');
+        if (bug) {
             unsafeWindow.location = './show_bug.cgi?id=' + bug;
         }
     });
@@ -224,7 +249,8 @@ function initKB() {
 
     addShortcut('L', 'Last bug in list', getNav('Last'));
 
-    addShortcut('gl', 'Go back to list of results', getNav('Show last search results'));
+    addShortcut('gl', 'Go back to list of results',
+        getNav('Show last search results'));
 
     addTitle('List Navigation');
 
@@ -237,8 +263,9 @@ function initKB() {
     });
 
     addShortcut('+', 'Go to selected row', function() {
-        if(el_count) {
-            window.location.href = $elements.filter('.is-selected').find('a').eq(0).attr('href');
+        if (el_count) {
+            window.location.href = $elements.filter('.is-selected').find('a').
+                eq(0).attr('href');
         }
     });
 }

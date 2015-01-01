@@ -1,0 +1,4 @@
+includes/jquery*
+includes/jsonp.js
+includes/md5.js
+includes/bugzilla-defs.js

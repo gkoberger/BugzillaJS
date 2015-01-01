@@ -1,9 +1,12 @@
+'use strict';
+/* exported bz_comments */
+
+/* global $, _, categories */
+
 var settings = [],
     settings_fields = [],
     bug_id = false,
-    joinCount = 0,
     bz_comments = $('.bz_comment_text'),
-    hidenobody_val = false,
     already_run = [],
     total_new = 0,
     is_mozilla_theme;
@@ -24,24 +27,24 @@ registerPref('gitcomments', {'title': 'Style the comments',
 /** Run the modules **/
 addPrefs();
 function ifBug(f) {
-    if(bug_id) {
+    if (bug_id) {
         return f;
     } else {
-        return function(){};
+        return function() {};
     }
 }
 
 function addStyling() {
-    if (settings['gitcomments']) {
-        $('body').addClass('git_style')
-        $('.git_style .ih_history br').replaceWith("<span>; </span>");
+    if (settings.gitcomments) {
+        $('body').addClass('git_style');
+        $('.git_style .ih_history br').replaceWith('<span>; </span>');
         setTimeout(repositionScroll, 200);
     }
 }
 
 function repositionScroll() {
     //-- Reposition the scrollTo if necessary
-    if(location.hash.match(/#c[0-9]*/)) {
+    if (location.hash.match(/#c[0-9]*/)) {
         $(window).scrollTo($(location.hash));
     }
 }
@@ -49,7 +52,9 @@ function repositionScroll() {
 function addPrefs() {
     var $appendTo;
     var $li = $('<li>');
-    var $a = $('<a>', {'class': 'bjs-prefs', 'href':'#', 'text': 'BugzillaJS Preferences'});
+    var $a = $('<a>', {'class': 'bjs-prefs',
+        'href': '#',
+        'text': 'BugzillaJS Preferences'});
     $li.append($a);
 
     if (is_mozilla_theme) {
@@ -70,14 +75,16 @@ function addPrefs() {
 
 }
 
-function openPrefs(e){
-    if(e) e.preventDefault();
+function openPrefs(e) {
+    if (e) {
+        e.preventDefault();
+    }
 
     $('#prefs').remove();
 
-    var $prefs = $('<div>', {'id': 'prefs'}),
-        $prefs_h = $('<div>', {'class': 'header'});
-        $prefs_f = $('<div>', {'class': 'footer'});
+    var $prefs = $('<div>', {'id': 'prefs'});
+    var $prefs_h = $('<div>', {'class': 'header'});
+    var $prefs_f = $('<div>', {'class': 'footer'});
 
     $('body').append($prefs);
     $prefs.append($prefs_h).append($prefs_f);
@@ -96,35 +103,43 @@ function openPrefs(e){
         $prefs_h.append($opts);
     });
 
-    $.each(settings_fields, function(k, v){
+    $.each(settings_fields, function(k, v) {
         var $opt = $('<div>');
 
-        $opt.append($('<input>', {'type': 'checkbox', 'id': 'setting_' + v.slug,
-                                  'data-slug': v.slug, 'checked': settings[v.slug]}));
+        $opt.append($('<input>', {'type': 'checkbox',
+            'id': 'setting_' + v.slug,
+            'data-slug': v.slug,
+            'checked': settings[v.slug]}));
 
-        $opt.append($('<label>', {'for': 'setting_' + v.slug, 'text': v.details}));
+        $opt.append($('<label>', {'for': 'setting_' + v.slug,
+            'text': v.details}));
 
-        if(v.is_new) {
-            $opt.find('label').prepend($('<span>', {'class': 'show_new', 'text': 'new'}));
+        if (v.is_new) {
+            $opt.find('label').prepend($('<span>', {'class': 'show_new',
+                'text': 'new'}));
         }
 
         $('#cat-' + v.category).append($opt);
     });
 
     /* Save button */
-    var $save = $("<a>", {'class': 'refresh', 'text': 'Save Changes', 'href': '#'});
+    var $save = $('<a>', {'class': 'refresh',
+        'text': 'Save Changes',
+        'href': '#'});
     $save.appendTo($prefs_f);
-    $save.click(function(){
-        $('input', $prefs_h).each(function(){
-            _.storage.save('settings_' + $(this).attr('data-slug'), $(this).is(':checked'));
+    $save.click(function() {
+        $('input', $prefs_h).each(function() {
+            _.storage.save('settings_' + $(this).attr('data-slug'),
+                $(this).is(':checked'));
         });
 
         window.location.reload();
         return false;
     });
 
-    /* Close button */
-    $('<a>', {'href': '#', 'text': 'cancel'}).appendTo($prefs_f).click(function(e){
+    var close_button = $('<a>', {'href': '#', 'text': 'cancel'});
+    close_button.appendTo($prefs_f);
+    close_button.click(function(e) {
         e.preventDefault();
         $(window).trigger('close');
     });
@@ -132,36 +147,51 @@ function openPrefs(e){
 
 function registerPref(slug, o) {
     /* TODO: integrate these */
-    registerPref_old(slug, o.title, o.setting_default, o.callback, o.category, o.is_new);
+    registerPref_old(slug,
+        o.title,
+        o.setting_default,
+        o.callback,
+        o.category,
+        o.is_new);
 }
 
-function registerPref_old(slug, details, setting_default, callback, category, is_new) {
-    if(! already_run[slug]) {
-        if(typeof setting_default == "function") {
+function registerPref_old(slug,
+  details,
+  setting_default,
+  callback,
+  category,
+  is_new) {
+    if (! already_run[slug]) {
+        if (typeof setting_default == 'function') {
             callback = setting_default;
             setting_default = null;
         }
-        if(setting_default == null || setting_default == undefined) setting_default = true;
+        if (setting_default == null || setting_default === undefined) {
+            setting_default = true;
+        }
 
-        callback = callback || function(){};
+        callback = callback || function() {};
 
         settings[slug] = setting_default;
 
-        _.storage.request('settings_' + slug, function(v){
+        _.storage.request('settings_' + slug, function(v) {
             var show_new = false;
-            if(typeof v != "undefined") {
+            if (typeof v != 'undefined') {
                 settings[slug] = v;
             } else {
-                if(is_new) {
+                if (is_new) {
                     total_new++;
                     show_new = true;
                 }
             }
 
-            settings_fields.push({'slug':slug, 'details':details, 'is_new': show_new, 'category': category});
+            settings_fields.push({'slug': slug,
+                'details': details,
+                'is_new': show_new,
+                'category': category});
 
             /* If it's enabled, run it! */
-            if(settings[slug]) {
+            if (settings[slug]) {
                 callback();
             }
         });
@@ -172,30 +202,8 @@ function registerPref_old(slug, details, setting_default, callback, category, is
 
 // New feature? Notify them!
 setTimeout(function() {
-    if(total_new > 0) {
-        $('.bjs-prefs').after($('<span class="notify">'+total_new+'</span>'));
+    if (total_new <= 0) {
+        return;
     }
+    $('.bjs-prefs').after($('<span class="notify">' + total_new + '</span>'));
 }, 500);
-
-function set_cookie(name, value) {
-  var cookie_string = name + "=" + escape ( value );
-
-  if (exp_y) {
-    var expires = new Date();
-    cookie_string += "; expires=" + expires.toGMTString();
-  }
-  cookie_string += "; secure";
-
-  document.cookie = cookie_string;
-}
-
-function get_cookie ( cookie_name ) {
-  var results = document.cookie.match ( '(^|;) ?' + cookie_name + '=([^;]*)(;|$)' );
-
-  if (results) {
-    return (unescape(results[2]));
-  } else {
-    return null;
-  }
-}
-

@@ -1,47 +1,59 @@
-registerPref('commentoverflow', {'title': 'Add scrollbar to overflowing comments',
-                          'setting_default': true,
-                          'callback': ifBug(commentOverflow),
-                          'category': 'comments'});
+'use strict';
 
-registerPref('removeflags', {'title': 'Remove flags, status and blocking',
-                             'setting_default': false,
-                             'callback': ifBug(removeFlags),
-                             'category': 'bug'});
+/* global registerPref, ifBug, $, settings, bug_id, is_mozilla_theme */
 
-registerPref('removeaccesskeys', {'title': 'Remove access keys',
-                                  'setting_default': false,
-                                  'callback': removeAccess,
-                                  'category': 'bug'});
+registerPref('commentoverflow', {
+    'title': 'Add scrollbar to overflowing comments',
+    'setting_default': true,
+    'callback': ifBug(commentOverflow),
+    'category': 'comments'});
 
-registerPref('dontguess', {'title': 'Don\'t guess OS and hardware',
-                                    'setting_default': false,
-                                    'callback': dontGuess,
-                                    'category': 'bug'});
+registerPref('removeflags', {
+    'title': 'Remove flags, status and blocking',
+    'setting_default': false,
+    'callback': ifBug(removeFlags),
+    'category': 'bug'});
 
-registerPref('hidefirst', {'title': 'Hide the first comment if empty',
-                                    'setting_default': true,
-                                    'callback': ifBug(hideFirst),
-                                    'category': 'comments'});
+registerPref('removeaccesskeys', {
+    'title': 'Remove access keys',
+    'setting_default': false,
+    'callback': removeAccess,
+    'category': 'bug'});
 
-registerPref('relatedbug', {'title': 'Add a "new" link for dependent and blocking fields',
-                                     'setting_default': true,
-                                     'callback': ifBug(relatedBug),
-                                     'category': 'bug'});
+registerPref('dontguess', {
+    'title': 'Don\'t guess OS and hardware',
+    'setting_default': false,
+    'callback': dontGuess,
+    'category': 'bug'});
 
-registerPref('browseComponent', {'title': 'Add a "browse" link for component fields',
-                                 'setting_default': true,
-                                 'callback': ifBug(browseComponent),
-                                 'category': 'bug'});
+registerPref('hidefirst', {
+    'title': 'Hide the first comment if empty',
+    'setting_default': true,
+    'callback': ifBug(hideFirst),
+    'category': 'comments'});
 
-registerPref('savedSearchDropDown', {'title': 'Makes saved searches into a dropdown (requires Mozilla skin)',
-                                     'setting_default': true,
-                                     'callback': savedSearchDropDown,
-                                     'category': 'misc'});
+registerPref('relatedbug', {
+    'title': 'Add a "new" link for dependent and blocking fields',
+    'setting_default': true,
+    'callback': ifBug(relatedBug),
+    'category': 'bug'});
+
+registerPref('browseComponent', {
+    'title': 'Add a "browse" link for component fields',
+    'setting_default': true,
+    'callback': ifBug(browseComponent),
+    'category': 'bug'});
+
+registerPref('savedSearchDropDown', {
+    'title': 'Makes saved searches into a dropdown (requires Mozilla skin)',
+    'setting_default': true,
+    'callback': savedSearchDropDown,
+    'category': 'misc'});
 
 
 function hideFirst() {
     // Hide the first comment if it's blank?
-    if($('.bz_first_comment .bz_comment_text').text() == "") {
+    if ($('.bz_first_comment .bz_comment_text').text() === '') {
         $('.bz_first_comment').hide();
         $('.bz_comment_table').addClass('no-first-comment');
     }
@@ -69,39 +81,41 @@ function removeFlags() {
     // Idea by jbalogh
     $('#flags, .flags_label').remove();
 
-    $('#bz_show_bug_column_2 [id^=field_label_cf_]').each(function(){
+    $('#bz_show_bug_column_2 [id^=field_label_cf_]').each(function() {
         $(this).next().remove();
         $(this).remove();
     });
 }
 
 function dontGuess() {
-    if(location.href.match(/enter_bug/)) {
-        $('#rep_platform, #op_sys').each(function(){
-            var $parent = $('<span>', {'css': {'padding-left': 10}}),
-                $s1 = $("<span>", {'text': '('}),
-                $a = $("<a>", {'text': 'guess'}),
-                $s2 = $("<span>", {'text': ')'});
-
-            $parent.append($s1).append($a).append($s2);
-
-            $a.attr({"href": "#", "data-val": $(this).val()});
-            $a.click(function(){
-                $(this).closest('td').find('select').val($(this).attr('data-val'));
-                $(this).parent().hide();
-                return false;
-            });
-            $(this).val("All").after($parent);
-        });
-
-        $('#os_guess_note').parent().hide();
+    if (!location.href.match(/enter_bug/)) {
+        return;
     }
+
+    $('#rep_platform, #op_sys').each(function() {
+        var $parent = $('<span>', {'css': {'padding-left': 10}}),
+            $s1 = $('<span>', {'text': '('}),
+            $a = $('<a>', {'text': 'guess'}),
+            $s2 = $('<span>', {'text': ')'});
+
+        $parent.append($s1).append($a).append($s2);
+
+        $a.attr({'href': '#', 'data-val': $(this).val()});
+        $a.click(function() {
+            $(this).closest('td').find('select').val($(this).attr('data-val'));
+            $(this).parent().hide();
+            return false;
+        });
+        $(this).val('All').after($parent);
+    });
+
+    $('#os_guess_note').parent().hide();
 }
 
 function _build_query_string(dict) {
-    var parts = []
+    var parts = [];
     for (var key in dict) {
-        parts.push(key + "=" + encodeURIComponent(dict[key]));
+        parts.push(key + '=' + encodeURIComponent(dict[key]));
     }
     return parts.join('&');
 }
@@ -125,36 +139,40 @@ function _attachLinkToField(field_id, text, location) {
 }
 
 function relatedBug() {
-    if(!settings['relatedbug']) {
+    if (!settings.relatedbug) {
         return;
     }
 
     var prefix = 'enter_bug.cgi?';
     var url_parts = {};
-    url_parts.product = document.querySelector('#product option[selected]').value;
-    url_parts.component = document.querySelector('#component option[selected]').value;
+    url_parts.product = document.querySelector('#product option[selected]').
+        value;
+    url_parts.component = document.querySelector('#component option[selected]').
+        value;
 
     url_parts.dependson = bug_id;
     var new_blocked_bug_location = prefix + _build_query_string(url_parts);
-    _attachLinkToField("blocked", "new", new_blocked_bug_location);
+    _attachLinkToField('blocked', 'new', new_blocked_bug_location);
 
     delete url_parts.dependson;
     url_parts.blocked = bug_id;
     var new_dependson_bug_location = prefix + _build_query_string(url_parts);
-    _attachLinkToField("dependson", "new", new_dependson_bug_location);
+    _attachLinkToField('dependson', 'new', new_dependson_bug_location);
 }
 
 function browseComponent() {
-    if (!settings['browseComponent']) {
+    if (!settings.browseComponent) {
         return;
     }
     var prefix = 'buglist.cgi?';
     var url_parts = {};
-    url_parts.product = document.querySelector('#product option[selected]').value;
-    url_parts.component = document.querySelector('#component option[selected]').value;
+    url_parts.product = document.querySelector('#product option[selected]').
+        value;
+    url_parts.component = document.querySelector('#component option[selected]').
+        value;
     var browse_location = prefix + _build_query_string(url_parts);
 
-    _attachLinkToField("component", "browse", browse_location);
+    _attachLinkToField('component', 'browse', browse_location);
 }
 
 function savedSearchDropDown() {
@@ -177,7 +195,7 @@ function savedSearchDropDown() {
         list.appendChild(saved[i]);
     }
     dropdown.appendChild(list);
-    var topbar = document.querySelector('#header .wrapper > .links')
+    var topbar = document.querySelector('#header .wrapper > .links');
     topbar.appendChild(dropdown);
-    document.querySelector('#links-saved').remove()
+    document.querySelector('#links-saved').remove();
 }

@@ -1,3 +1,7 @@
+'use strict';
+
+/* global registerPref, $ */
+
 registerPref('openall', {'title': 'Option to open all bugs in tabs',
                          'setting_default': true,
                          'callback': loadOpenAll,
@@ -8,16 +12,20 @@ function loadOpenAll() {
         e.preventDefault();
 
         var all = $('.bz_id_column a');
-        if(all.length < 10 || confirm("You're trying to open " + all.length + " tabs. Are you sure you want to do this?")) {
+        var msg = 'You\'re trying to open ' + all.length + ' tabs. ';
+        msg += 'Are you sure you want to do this?';
+        if (all.length < 10 || confirm(msg)) {
             $('.bz_id_column a').each(function() {
-                if($(this).attr('href')) {
-                    window.open($(this).attr('href'),'_blank');
+                if ($(this).attr('href')) {
+                    window.open($(this).attr('href'), '_blank');
                 }
             });
         }
-    }
+    };
 
-    var a = $('<a>', {'href': '#', 'click': openAll, 'text': 'Open All in Tabs'}),
+    var a = $('<a>', {'href': '#',
+        'click': openAll,
+        'text': 'Open All in Tabs'}),
         pipe = $('<span>', {'html': '&nbsp;|'}),
         td = $('<td>');
 
