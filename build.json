@@ -5,7 +5,6 @@
     "namespace": "http://gkoberger.net",
     "load_order": [
         "jquery.js",
-        "jsonp.js",
         "jquery.scrollTo.js",
         "jquery.flot.js",
         "jquery.flot.pie.js",
