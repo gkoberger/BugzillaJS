@@ -505,7 +505,6 @@ background-position:0px -100px;
 }
 
 .git td .stat-icon {
-background:url("http://github.com/images/modules/commit/file_modes.png") no-repeat scroll 0 0 transparent;
 display:block;
 height:19px;
 text-indent:-9999px;
