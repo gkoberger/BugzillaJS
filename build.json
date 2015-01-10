@@ -24,7 +24,7 @@
         "bugzilla-keyboard.js",
         "bugzilla-tbpl.js"
     ],
-    "version": "3.2.1",
+    "version": "3.3",
     "included_urls": "prefs.prefs.urls.split(/\\s*,\\s*/)",
     "name": "BugzillaJS",
     "preferences": [{
