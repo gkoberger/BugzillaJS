@@ -5,7 +5,6 @@
 registerPref('keyboard', {'title': 'Enable keyboard shortcuts',
                           'setting_default': false,
                           'callback': initKB,
-                          'is_new': true,
                           'category': 'keyboard'});
 
 // Watch for <esc> or '?'
