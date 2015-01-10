@@ -3,7 +3,7 @@
 /*global registerPref, ifBug, settings, bz_comments */
 
 registerPref('reporter_assignee',
-    {title: 'Highlight reporter and assignee comments?',
+    {title: 'Highlight reporter and assignee comments',
     callback: ifBug(initHighlightRA),
     category: 'comments'});
 

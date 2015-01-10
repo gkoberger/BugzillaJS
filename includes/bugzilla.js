@@ -19,7 +19,7 @@ bug_id = bug_id ? bug_id[1] : false;
 is_mozilla_theme = document.body.classList.contains('skin-Mozilla');
 
 /* Register preferences */
-registerPref('gitcomments', {'title': 'Style the comments',
+registerPref('gitcomments', {'title': 'Style the comments like Github',
                              'setting_default': true,
                              'callback': ifBug(addStyling),
                              'category': 'bug'});

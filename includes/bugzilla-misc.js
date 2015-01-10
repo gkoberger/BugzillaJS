@@ -9,7 +9,7 @@ registerPref('commentoverflow', {
     'category': 'comments'});
 
 registerPref('removeflags', {
-    'title': 'Remove flags, status and blocking',
+    'title': 'Remove flags, status and blocking fields',
     'setting_default': false,
     'callback': ifBug(removeFlags),
     'category': 'bug'});
