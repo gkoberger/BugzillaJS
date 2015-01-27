@@ -147,6 +147,10 @@ span.reporter {
     width: 677px;
 }
 
+.bz_first_comment_head, .bz_comment_head {
+    margin-left:0px;
+}
+
 .git_style .bz_first_comment,
 .git_style .no-first-comment .bz_comment {
     margin-left:0;
@@ -197,12 +201,6 @@ span.reporter {
     border-bottom:1px solid #CCCCCC;
     margin:0;
     padding:10px;
-    width:655px;
-}
-
-.git_style .bz_first_comment .bz_comment_text,
-.git_style .no-first-comment .bz_comment_text {
-    width:670px;
 }
 
 .git_style .bz_comment_user {
