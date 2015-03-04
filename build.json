@@ -22,7 +22,8 @@
         "bugzilla-misc.js",
         "bugzilla-agile.js",
         "bugzilla-keyboard.js",
-        "bugzilla-tbpl.js"
+        "bugzilla-tbpl.js",
+        "bugzilla-treeherder.js"
     ],
     "version": "3.3",
     "included_urls": "prefs.prefs.urls.split(/\\s*,\\s*/)",
