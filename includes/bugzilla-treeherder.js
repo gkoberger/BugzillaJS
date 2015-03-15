@@ -5,7 +5,8 @@
 registerPref('show_treeherder', {'title': 'Show inline Treeherder results',
                                  'setting_default': true,
                                  'callback': ifBug(initTreeherder),
-                                 'category': 'bug'});
+                                 'category': 'bug',
+                                 'is_new': true});
 
 function initTreeherder() {
     if (!settings.show_treeherder) {
@@ -16,7 +17,8 @@ function initTreeherder() {
     document.addEventListener('blur', detectIframeFocused);
 
     var baseHref = 'https://treeherder.mozilla.org/embed/resultset-status/';
-    var selector = '.bz_comment_text a[href^="https://treeherder.mozilla.org/#/jobs?"]';
+    var selector = '.bz_comment_text ';
+    selector += 'a[href^="https://treeherder.mozilla.org/#/jobs?"]';
     var treeherders = document.querySelectorAll(selector);
 
     for (var i = 0, il = treeherders.length; i < il; i++) {
@@ -26,7 +28,7 @@ function initTreeherder() {
         var revision = href.match(/[&?]revision=([\w-]+)/);
 
         if (!repo || !revision) {
-            return;
+            continue;
         }
 
         var iframe = document.createElement('iframe');

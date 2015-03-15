@@ -754,15 +754,10 @@ color:#fff;
      width: 0;
 }
 
-.tbpl_inline_result,
 .treeherder_inline_result {
   width: 100%;
   border: 1px solid #ddd;
   background-color: white;
-  height: 200px;
-}
-
-.treeherder_inline_result {
   height: 60px;
 }
 
