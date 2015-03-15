@@ -57,7 +57,7 @@ These pertain to editing bugs.
 - Don't guess OS and hardware
 - Add a "new" link for dependent and blocking fields
 - Add a "browse" link for component fields
-- Show inline TBPL results
+- Show inline TBPL & treeherder results
 
 ## Listing Pages
 These modify parts of the pages with lists of bugs.
