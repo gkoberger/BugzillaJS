@@ -181,6 +181,7 @@ function registerPref_old(slug,
             } else {
                 if (is_new) {
                     total_new++;
+                    notifyNew();
                     show_new = true;
                 }
             }
@@ -200,10 +201,24 @@ function registerPref_old(slug,
     }
 }
 
+function getNotifyElt(prefMenu) {
+    var notifyElt = prefMenu.nextElementSibling;
+    if (notifyElt && notifyElt.classList.contains('notify')) {
+        return notifyElt;
+    }
+
+    notifyElt = document.createElement('span');
+    notifyElt.classList.add('notify');
+    return prefMenu.parentNode.insertBefore(notifyElt,
+                                            prefMenu.nextElementSibling);
+}
+
 // New feature? Notify them!
-setTimeout(function() {
+function notifyNew() {
     if (total_new <= 0) {
         return;
     }
-    $('.bjs-prefs').after($('<span class="notify">' + total_new + '</span>'));
-}, 500);
+    var prefMenu = document.querySelector('.bjs-prefs');
+    var notifyElt = getNotifyElt(prefMenu);
+    notifyElt.textContent = total_new;
+}
