@@ -65,6 +65,9 @@ function prettydate(d) {
         weeks = 0,
         months = 0;
 
+    if (diff < -600) {
+        return 'Future!'; // Found mistakes ASAP
+    }
     // FIXME: calculation not very accurate towards months/years
     if (diff < 0) {
         return 'just now';
