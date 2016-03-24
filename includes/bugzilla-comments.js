@@ -12,6 +12,11 @@ function initHighlightRA() {
         return;
     }
 
+    if (document.body.classList.contains("bug_modal")) {
+        // This feature is already implemented in the BMO experimental modal UI.
+        return;
+    }
+
     var selector = '#bz_assignee_edit_container .vcard .fn';
     var assignee = document.querySelector(selector).textContent;
 
