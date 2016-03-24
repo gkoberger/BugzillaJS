@@ -40,7 +40,7 @@ registerPref('relatedbug', {
 
 registerPref('browseComponent', {
     'title': 'Add a "browse" link for component fields',
-    'setting_default': true,
+    'setting_default': false,
     'callback': ifBug(browseComponent),
     'category': 'bug'});
 
