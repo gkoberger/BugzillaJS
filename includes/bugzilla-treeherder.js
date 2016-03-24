@@ -5,8 +5,7 @@
 registerPref('show_treeherder', {'title': 'Show inline Treeherder results',
                                  'setting_default': true,
                                  'callback': ifBug(initTreeherder),
-                                 'category': 'bug',
-                                 'is_new': true});
+                                 'category': 'bug'});
 
 function initTreeherder() {
     if (!settings.show_treeherder) {
