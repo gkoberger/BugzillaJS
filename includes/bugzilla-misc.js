@@ -121,9 +121,23 @@ function _build_query_string(dict) {
 }
 
 function _attachLinkToField(field_id, text, location) {
+    var fragment = document.createDocumentFragment();
     var link = document.createElement('a');
     link.href = location;
     link.appendChild(document.createTextNode(text));
+    var span = document.createElement("span");
+    span.appendChild(document.createTextNode(' ('));
+    span.appendChild(link);
+    span.appendChild(document.createTextNode(')'));
+    fragment.appendChild(span);
+
+    var parent = document.querySelector("#field-" + field_id + " .name");
+    if (parent) {
+        // BMO Modal UI
+        span.style.display = "block";
+        parent.appendChild(fragment);
+        return;
+    }
 
     var field = document.getElementById(field_id);
     var text_length = text.length + 3;
@@ -133,9 +147,7 @@ function _attachLinkToField(field_id, text, location) {
     while (td.nodeName.toLowerCase() != 'td') {
         td = td.parentNode;
     }
-    td.appendChild(document.createTextNode(' ('));
-    td.appendChild(link);
-    td.appendChild(document.createTextNode(')'));
+    td.appendChild(fragment);
 }
 
 function relatedBug() {
