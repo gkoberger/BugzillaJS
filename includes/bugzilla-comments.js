@@ -17,17 +17,8 @@ function initHighlightRA() {
         return;
     }
 
-    var selector = '#bz_assignee_edit_container .vcard .fn';
-    var assignee = document.querySelector(selector).textContent;
-
-    var reporter = false;
-    for (var field of document.querySelectorAll('.field_label')) {
-        if (field.textContent.includes('Reported')) {
-            reporter = field.nextElementSibling.querySelector('.vcard .fn').
-                textContent;
-            break;
-        }
-    }
+	var assignee = $( "tr > th:contains('Assigned To')").next().find('.fn').html();
+    var reporter = $( ".field_label:contains('Reported:')").next().find('.fn').html();
 
     bz_comments.each(function(i, comment) {
         var commenter = comment.parentNode.querySelector('.vcard .fn');
