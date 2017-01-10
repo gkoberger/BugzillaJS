@@ -6,7 +6,7 @@
 var settings = [],
     settings_fields = [],
     bug_id = false,
-    bz_comments = $('.bz_comment_text:not(#comment_preview_text)'),
+    bz_comments = $('.bz_comment_text:not(#comment_preview_text), .comment-text:not(#comment-preview)'),
     already_run = [],
     total_new = 0,
     is_mozilla_theme;
