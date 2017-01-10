@@ -16,8 +16,8 @@ function initTreeherder() {
     document.addEventListener('blur', detectIframeFocused);
 
     var baseHref = 'https://treeherder.mozilla.org/embed/resultset-status/';
-    var selector = '.bz_comment_text ';
-    selector += 'a[href^="https://treeherder.mozilla.org/#/jobs?"]';
+    var a_selector = 'a[href^="https://treeherder.mozilla.org/#/jobs?"]';
+    var selector = `.bz_comment_text ${a_selector}, .comment-text ${a_selector}`;
     var treeherders = document.querySelectorAll(selector);
 
     for (var i = 0, il = treeherders.length; i < il; i++) {

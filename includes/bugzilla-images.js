@@ -31,7 +31,7 @@ function initImageBoth() {
     }
     imageBothRun = true;
 
-    $('#attachment_table tr').each(function() {
+    $('#attachment_table tr, #attachments tr').each(function() {
         var $this = $(this);
         if ($this.prop('class').match('image')) {
             var $a = $this.find('a b').parent();
@@ -106,7 +106,7 @@ function initImageLightbox() {
     /* Close on <esc> */
     $(window).bind('close', closeLightbox);
 
-    $('#attachment_table, .bz_comment_table').delegate('.is-image',
+    $('#attachment_table, .bz_comment_table, #bugzilla-body').delegate('.is-image',
         'click', bzLightbox);
 }
 
