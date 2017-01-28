@@ -24,7 +24,7 @@
         "bugzilla-keyboard.js",
         "bugzilla-treeherder.js"
     ],
-    "version": "3.5",
+    "version": "3.5.1",
     "included_urls": "prefs.prefs.urls.split(/\\s*,\\s*/)",
     "name": "BugzillaJS",
     "preferences": [{
