@@ -26,6 +26,12 @@ registerPref('dontguess', {
     'callback': dontGuess,
     'category': 'bug'});
 
+registerPref('dontaddCC', {
+    'title': 'Don\'t "Add me to CC list" by default',
+    'setting_default': false,
+    'callback': dontAddCC,
+    'category': 'bug'});
+
 registerPref('hidefirst', {
     'title': 'Hide the first comment if empty',
     'setting_default': true,
@@ -110,6 +116,15 @@ function dontGuess() {
     });
 
     $('#os_guess_note').parent().hide();
+}
+
+function dontAddCC() {
+    if (!location.href.match(/show_bug\.cgi/)) {
+        return;
+    }
+
+    $('#add-self-cc').attr('checked', false); // Modern interface
+    $('#addselfcc').attr('checked', false); // Legacy interface
 }
 
 function _build_query_string(dict) {
