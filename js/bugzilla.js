@@ -176,7 +176,7 @@ function registerPref_old(slug,
         settings[slug] = setting_default;
 
         browser.storage.sync.get('settings_' + slug).then(function(result) {
-            var v = result[slug];
+            var v = result['settings_' + slug];
             var show_new = false;
             if (typeof v != 'undefined') {
                 settings[slug] = v;
