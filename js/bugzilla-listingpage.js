@@ -26,9 +26,8 @@ function loadOpenAll() {
     var a = $('<a>', {'href': '#',
         'click': openAll,
         'text': 'Open All in Tabs'}),
-        pipe = $('<span>', {'html': '&nbsp;|'}),
         td = $('<td>');
 
-    td.append(a).append(pipe);
+    td.append(a);
     $('.bz_query_edit').before(td);
 }
