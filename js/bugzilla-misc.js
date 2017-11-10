@@ -140,6 +140,9 @@ function _attachLinkToField(field_id, text, location) {
     }
 
     var field = document.getElementById(field_id);
+    if (!field) {
+        return;
+    }
     var text_length = text.length + 3;
     field.style.maxWidth = 'calc(100% - ' + text_length + 'ch)';
 
@@ -157,10 +160,23 @@ function relatedBug() {
 
     var prefix = 'enter_bug.cgi?';
     var url_parts = {};
-    url_parts.product = document.querySelector('#product option[selected]').
-        value;
-    url_parts.component = document.querySelector('#component option[selected]').
-        value;
+    try {
+        url_parts.product = document.querySelector('#product option[selected]').
+            value;
+    } catch (ex) {
+        // The user cannot edit the field or is not logged in
+        url_parts.product = document.querySelector('#field_container_product')
+            .textContent;
+    }
+    try {
+        url_parts.component = document
+            .querySelector('#component option[selected]')
+            .value;
+    } catch (ex) {
+        let comp_text = document.querySelector('#field_container_component')
+            .firstChild.textContent;
+        url_parts.component = comp_text.trim().replace(/\)$/, '').trim();
+    }
 
     url_parts.dependson = bug_id;
     var new_blocked_bug_location = prefix + _build_query_string(url_parts);
