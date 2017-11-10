@@ -125,16 +125,16 @@ function _attachLinkToField(field_id, text, location) {
     var link = document.createElement('a');
     link.href = location;
     link.appendChild(document.createTextNode(text));
-    var span = document.createElement("span");
+    var span = document.createElement('span');
     span.appendChild(document.createTextNode(' ('));
     span.appendChild(link);
     span.appendChild(document.createTextNode(')'));
     fragment.appendChild(span);
 
-    var parent = document.querySelector("#field-" + field_id + " .name");
+    var parent = document.querySelector('#field-' + field_id + ' .name');
     if (parent) {
         // BMO Modal UI
-        span.style.display = "block";
+        span.style.display = 'block';
         parent.appendChild(fragment);
         return;
     }

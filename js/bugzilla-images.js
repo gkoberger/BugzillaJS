@@ -106,8 +106,8 @@ function initImageLightbox() {
     /* Close on <esc> */
     $(window).bind('close', closeLightbox);
 
-    $('#attachment_table, .bz_comment_table, #bugzilla-body').delegate('.is-image',
-        'click', bzLightbox);
+    $('#attachment_table, .bz_comment_table, #bugzilla-body')
+        .delegate('.is-image', 'click', bzLightbox);
 }
 
 function initImageInline() {
@@ -141,4 +141,3 @@ function initImageInline() {
 
     });
 }
-

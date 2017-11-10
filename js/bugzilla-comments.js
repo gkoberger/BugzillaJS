@@ -12,7 +12,7 @@ function initHighlightRA() {
         return;
     }
 
-    if (document.body.classList.contains("bug_modal")) {
+    if (document.body.classList.contains('bug_modal')) {
         // This feature is already implemented in the BMO experimental modal UI.
         return;
     }

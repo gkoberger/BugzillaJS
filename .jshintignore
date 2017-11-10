@@ -1,4 +1,5 @@
-includes/jquery*
-includes/jsonp.js
-includes/md5.js
-includes/bugzilla-defs.js
+js/jquery*
+js/md5.js
+js/bugzilla-defs.js
+legacy/*
+output/**

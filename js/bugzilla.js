@@ -1,12 +1,13 @@
 'use strict';
 /* exported bz_comments */
 
-/* global $, _, categories */
+/* global $, browser, categories */
 
 var settings = [],
     settings_fields = [],
     bug_id = false,
-    bz_comments = $('.bz_comment_text:not(#comment_preview_text), .comment-text:not(#comment-preview)'),
+    bz_comments = $('.bz_comment_text:not(#comment_preview_text),' +
+                    '.comment-text:not(#comment-preview)'),
     already_run = [],
     total_new = 0,
     is_mozilla_theme;
@@ -129,8 +130,9 @@ function openPrefs(e) {
     $save.appendTo($prefs_f);
     $save.click(function() {
         $('input', $prefs_h).each(function() {
+            var setting_name = 'settings_' + $(this).attr('data-slug');
             browser.storage.sync.set({
-                ['settings_' + $(this).attr('data-slug')]: $(this).is(':checked'),
+                [setting_name]: $(this).is(':checked'),
             });
         });
 
