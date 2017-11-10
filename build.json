@@ -9,7 +9,6 @@
         "md5.js",
         "bugzilla-defs.js",
         "bugzilla.js",
-        "bugzilla-date.js",
         "bugzilla-images.js",
         "bugzilla-listingpage.js",
         "bugzilla-git.js",
