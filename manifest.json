@@ -42,6 +42,11 @@
         }
     ],
 
+    "icons": {
+        "32": "icon.png",
+        "64": "icon64.png"
+    },
+
     "permissions": [
         "https://api.github.com/*",
         "storage"
