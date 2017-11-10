@@ -18,7 +18,13 @@ function initHighlightRA() {
     }
 
     var selector = '#bz_assignee_edit_container .vcard .fn';
-    var assignee = document.querySelector(selector).textContent;
+    var assignee_el = document.querySelector(selector);
+    if (!assignee_el) {
+        // The user is probably not logged in
+        return;
+    }
+    var assignee = assignee_el.textContent;
+
 
     var reporter = false;
     for (var field of document.querySelectorAll('.field_label')) {
