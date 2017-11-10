@@ -29,8 +29,10 @@
             "js": [
                 "js/jquery.js",
                 "js/jquery.scrollTo.js",
+                "js/md5.js",
                 "js/bugzilla-defs.js",
                 "js/bugzilla.js",
+                "js/bugzilla-gravatars.js",
                 "js/bugzilla-misc.js"
             ]
         }
