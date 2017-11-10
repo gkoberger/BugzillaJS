@@ -34,6 +34,7 @@
                 "js/bugzilla.js",
                 "js/bugzilla-images.js",
                 "js/bugzilla-gravatars.js",
+                "js/bugzilla-comments.js",
                 "js/bugzilla-misc.js"
             ]
         }
