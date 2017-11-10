@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "BugzillaJS",
-    "version": "4.0.0",
+    "version": "4.1.0",
 
     "description": "Add features to Bugzilla.",
 
@@ -13,7 +13,7 @@
     "applications": {
         "gecko": {
             "id": "jid0-NgMDcEu2B88AbzZ6ulHodW9sJzA@jetpack",
-            "strict_min_version": "52.0"
+            "strict_min_version": "57.0"
         }
     },
 
