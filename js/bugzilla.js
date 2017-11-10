@@ -174,6 +174,10 @@ function registerPref_old(slug,
 
         settings[slug] = setting_default;
 
+        if (settings[slug]) {
+            callback();
+        }
+        /*
         _.storage.request('settings_' + slug, function(v) {
             var show_new = false;
             if (typeof v != 'undefined') {
@@ -191,12 +195,12 @@ function registerPref_old(slug,
                 'is_new': show_new,
                 'category': category});
 
-            /* If it's enabled, run it! */
+            // If it's enabled, run it!
             if (settings[slug]) {
                 callback();
             }
         });
-
+        */
         already_run[slug] = true;
     }
 }

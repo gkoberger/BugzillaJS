@@ -1,8 +1,4 @@
 {
-    "description": "Add features to Bugzilla.",
-    "author": "Gregory Koberger",
-    "jetpack_id": "jid0-NgMDcEu2B88AbzZ6ulHodW9sJzA",
-    "namespace": "http://gkoberger.net",
     "load_order": [
         "jquery.js",
         "jquery.scrollTo.js",
@@ -24,9 +20,7 @@
         "bugzilla-keyboard.js",
         "bugzilla-treeherder.js"
     ],
-    "version": "3.6.0",
     "included_urls": "prefs.prefs.urls.split(/\\s*,\\s*/)",
-    "name": "BugzillaJS",
     "preferences": [{
         "name": "urls",
         "title": "Active URLs (comma separated, each ending in '*')",
