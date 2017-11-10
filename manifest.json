@@ -1,36 +1,41 @@
 {
-  "manifest_version": 2,
-  "name": "BugzillaJS",
-  "version": "4.0.0",
+    "manifest_version": 2,
+    "name": "BugzillaJS",
+    "version": "4.0.0",
 
-  "description": "Add features to Bugzilla.",
+    "description": "Add features to Bugzilla.",
 
-  "developer": {
-    "name": "Gregory Koberger, Matthew Noorenberghe",
-    "url": "https://github.com/gkoberger/BugzillaJS"
-  },
+    "developer": {
+        "name": "Gregory Koberger, Matthew Noorenberghe",
+        "url": "https://github.com/gkoberger/BugzillaJS"
+    },
 
-  "applications": {
-    "gecko": {
-      "id": "jid0-NgMDcEu2B88AbzZ6ulHodW9sJzA@jetpack"
-    }
-  },
+    "applications": {
+        "gecko": {
+            "id": "jid0-NgMDcEu2B88AbzZ6ulHodW9sJzA@jetpack",
+            "strict_min_version": "52.0"
+        }
+    },
 
-  "content_scripts": [
-    {
-      "matches": [
-        "*://*/",
-        "*://*/*.cgi*"
-      ],
-      "css": [
-        "css/bugzillajs.css"
-      ],
-      "js": [
-        "js/jquery.js",
-        "js/bugzilla-defs.js",
-        "js/bugzilla.js",
-        "js/bugzilla-misc.js"
-      ]
-    }
-  ]
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*/",
+                "*://*/*.cgi*"
+            ],
+            "css": [
+                "css/bugzillajs.css"
+            ],
+            "js": [
+                "js/jquery.js",
+                "js/bugzilla-defs.js",
+                "js/bugzilla.js",
+                "js/bugzilla-misc.js"
+            ]
+        }
+    ],
+
+    "permissions": [
+        "storage"
+    ]
 }

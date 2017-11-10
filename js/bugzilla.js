@@ -129,8 +129,9 @@ function openPrefs(e) {
     $save.appendTo($prefs_f);
     $save.click(function() {
         $('input', $prefs_h).each(function() {
-            _.storage.save('settings_' + $(this).attr('data-slug'),
-                $(this).is(':checked'));
+            browser.storage.sync.set({
+                ['settings_' + $(this).attr('data-slug')]: $(this).is(':checked'),
+            });
         });
 
         window.location.reload();
@@ -174,11 +175,8 @@ function registerPref_old(slug,
 
         settings[slug] = setting_default;
 
-        if (settings[slug]) {
-            callback();
-        }
-        /*
-        _.storage.request('settings_' + slug, function(v) {
+        browser.storage.sync.get('settings_' + slug).then(function(result) {
+            var v = result[slug];
             var show_new = false;
             if (typeof v != 'undefined') {
                 settings[slug] = v;
@@ -200,7 +198,7 @@ function registerPref_old(slug,
                 callback();
             }
         });
-        */
+
         already_run[slug] = true;
     }
 }
