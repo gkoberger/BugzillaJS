@@ -2,7 +2,7 @@
     "title": "BugzillaJS",
     "description": "Add features to Bugzilla.",
     "author": "Gregory Koberger / Matthew Noorenberghe",
-    "version": "4.0.0",
+    "version": "4.0.1",
     "main": "./sdk.js",
     "id": "jid0-NgMDcEu2B88AbzZ6ulHodW9sJzA@jetpack",
     "engines": {
