@@ -1,0 +1,14 @@
+# Ignore .DS_Store files created by mac
+.*
+\#*
+*~
+
+# Ignore any zip or xpi files
+*.zip
+*.xpi
+
+/Makefile
+/build.json
+/demo/
+/legacy/
+/output/
