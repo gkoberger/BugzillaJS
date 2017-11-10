@@ -14,7 +14,6 @@ function initGit() {
         $('a', $comment).each(function() {
             var url = $(this).attr('href');
             var isGithub = url.match(github_regexp);
-            console.log('fooo', isGithub);
 
             if (!isGithub) {
                 return;
