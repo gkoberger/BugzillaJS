@@ -195,8 +195,8 @@ function registerPref_old(slug,
                 'is_new': show_new,
                 'category': category});
 
-            // If it's enabled, run it!
-            if (settings[slug]) {
+            // If it's enabled and we're on a Bugzilla page, run it!
+            if (window.wrappedJSObject.BUGZILLA && settings[slug]) {
                 callback();
             }
         });
