@@ -1,23 +1,15 @@
 # DOWNLOAD THE ADD-ON
 
-https://addons.mozilla.org/en-US/firefox/addon/bugzillajs/
+https://addons.mozilla.org/firefox/addon/bugzillajs/
 
-# DEVELOPING THE ADD-ON (OSX Only!)
+# DEVELOPING THE ADD-ON
 
-BugzillaJS requires Omnium (cross-browser pagemods), and can be installed
-like this:
-
-    git clone git@github.com:gkoberger/omnium.git --recursive
-    cd omnium
-    npm install
+BugzillaJS is in the process of being converted to a cross-browser web extension,
+and can be installed like this:
 
     git clone git@github.com:gkoberger/BugzillaJS.git bugzillajs
-    ./builder.js bugzillajs
 
 This should open up an install button in Firefox.
-
-Omnium is just a wrapper that I use to generate XPI files.  It takes care of
-figuring out all the page-mod logic.
 
 # TESTING THE ADD-ON
 
@@ -26,6 +18,9 @@ Once you have it installed, check out the following URL to see it in action:
 https://bugzilla.mozilla.org/show_bug.cgi?id=574290
 
 # FEATURES
+
+** The extension is in the process of being converted to an web extension so
+doesn't currently supported the previous features **
 
 You can turn features on and off by clicking the "BugzillaJS Preferences" link
 at the top and bottom of every page.  You need to refresh the page to see them
@@ -76,10 +71,7 @@ future of cleaning up the code and possibly making it API-like.
 
 # TROUBLESHOOTING
 
-- It conflicts with other Bugzilla Jetpacks and Userscripts, including the
-  Bugzilla Tweaks Jetpack running.
-- Developing on it has only been tested on OSX; it probably won't work anywhere
-  else.
+- It conflicts with other Bugzilla extensions and Userscripts.
 
 ## IF THERE IS A CONFLICT WITH ANOTHER SCRIPT
 
