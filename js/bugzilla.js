@@ -26,7 +26,6 @@ registerPref('gitcomments', {'title': 'Style the comments like Github',
                              'category': 'bug'});
 
 /** Run the modules **/
-addPrefs();
 function ifBug(f) {
     if (bug_id) {
         return f;
@@ -48,104 +47,6 @@ function repositionScroll() {
     if (location.hash.match(/#c[0-9]*/)) {
         $(window).scrollTo($(location.hash));
     }
-}
-
-function addPrefs() {
-    var $appendTo;
-    var $li = $('<li>');
-    var $a = $('<a>', {'class': 'bjs-prefs',
-        'href': '#',
-        'text': 'BugzillaJS Preferences'});
-    $li.append($a);
-
-    if (is_mozilla_theme) {
-        $appendTo = $('#moz_login .dropdown li:eq(1)');
-        $appendTo.after($li);
-    } else {
-        $appendTo = $('#header > .links, #links-actions .links');
-        $appendTo.append($('<span>', {'class': 'separator', 'text': '| '}));
-        $appendTo.append($li.clone());
-    }
-
-    $('a.bjs-prefs').click(openPrefs);
-
-    // Close on <esc>
-    $(window).bind('close', function(e) {
-        $('#prefs').remove();
-    });
-
-}
-
-function openPrefs(e) {
-    if (e) {
-        e.preventDefault();
-    }
-
-    $('#prefs').remove();
-
-    var $prefs = $('<div>', {'id': 'prefs'});
-    var $prefs_h = $('<div>', {'class': 'header'});
-    var $prefs_f = $('<div>', {'class': 'footer'});
-
-    $('body').append($prefs);
-    $prefs.append($prefs_h).append($prefs_f);
-
-    $.each(categories, function(v, k) {
-        var content = k.split(' | '),
-            title = content[0],
-            desc = content[1];
-
-        var $h3 = $('<h3>', {'text': title}),
-            $desc = $('<p>', {'text': desc}),
-            $opts = $('<div>', {'id': 'cat-' + v});
-
-        $prefs_h.append($h3);
-        $prefs_h.append($desc);
-        $prefs_h.append($opts);
-    });
-
-    $.each(settings_fields, function(k, v) {
-        var $opt = $('<div>');
-
-        $opt.append($('<input>', {'type': 'checkbox',
-            'id': 'setting_' + v.slug,
-            'data-slug': v.slug,
-            'checked': settings[v.slug]}));
-
-        $opt.append($('<label>', {'for': 'setting_' + v.slug,
-            'text': v.details}));
-
-        if (v.is_new) {
-            $opt.find('label').prepend($('<span>', {'class': 'show_new',
-                'text': 'new'}));
-        }
-
-        $('#cat-' + v.category).append($opt);
-    });
-
-    /* Save button */
-    var $save = $('<a>', {'class': 'refresh',
-        'text': 'Save Changes',
-        'href': '#'});
-    $save.appendTo($prefs_f);
-    $save.click(function() {
-        $('input', $prefs_h).each(function() {
-            var setting_name = 'settings_' + $(this).attr('data-slug');
-            browser.storage.sync.set({
-                [setting_name]: $(this).is(':checked'),
-            });
-        });
-
-        window.location.reload();
-        return false;
-    });
-
-    var close_button = $('<a>', {'href': '#', 'text': 'cancel'});
-    close_button.appendTo($prefs_f);
-    close_button.click(function(e) {
-        e.preventDefault();
-        $(window).trigger('close');
-    });
 }
 
 function registerPref(slug, o) {

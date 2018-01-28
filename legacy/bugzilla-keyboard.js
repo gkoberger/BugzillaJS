@@ -1,6 +1,6 @@
 'use strict';
 
-/* global registerPref, $, _, settings, unsafeWindow, openPrefs */
+/* global registerPref, $, _, settings, unsafeWindow */
 
 registerPref('keyboard', {'title': 'Enable keyboard shortcuts',
                           'setting_default': false,
@@ -230,7 +230,7 @@ function initKB() {
 
     addShortcut('gp', 'Go to preferences', './userprefs.cgi');
 
-    addShortcut('g,', 'Go to BugzillaJS prefs', openPrefs);
+    //addShortcut('g,', 'Go to BugzillaJS prefs', openPrefs);
 
     newTable();
 
@@ -268,4 +268,3 @@ function initKB() {
         }
     });
 }
-
