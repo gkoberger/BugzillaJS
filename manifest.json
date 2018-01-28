@@ -21,7 +21,14 @@
         {
             "matches": [
                 "*://*/",
+                "*://*/*bug*/",
                 "*://*/*.cgi*"
+            ],
+            "include_globs": [
+                "*bugz*",
+                "*bugs*",
+                "*Bugs*",
+                "*bz*"
             ],
             "css": [
                 "css/bugzillajs.css"
@@ -44,6 +51,11 @@
     "icons": {
         "32": "icon.png",
         "64": "icon64.png"
+    },
+
+    "options_ui": {
+        "page": "options.html",
+        "browser_style": true
     },
 
     "permissions": [

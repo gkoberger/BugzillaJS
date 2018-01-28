@@ -74,6 +74,13 @@ If you have an idea for an extra feature, either ask me to implement it or
 you can implement it yourself and submit a patch.  I'll do a better job in the
 future of cleaning up the code and possibly making it API-like.
 
+## Bugzilla Installation URLs
+
+  To test patterns/globs against installation URLs you can visit https://www.bugzilla.org/installation-list/ and run:
+  ```js
+  new Set([...document.querySelectorAll("a[href]")].filter(a => a.textContent.trim() == "Bugzilla").map(a => a.href).filter(url => !url.includes("www.bugzilla.org")).filter(url => !url.match(/(.*bugz.*|.*bugs.*|.*Bugs.*|.*bz.*)/)))
+  ```
+
 # TROUBLESHOOTING
 
 - It conflicts with other Bugzilla extensions and Userscripts.
