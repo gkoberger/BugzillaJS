@@ -7,6 +7,9 @@
     <body>
         <div id="prefs">
             <p>Changes take effect on the next load of a Bugzilla page.</p>
+
+            <!-- Add @checked for setting_default: true -->
+
             <!--
                 See legacy/bugzilla-keyboard.js
                 <h3>Keyboard Shortcuts</h3>
@@ -18,39 +21,39 @@
             <p>Make the comments on bugs more readable.</p>
             <div>
                 <div><label><input id="reporter_assignee" type="checkbox">Highlight reporter and assignee comments</label></div>
-                <div><label><input id="commentoverflow" type="checkbox">Add scrollbar to overflowing comments</label></div>
-                <div><label><input id="hidefirst" type="checkbox">Hide the first comment if empty</label></div>
+                <div><label><input id="commentoverflow" type="checkbox" checked>Add scrollbar to overflowing comments</label></div>
+                <div><label><input id="hidefirst" type="checkbox" checked>Hide the first comment if empty</label></div>
             </div>
 
             <h3>Show inline media</h3>
             <p>Show images and other types of content right in the comments.</p>
             <div>
-                <div><label><input id="gallery" type="checkbox">Display images and attachments as an inline gallery</label></div>
-                <div><label><input id="lightbox" type="checkbox">Use lightbox for images</label></div>
-                <div><label><input id="gravatar" type="checkbox">Show gravatars in comments</label></div>
+                <div><label><input id="gallery" type="checkbox" checked>Display images and attachments as an inline gallery</label></div>
+                <div><label><input id="lightbox" type="checkbox" checked>Use lightbox for images</label></div>
+                <div><label><input id="gravatar" type="checkbox" checked>Show gravatars in comments</label></div>
             </div>
 
             <h3>Improve Bugs</h3>
             <p>These pertain to editing bugs.</p>
             <div>
-                <div><label><input id="gitcomments" type="checkbox">Style the comments like Github</label></div>
+                <div><label><input id="gitcomments" type="checkbox" checked>Style the comments like Github</label></div>
                 <div><label><input id="removeflags" type="checkbox">Remove flags, status and blocking fields</label></div>
                 <div><label><input id="removeaccesskeys" type="checkbox">Remove access keys</label></div>
                 <div><label><input id="dontguess" type="checkbox">Don't guess OS and hardware</label></div>
-                <div><label><input id="relatedbug" type="checkbox">Add a "new" link for dependent and blocking fields</label></div>
+                <div><label><input id="relatedbug" type="checkbox" checked>Add a "new" link for dependent and blocking fields</label></div>
                 <div><label><input id="browseComponent" type="checkbox">Add a "browse" link for component fields</label></div>
             </div>
 
             <h3>Listing Pages</h3>
             <p>These modify parts of the pages with lists of bugs.</p>
             <div>
-                <div><label><input id="openall" type="checkbox">Option to open all bugs in tabs</label></div>
+                <div><label><input id="openall" type="checkbox" checked>Option to open all bugs in tabs</label></div>
             </div>
 
             <h3>Miscellaneous</h3>
             <p>These are other tidbits that do not fit into other categories.</p>
             <div>
-                <div><label><input id="savedSearchDropDown" type="checkbox">Makes saved searches into a dropdown (requires Mozilla skin)</label></div>
+                <div><label><input id="savedSearchDropDown" type="checkbox" checked>Makes saved searches into a dropdown (requires Mozilla skin)</label></div>
             </div>
         </div>
         <script src="options.js" defer></script>
